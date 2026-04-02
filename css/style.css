@@ -1,0 +1,211 @@
+:root {
+    --color-primary: #1b4332;
+    --color-primary-hover: #143528;
+    --color-link: #1b4332;
+    --color-link-hover: #143528;
+    --color-secondary: #40916c;
+    --color-secondary-hover: #2d6a4f;
+}
+
+body {
+    padding-top: 76px;
+}
+
+/* Skip-link per accessibilità */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background: #212529;
+    color: #fff;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Link generali */
+a {
+    color: var(--color-link);
+}
+a:hover,
+a:focus {
+    color: var(--color-link-hover);
+}
+
+/* Navbar */
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: var(--color-primary) !important;
+}
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link:focus,
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+    color: var(--color-primary-hover) !important;
+}
+
+/* Bottoni */
+.btn-custom-primary {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border: 1px solid var(--color-primary);
+}
+.btn-custom-primary:hover,
+.btn-custom-primary:focus {
+    background-color: var(--color-primary-hover);
+    color: #ffffff;
+    border-color: var(--color-primary-hover);
+}
+
+.btn-custom-outline {
+    background-color: #ffffff;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+.btn-custom-outline:hover,
+.btn-custom-outline:focus {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+}
+
+/* Outline verde per btn-group (filtri) */
+.btn.btn-outline-custom-primary {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background-color: transparent;
+}
+.btn.btn-outline-custom-primary:hover,
+.btn.btn-outline-custom-primary:focus {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+}
+.btn-check:checked + .btn.btn-outline-custom-primary,
+.btn-check:active + .btn.btn-outline-custom-primary,
+.btn.btn-outline-custom-primary:active,
+.btn.btn-outline-custom-primary.active {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+}
+
+.btn-custom-secondary {
+    background-color: var(--color-secondary);
+    color: #ffffff;
+    border: 1px solid var(--color-secondary);
+}
+.btn-custom-secondary:hover,
+.btn-custom-secondary:focus {
+    background-color: var(--color-secondary-hover);
+    color: #ffffff;
+    border-color: var(--color-secondary-hover);
+}
+
+/* Sidebar Profilo (Nav-pills) */
+.nav-pills .nav-link {
+    color: var(--color-primary) !important;
+}
+.nav-pills .nav-link:hover,
+.nav-pills .nav-link:focus {
+    color: var(--color-primary-hover) !important;
+    background-color: rgba(27, 67, 50, 0.08) !important;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: var(--color-primary) !important;
+    color: #ffffff !important;
+}
+
+/* Custom Dropdown Active State */
+.dropdown-item.active, 
+.dropdown-item:active {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(27, 67, 50, 0.1);
+    color: var(--color-primary);
+}
+
+/* Animazioni di ingresso (Index) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.5s; }
+.delay-4 { animation-delay: 0.7s; }
+.delay-5 { animation-delay: 0.9s; }
+
+/* Radio button "Creat Post" Blocks */
+.btn-post-type {
+    border: 1px solid #dee2e6;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-post-type:hover {
+    border-color: var(--color-primary);
+    background-color: rgba(45, 90, 68, 0.03);
+}
+
+.btn-post-type .icon-post-type {
+    color: var(--color-primary);
+    transition: color 0.15s ease-in-out;
+}
+
+.btn-post-type .title-post-type {
+    color: #212529; /* Dark text normally */
+}
+
+.btn-post-type .desc-post-type {
+    color: #6c757d; /* Muted text normally */
+}
+
+/* Quando il radio button e' selezionato */
+.btn-check:checked + .btn-post-type {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.btn-check:checked + .btn-post-type .icon-post-type,
+.btn-check:checked + .btn-post-type .title-post-type,
+.btn-check:checked + .btn-post-type .desc-post-type {
+    color: white !important;
+}
+
+/* =========================================================================
+   OVERRIDE FORMS SWITCH & CHECKBOX
+   Forze il Bootstrap Switch a verde invece che al classico blu.
+   ========================================================================= */
+.form-check-input:checked {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* Override: btn-outline-dark selezionato diventa verde del sito */
+.btn-check:checked + .btn-outline-dark {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+}

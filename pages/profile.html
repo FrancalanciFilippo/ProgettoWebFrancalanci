@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Gestisci il tuo profilo SchoolTogether, modifica i tuoi dati e visualizza i tuoi post." />
+    <title>SchoolTogether - Profilo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Vai al contenuto principale</a>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom navbar-custom fixed-top" aria-label="Navigazione principale">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="../index.html">
+                    <img src="../img/logo.png" alt="SchoolTogether logo" height="28" class="me-2" />
+                    SchoolTogether
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Apri il menu di navigazione">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link" href="posts.html">Posts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="create_post.html">Crea post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="profile.html"
+                                aria-label="Il tuo profilo">
+                                <em class="bi bi-person-circle fs-5" aria-hidden="true"></em>
+                                <span class="d-md-none ms-1">Profilo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <nav aria-label="Breadcrumb">
+            <ol class="breadcrumb py-2 mb-0 small">
+                <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Profilo</li>
+            </ol>
+        </nav>
+    </div>
+
+    <main id="main-content">
+        <div class="container-fluid">
+            <div class="row min-vh-100">
+
+                <!-- Sidebar desktop (md+) -->
+                <div class="col-md-3 col-lg-2 d-none d-md-flex flex-column border-end bg-body-tertiary p-3">
+                    <nav aria-label="Menu profilo">
+                        <ul class="nav nav-pills flex-column gap-1">
+                            <li class="nav-item">
+                                <a href="profile.html" class="nav-link active" aria-current="page"
+                                    id="sidebar-modifica">
+                                    <em class="bi bi-person-circle me-2" aria-hidden="true"></em>
+                                    Profilo
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="my_posts.html" class="nav-link"
+                                    id="sidebar-miei-post">
+                                    <em class="bi bi-file-text me-2" aria-hidden="true"></em>
+                                    I miei post
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="joined_posts.html" class="nav-link"
+                                    id="sidebar-partecipati">
+                                    <em class="bi bi-people me-2" aria-hidden="true"></em>
+                                    Post a cui partecipi
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="requests.html" class="nav-link"
+                                    id="sidebar-richieste">
+                                    <em class="bi bi-bell me-2" aria-hidden="true"></em>
+                                    Richieste
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="create_post.html" class="nav-link" id="sidebar-crea-post">
+                                    <em class="bi bi-plus-circle me-2" aria-hidden="true"></em>
+                                    Crea Nuovo Post
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Trigger offcanvas su mobile -->
+                <div class="col-12 d-md-none border-bottom p-2">
+                    <button class="btn btn-sm btn-outline-secondary w-100" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas"
+                        aria-controls="sidebarOffcanvas">
+                        <em class="bi bi-layout-sidebar me-1" aria-hidden="true"></em>
+                        Menu Profilo
+                    </button>
+                </div>
+
+                <!-- Offcanvas mobile -->
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas">
+                    <div class="offcanvas-header border-bottom">
+                        <h2 class="offcanvas-title fs-6 fw-bold" id="sidebarOffcanvasLabel">Menu Profilo</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                            aria-label="Chiudi menu"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <nav aria-label="Menu profilo mobile">
+                            <ul class="nav nav-pills flex-column gap-1">
+                                <li class="nav-item">
+                                    <a href="profile.html" class="nav-link active" aria-current="page">
+                                        <em class="bi bi-person-circle me-2" aria-hidden="true"></em>
+                                        Profilo
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="my_posts.html" class="nav-link">
+                                        <em class="bi bi-file-text me-2" aria-hidden="true"></em>
+                                        I miei post
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="joined_posts.html" class="nav-link">
+                                        <em class="bi bi-people me-2" aria-hidden="true"></em>
+                                        Post a cui partecipi
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="requests.html" class="nav-link">
+                                        <em class="bi bi-bell me-2" aria-hidden="true"></em>
+                                        Richieste
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="create_post.html" class="nav-link">
+                                        <em class="bi bi-plus-circle me-2" aria-hidden="true"></em>
+                                        Crea Nuovo Post
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Form profilo -->
+                <div class="col-12 col-md-9 col-lg-10 pt-2 px-4 pb-4 pt-md-4">
+
+                    <form action="#" method="post" id="profile-form" novalidate="novalidate">
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-6">
+                                <label for="profile-name" class="form-label fw-semibold">Nome</label>
+                                <input type="text" class="form-control" id="profile-name" name="name"
+                                    value="Marco" disabled="disabled" maxlength="32" autocomplete="given-name" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="profile-surname" class="form-label fw-semibold">Cognome</label>
+                                <input type="text" class="form-control" id="profile-surname" name="surname"
+                                    value="Rossi" disabled="disabled" maxlength="32" autocomplete="family-name" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="profile-email" class="form-label fw-semibold">E-mail</label>
+                            <input type="email" class="form-control" id="profile-email" name="email"
+                                value="Marco@miamail.com" disabled="disabled" maxlength="32"
+                                autocomplete="email" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="profile-password" class="form-label fw-semibold">Password</label>
+                            <input type="password" class="form-control" id="profile-password" name="password"
+                                value="password123" disabled="disabled" maxlength="32"
+                                autocomplete="current-password" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="profile-bio" class="form-label fw-semibold">Descrizione</label>
+                            <textarea class="form-control" id="profile-bio" name="bio" rows="5"
+                                disabled="disabled" maxlength="200">sono Marco e mi piace...</textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-custom-primary fw-semibold px-4" id="toggle-edit-btn">
+                                <em class="bi bi-pencil-square me-2" aria-hidden="true"></em>Modifica
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-top bg-light py-4 mt-4">
+        <div class="container">
+            <div class="row text-center text-md-start">
+                <div class="col-12 col-md-4 mb-3 mb-md-0">
+                    <h2 class="h6 fw-bold">Navigazione</h2>
+                    <ul class="list-unstyled small">
+                        <li><a href="../index.html" class="text-body text-decoration-none">Home</a></li>
+                        <li><a href="chi-siamo.html" class="text-body text-decoration-none">Chi siamo</a></li>
+                        <li><a href="contatti.html" class="text-body text-decoration-none">Contatti</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mb-3 mb-md-0 text-md-center">
+                    <h2 class="h6 fw-bold">Link utili</h2>
+                    <ul class="list-unstyled small">
+                        <li><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"
+                                class="text-body text-decoration-none">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                                class="text-body text-decoration-none">LinkedIn</a></li>
+                        <li><a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
+                                class="text-body text-decoration-none">Facebook</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 text-md-end">
+                    <h2 class="h6 fw-bold">Contatti</h2>
+                    <ul class="list-unstyled small">
+                        <li>
+                            <a href="mailto:filippo.francalanci@studio.unibo.it"
+                                class="text-body text-decoration-none">filippo.francalanci@studio.unibo.it</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr />
+            <p class="text-center text-secondary small mb-0">
+                &copy; 2026 SchoolTogether &ndash; Francalanci Filippo
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

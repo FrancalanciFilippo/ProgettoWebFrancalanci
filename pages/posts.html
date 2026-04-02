@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Cerca e partecipa a sessioni di studio o progetti di gruppo su SchoolTogether." />
+    <title>SchoolTogether - Posts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Vai al contenuto principale</a>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom navbar-custom fixed-top"
+            aria-label="Navigazione principale">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="../index.html">
+                    <img src="../img/logo.png" alt="SchoolTogether logo" height="28" class="me-2" />
+                    SchoolTogether
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Apri il menu di navigazione">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="posts.html">Posts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="create_post.html">Crea post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="profile.html" aria-label="Accedi al tuo profilo">
+                                <em class="bi bi-person-circle fs-5" aria-hidden="true"></em>
+                                <span class="d-md-none ms-1">Profilo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <nav aria-label="Breadcrumb">
+            <ol class="breadcrumb py-2 mb-0 small">
+                <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Posts</li>
+            </ol>
+        </nav>
+    </div>
+
+    <main id="main-content">
+        <div class="container-fluid">
+            <div class="row min-vh-100">
+
+                <!-- Sidebar Desktop (md+) -->
+                <aside class="col-md-4 col-lg-3 d-none d-md-flex flex-column border-end bg-body-tertiary p-4">
+                    <h1 class="h5 fw-bold mb-4">
+                        <em class="bi bi-funnel me-2" aria-hidden="true"></em>Filtri di Ricerca
+                    </h1>
+                    
+                    <form action="#" method="get" id="filter-form-desktop">
+                        <div class="mb-3">
+                            <label for="sort-desktop" class="form-label small fw-semibold">Ordina per</label>
+                            <select class="form-select form-select-sm" id="sort-desktop" name="sort">
+                                <option value="recenti" selected="selected">Pi&ugrave; recenti</option>
+                                <option value="meno-recenti">Meno recenti</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="subject-desktop" class="form-label small fw-semibold">Materia</label>
+                            <select class="form-select form-select-sm" id="subject-desktop" name="subject">
+                                <option value="">Tutte le materie</option>
+                                <option value="informatica">Informatica</option>
+                                <option value="matematica">Matematica</option>
+                                <option value="fisica">Fisica</option>
+                                <option value="economia">Economia</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="date-desktop" class="form-label small fw-semibold">Data inizio (da)</label>
+                            <input type="date" class="form-control form-control-sm" id="date-desktop" name="date_from" />
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="no-auth-desktop" name="no_auth" />
+                            <label class="form-check-label small" for="no-auth-desktop">Non richiedono consenso</label>
+                        </div>
+
+                        <div class="mb-4 form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="show-unavailable-desktop" name="show_unavailable" />
+                            <label class="form-check-label small" for="show-unavailable-desktop">Mostra post non disponibili</label>
+                            <div class="form-text mt-1" style="font-size:0.75rem;">Include post scaduti o con posti esauriti.</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-custom-primary btn-sm">
+                                Applica Filtri
+                            </button>
+                        </div>
+                    </form>
+                </aside>
+
+                <!-- Trigger offcanvas su mobile -->
+                <div class="col-12 d-md-none border-bottom p-2 bg-light">
+                    <button class="btn btn-sm btn-outline-secondary w-100 d-flex justify-content-center align-items-center" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas"
+                        aria-controls="filterOffcanvas">
+                        <em class="bi bi-funnel me-2" aria-hidden="true"></em>
+                        Filtra i Post
+                    </button>
+                </div>
+
+                <!-- Offcanvas mobile -->
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="filterOffcanvas"
+                    aria-labelledby="filterOffcanvasLabel">
+                    <div class="offcanvas-header border-bottom">
+                        <h2 class="offcanvas-title fs-6 fw-bold" id="filterOffcanvasLabel">Filtri di Ricerca</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                            aria-label="Chiudi filtri"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <form action="#" method="get" id="filter-form-mobile">
+                            <div class="mb-3">
+                                <label for="sort-mobile" class="form-label small fw-semibold">Ordina per</label>
+                                <select class="form-select form-select-sm" id="sort-mobile" name="sort">
+                                    <option value="recenti" selected="selected">Pi&ugrave; recenti</option>
+                                    <option value="meno-recenti">Meno recenti</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="subject-mobile" class="form-label small fw-semibold">Materia</label>
+                                <select class="form-select form-select-sm" id="subject-mobile" name="subject">
+                                    <option value="">Tutte le materie</option>
+                                    <option value="informatica">Informatica</option>
+                                    <option value="matematica">Matematica</option>
+                                    <option value="fisica">Fisica</option>
+                                    <option value="economia">Economia</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="date-mobile" class="form-label small fw-semibold">Data inizio (da)</label>
+                                <input type="date" class="form-control form-control-sm" id="date-mobile" name="date_from" />
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="no-auth-mobile" name="no_auth" />
+                                <label class="form-check-label small" for="no-auth-mobile">Non richiedono consenso</label>
+                            </div>
+
+                            <div class="mb-4 form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="show-unavailable-mobile" name="show_unavailable" />
+                                <label class="form-check-label small" for="show-unavailable-mobile">Mostra post non disponibili</label>
+                                <div class="form-text mt-1" style="font-size:0.75rem;">Include post scaduti o con posti esauriti.</div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom-primary btn-sm">
+                                    Applica Filtri
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Feed dei Post -->
+                <div class="col-12 col-md-8 col-lg-9 p-4">
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h4 fw-bold mb-0">Gruppi e Sessioni</h2>
+                        <span class="badge text-bg-secondary">12 Trovati</span>
+                    </div>
+
+                    <!-- CARD 1: Sessione di studio (Partecipazione diretta) -->
+                    <div class="card shadow-sm mb-4 border-0">
+                        <div class="card-body p-4">
+                            <!-- Titolo e Icona Tipo -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="h5 fw-bold mb-0 text-dark">
+                                    Preparazione Analisi 1
+                                </h3>
+                                <em class="bi bi-book fs-4" style="color: var(--color-primary);" data-bs-toggle="tooltip" data-bs-placement="left" title="Sessione di studio" aria-label="Sessione di studio"></em>
+                            </div>
+                            
+                            <hr class="my-3 text-secondary opacity-25" />
+
+                            <!-- Dettagli -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-tag me-2" aria-hidden="true"></em>
+                                        <strong>Materia:</strong>&nbsp;Matematica
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-people me-2" aria-hidden="true"></em>
+                                        <strong>Partecipanti:</strong>&nbsp;4/10
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-calendar-event me-2" aria-hidden="true"></em>
+                                        <strong>Dal:</strong>&nbsp;12 Ott &ndash; <strong>Al:</strong>&nbsp;20 Ott
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-geo-alt me-2" aria-hidden="true"></em>
+                                        <strong>Luogo:</strong>&nbsp;Aula Studio Campus
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottoni e Data -->
+                            <div class="d-flex flex-wrap justify-content-between align-items-end mt-2">
+                                <div class="row gx-3 mb-2 mb-sm-0 w-100 align-items-center">
+                                    <div class="col-8 col-sm-6 col-md-5 col-xl-4">
+                                        <a href="#" class="btn btn-custom-primary w-100 text-center fw-semibold">
+                                            Partecipa
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="post_info.html" class="btn btn-link text-secondary p-0 border-0" aria-label="Informazioni aggiuntive" data-bs-toggle="tooltip" data-bs-placement="top" title="Maggiori dettagli e materiale">
+                                            <em class="bi bi-info-circle fs-4" aria-hidden="true"></em>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-secondary small mt-3 mt-sm-0 w-100 text-end">
+                                    <em class="bi bi-clock me-1" aria-hidden="true"></em>Pubblicato il 02/04/2026
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2: Progetto Gruppo (Richiede consenso) -->
+                    <div class="card shadow-sm mb-4 border-0">
+                        <div class="card-body p-4">
+                            <!-- Titolo e Icona Tipo -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="h5 fw-bold mb-0 text-dark">
+                                    Sviluppo Web App Gestionale
+                                </h3>
+                                <em class="bi bi-diagram-3 fs-4" style="color: var(--color-primary);" data-bs-toggle="tooltip" data-bs-placement="left" title="Progetto di gruppo" aria-label="Progetto di gruppo"></em>
+                            </div>
+                            
+                            <hr class="my-3 text-secondary opacity-25" />
+
+                            <!-- Dettagli -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-tag me-2" aria-hidden="true"></em>
+                                        <strong>Materia:</strong>&nbsp;Informatica
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-people me-2" aria-hidden="true"></em>
+                                        <strong>Partecipanti:</strong>&nbsp;2/4
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-calendar-event me-2" aria-hidden="true"></em>
+                                        <strong>Dal:</strong>&nbsp;05 Nov &ndash; <strong>Al:</strong>&nbsp;15 Gen
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <em class="bi bi-geo-alt me-2" aria-hidden="true"></em>
+                                        <strong>Luogo:</strong>&nbsp;Discord / Online
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottoni e Data -->
+                            <div class="d-flex flex-wrap justify-content-between align-items-end mt-2">
+                                <div class="row gx-3 mb-2 mb-sm-0 w-100 align-items-center">
+                                    <div class="col-8 col-sm-6 col-md-5 col-xl-4">
+                                        <a href="#" class="btn btn-custom-secondary w-100 text-center fw-semibold">
+                                            Invia richiesta
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="post_info.html" class="btn btn-link text-secondary p-0 border-0" aria-label="Informazioni aggiuntive" data-bs-toggle="tooltip" data-bs-placement="top" title="Maggiori dettagli e materiale">
+                                            <em class="bi bi-info-circle fs-4" aria-hidden="true"></em>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-secondary small mt-3 mt-sm-0 w-100 text-end">
+                                    <em class="bi bi-clock me-1" aria-hidden="true"></em>Pubblicato il 01/04/2026
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-top bg-light py-4 mt-4">
+        <div class="container">
+            <div class="row text-center text-md-start">
+                <div class="col-12 col-md-4 mb-3 mb-md-0">
+                    <h2 class="h6 fw-bold">Navigazione</h2>
+                    <ul class="list-unstyled small">
+                        <li><a href="../index.html" class="text-body text-decoration-none">Home</a></li>
+                        <li><a href="chi-siamo.html" class="text-body text-decoration-none">Chi siamo</a></li>
+                        <li><a href="contatti.html" class="text-body text-decoration-none">Contatti</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mb-3 mb-md-0 text-md-center">
+                    <h2 class="h6 fw-bold">Link utili</h2>
+                    <ul class="list-unstyled small">
+                        <li><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"
+                                class="text-body text-decoration-none">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                                class="text-body text-decoration-none">LinkedIn</a></li>
+                        <li><a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
+                                class="text-body text-decoration-none">Facebook</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 text-md-end">
+                    <h2 class="h6 fw-bold">Contatti</h2>
+                    <ul class="list-unstyled small">
+                        <li>
+                            <a href="mailto:filippo.francalanci@studio.unibo.it"
+                                class="text-body text-decoration-none">filippo.francalanci@studio.unibo.it</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr />
+            <p class="text-center text-secondary small mb-0">
+                &copy; 2026 SchoolTogether &ndash; Francalanci Filippo
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Inizializza i Tooltip nativi di Bootstrap
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+</body>
+
+</html>
