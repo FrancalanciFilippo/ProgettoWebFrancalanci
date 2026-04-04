@@ -1,0 +1,26 @@
+/* Stili specifici per la pagina di Logout */
+.logout-card {
+    max-width: 480px;
+    margin: auto;
+}
+
+.success-icon-wrap {
+    color: var(--color-secondary);
+    margin-bottom: 2rem;
+}
+
+.success-icon-wrap .bi-check-circle-fill {
+    font-size: 6rem;
+}
+
+/* Centratura perfetta del contenuto */
+body, html {
+    height: 100%;
+}
+
+main.container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

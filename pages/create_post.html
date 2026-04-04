@@ -76,7 +76,7 @@
         <section class="py-5 blur-entrance">
             <div class="container">
                 <div class="row justify-content-center">
-            <div class="col-lg-8">
+                    <div class="col-lg-8">
                 <!-- Header della pagina -->
                 <div class="mb-4">
                     <h1 class="fw-bold mb-2">Crea un nuovo post</h1>
@@ -88,35 +88,34 @@
                 <!-- Form Card -->
                 <div class="card shadow-sm">
                     <div class="card-body p-4">
-                        <form action="#" method="get">
+                        <form action="#" method="post">
                             
-                            <!-- Tipo di Post -->
-                            <div class="mb-4">
-                                <span class="fw-semibold d-block mb-2 text-dark">Che cosa vuoi organizzare?</span>
+                            <fieldset class="mb-4 border-0 p-0 m-0">
+                                <legend class="fw-semibold mb-2 text-dark fs-6">Che cosa vuoi organizzare?</legend>
                                 
                                 <div class="row g-3">
                                     <div class="col-sm-6">
                                         <input type="radio" class="btn-check" name="post_type" id="type_session" value="session" checked="checked" />
                                         <label class="btn btn-post-type w-100 py-3 text-start d-flex align-items-center gap-3 rounded-3" for="type_session">
                                             <em class="bi bi-book fs-3 icon-post-type" aria-hidden="true"></em>
-                                            <div>
-                                                <div class="fw-bold title-post-type">Sessione di studio</div>
+                                            <span>
+                                                <span class="fw-bold title-post-type d-block">Sessione di studio</span>
                                                 <small class="desc-post-type">Incontriamoci e studiamo insieme.</small>
-                                            </div>
+                                            </span>
                                         </label>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="radio" class="btn-check" name="post_type" id="type_project" value="project" />
                                         <label class="btn btn-post-type w-100 py-3 text-start d-flex align-items-center gap-3 rounded-3" for="type_project">
                                             <em class="bi bi-diagram-3 fs-3 icon-post-type" aria-hidden="true"></em>
-                                            <div>
-                                                <div class="fw-bold title-post-type">Progetto di gruppo</div>
+                                            <span>
+                                                <span class="fw-bold title-post-type d-block">Progetto di gruppo</span>
                                                 <small class="desc-post-type">Creiamo un team per un esame.</small>
-                                            </div>
+                                            </span>
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </fieldset>
 
                             <hr class="my-4 text-secondary opacity-25" />
 
@@ -213,6 +212,8 @@
                         </form>
                     </div>
                 </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -225,8 +226,8 @@
                     <h2 class="h6 fw-bold">Navigazione</h2>
                     <ul class="list-unstyled small">
                         <li><a href="../index.html" class="text-body text-decoration-none">Home</a></li>
-                        <li><a href="chi-siamo.html" class="text-body text-decoration-none">Chi siamo</a></li>
-                        <li><a href="contatti.html" class="text-body text-decoration-none">Contatti</a></li>
+                        <li><a href="about_us.html" class="text-body text-decoration-none">Chi siamo</a></li>
+                        <li><a href="contacts.html" class="text-body text-decoration-none">Contatti</a></li>
                     </ul>
                 </div>
                 <div class="col-12 col-md-4 mb-3 mb-md-0 text-md-center">

@@ -10,73 +10,7 @@
         />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" />
-    <style>
-        /* Stile reply preview */
-        .reply-preview {
-            background-color: #f0f2f5;
-            border-left: 3px solid var(--color-primary);
-            border-radius: 6px;
-            padding: 8px 12px;
-            font-size: 0.82rem;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        .reply-preview .reply-author {
-            font-weight: 600;
-            color: var(--color-primary);
-        }
-        .reply-preview .reply-text {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-            display: block;
-        }
-        /* Commento con reply indentato */
-        .comment-reply-quote {
-            background-color: #f0f2f5;
-            border-left: 3px solid #adb5bd;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 0.80rem;
-            color: #666;
-            margin-bottom: 8px;
-        }
-        .comment-reply-quote .reply-author {
-            font-weight: 600;
-        }
-        /* Avatar placeholder */
-        .comment-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background-color: var(--color-primary);
-            color: white;
-            font-weight: 700;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .reply-btn {
-            background-color: var(--color-primary);
-            border: none;
-            padding: 4px 12px;
-            color: #ffffff;
-            cursor: pointer;
-            font-size: 0.78rem;
-            border-radius: 20px;
-            transition: background-color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-weight: 600;
-        }
-        .reply-btn:hover {
-            background-color: var(--color-primary-hover);
-        }
-    </style>
+    <link href="../css/comment_style.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -134,12 +68,7 @@
 
                         <!-- Toolbar -->
                         <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3 border mb-4">
-                            <div class="d-flex align-items-center gap-3">
-                                <a href="joined_posts.html" class="btn btn-sm btn-outline-secondary">
-                                    <em class="bi bi-arrow-left me-1"></em>Indietro
-                                </a>
-                                <span class="fw-semibold text-dark">Preparazione Analisi 1</span>
-                            </div>
+                            <span class="fw-semibold text-dark">Preparazione Analisi 1</span>
                             <span class="badge text-bg-secondary">3 commenti</span>
                         </div>
 
@@ -173,7 +102,7 @@
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-start gap-3">
-                                        <div class="comment-avatar" aria-hidden="true" style="background-color: #2e7d32;">AR</div>
+                                        <div class="comment-avatar" aria-hidden="true">AR</div>
                                         <div class="flex-grow-1">
                                             <div class="d-flex justify-content-between align-items-center mb-1">
                                                 <span class="fw-semibold text-dark">Anna Rossi</span>
@@ -202,7 +131,7 @@
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-start gap-3">
-                                        <div class="comment-avatar" aria-hidden="true" style="background-color: #1565c0;">MM</div>
+                                        <div class="comment-avatar" aria-hidden="true">MM</div>
                                         <div class="flex-grow-1">
                                             <div class="d-flex justify-content-between align-items-center mb-1">
                                                 <span class="fw-semibold text-dark">Marco (Tu)</span>
@@ -279,8 +208,8 @@
                     <h2 class="h6 fw-bold">Navigazione</h2>
                     <ul class="list-unstyled small">
                         <li><a href="../index.html" class="text-body text-decoration-none">Home</a></li>
-                        <li><a href="chi-siamo.html" class="text-body text-decoration-none">Chi siamo</a></li>
-                        <li><a href="contatti.html" class="text-body text-decoration-none">Contatti</a></li>
+                        <li><a href="about_us.html" class="text-body text-decoration-none">Chi siamo</a></li>
+                        <li><a href="contacts.html" class="text-body text-decoration-none">Contatti</a></li>
                     </ul>
                 </div>
                 <div class="col-12 col-md-4 mb-3 mb-md-0 text-md-center">

@@ -1,0 +1,143 @@
+<section class="py-5 blur-entrance">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+        <!-- Header della pagina -->
+        <div class="mb-4">
+            <h1 class="fw-bold mb-2">Crea un nuovo post</h1>
+            <p class="text-secondary">
+                Vuoi organizzare un ritrovo in biblioteca per studiare in compagnia o ti manca un membro per il progetto assegnato dal professore? Compila il form qui sotto!
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <form action="#" method="post">
+                    
+                    <fieldset class="mb-4 border-0 p-0 m-0">
+                        <legend class="fw-semibold mb-2 text-dark fs-6">Che cosa vuoi organizzare?</legend>
+                        
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <input type="radio" class="btn-check" name="post_type" id="type_session" value="session" checked="checked" />
+                                <label class="btn btn-post-type w-100 py-3 text-start d-flex align-items-center gap-3 rounded-3" for="type_session">
+                                    <em class="bi bi-book fs-3 icon-post-type" aria-hidden="true"></em>
+                                    <span>
+                                        <span class="fw-bold title-post-type d-block">Sessione di studio</span>
+                                        <small class="desc-post-type">Incontriamoci e studiamo insieme.</small>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="radio" class="btn-check" name="post_type" id="type_project" value="project" />
+                                <label class="btn btn-post-type w-100 py-3 text-start d-flex align-items-center gap-3 rounded-3" for="type_project">
+                                    <em class="bi bi-diagram-3 fs-3 icon-post-type" aria-hidden="true"></em>
+                                    <span>
+                                        <span class="fw-bold title-post-type d-block">Progetto di gruppo</span>
+                                        <small class="desc-post-type">Creiamo un team per un esame.</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <hr class="my-4 text-secondary opacity-25" />
+
+                    <!-- Sezione Informazioni Base -->
+                    <h2 class="h5 fw-bold mb-3">Informazioni Generali</h2>
+                    
+                    <div class="mb-3">
+                        <label for="titoloPost" class="form-label fw-medium">Titolo del Post <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control focus-ring" id="titoloPost" name="titolo" placeholder="Es. Preparazione esame Reti di Calcolatori" required="required" />
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-8">
+                            <label for="materiaSelezionata" class="form-label fw-medium">Materia <span class="text-danger">*</span></label>
+                            <select class="form-select focus-ring" id="materiaSelezionata" name="materia" required="required">
+                                <option value="" selected="selected">Seleziona una materia...</option>
+                                <option value="matematica">Matematica / Analisi</option>
+                                <option value="informatica">Informatica / Programmazione</option>
+                                <option value="fisica">Fisica</option>
+                                <option value="economia">Economia e Management</option>
+                                <option value="inglese">Lingua Inglese</option>
+                                <option value="altro">Altro...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="maxPartecipanti" class="form-label fw-medium">Partecipanti <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control focus-ring" id="maxPartecipanti" name="partecipanti_max" min="2" max="20" placeholder="Max" required="required" />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="luogoIncontro" class="form-label fw-medium">Luogo dell'incontro <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control focus-ring" id="luogoIncontro" name="luogo" placeholder="Es. Biblioteca Campus oppure Online (Link Teams/Discord)" required="required" />
+                    </div>
+
+                    <hr class="my-4 text-secondary opacity-25" />
+
+                    <!-- Sezione Date -->
+                    <h2 class="h5 fw-bold mb-3">Pianificazione</h2>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6">
+                            <label for="dataInizio" class="form-label fw-medium">Da (Inizio) <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control focus-ring" id="dataInizio" name="data_inizio" required="required" />
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="dataFine" class="form-label fw-medium">A (Fine)</label>
+                            <input type="date" class="form-control focus-ring" id="dataFine" name="data_fine" />
+                            <div class="form-text">Facoltativo: se l'attività dura più giorni.</div>
+                        </div>
+                    </div>
+
+                    <!-- Switch Richiesta Approvazione -->
+                    <div class="mb-4 p-3 bg-light rounded-3 border">
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" role="switch" id="richiedeApprovazione" name="approvazione_richiesta" />
+                            <label class="form-check-label fw-medium ms-1" for="richiedeApprovazione">
+                                Richiedi la tua approvazione prima che un utente possa unirsi
+                            </label>
+                        </div>
+                        <div class="form-text ms-5 mt-1">
+                            Se attivato, riceverai una notifica quando qualcuno clicca "Partecipa" e potrai accettare o ignorare la richiesta (utile per i progetti con un numero chiuso molto ristretto).
+                        </div>
+                    </div>
+
+                    <hr class="my-4 text-secondary opacity-25" />
+
+                    <!-- Descrizione e Pubblicazione -->
+                    <h2 class="h5 fw-bold mb-3">Dettagli</h2>
+
+                    <div class="mb-4">
+                        <label for="formFileMultiple" class="form-label fw-medium">Carica File Multipli (Opzionale)</label>
+                        <input class="form-control" type="file" id="formFileMultiple" name="materiali" multiple="multiple" />
+                        <div class="form-text mt-1">
+                            Puoi selezionare più documenti da condividere con il gruppo.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="descrizionePost" class="form-label fw-medium">Descrizione e materiale aggiuntivo</label>
+                        <textarea class="form-control focus-ring" id="descrizionePost" name="descrizione" rows="4" placeholder="Fornisci maggiori dettagli ai futuri partecipanti (es. argomenti trattati, requisiti)..."></textarea>
+                    </div>
+
+                    <!-- Bottoni Invio -->
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
+                        <a href="posts.php" class="btn btn-outline-secondary px-4 fw-semibold order-2 order-sm-1">
+                            Annulla
+                        </a>
+                        <button type="submit" class="btn btn-custom-primary px-5 fw-bold order-1 order-sm-2">
+                            <em class="bi bi-send me-2" aria-hidden="true"></em>Pubblica il Post
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</section>

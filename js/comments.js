@@ -43,3 +43,33 @@ function clearReply() {
     document.getElementById('reply-preview-wrapper').classList.add('d-none');
     document.getElementById('comment-text').value = '';
 }
+
+// Inizializzazione al caricamento della pagina
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Inizializzazione Avatar (Colori e Iniziali)
+    const avatars = document.querySelectorAll('.comment-avatar');
+    avatars.forEach(avatar => {
+        const userName = avatar.getAttribute('data-user');
+        if (userName) {
+            // Applica colore basato sull'hash del nome
+            avatar.style.backgroundColor = hashColor(userName);
+            // Se il div è vuoto, genera anche le iniziali
+            if (avatar.textContent.trim() === "") {
+                avatar.textContent = getInitials(userName);
+            }
+        }
+    });
+
+    // 2. Validazione Standard Bootstrap per i Form
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+});
+
