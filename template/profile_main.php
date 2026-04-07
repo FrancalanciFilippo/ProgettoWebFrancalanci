@@ -20,13 +20,6 @@
             autocomplete="email" />
     </div>
 
-    <div class="mb-3">
-        <label for="profile-password" class="form-label fw-semibold">Password</label>
-        <input type="password" class="form-control" id="profile-password" name="password"
-            value="password123" disabled="disabled" maxlength="32"
-            autocomplete="current-password" />
-    </div>
-
     <div class="mb-4">
         <label for="profile-bio" class="form-label fw-semibold">Descrizione</label>
         <textarea class="form-control" id="profile-bio" name="bio" rows="5"
@@ -41,10 +34,38 @@
             <a href="logout.php" class="btn btn-outline-custom-primary fw-semibold" id="profile-logout">
                 <em class="bi bi-box-arrow-right me-2" aria-hidden="true"></em>Logout
             </a>
-            <button type="button" class="btn btn-outline-danger fw-semibold" id="profile-elimina">
+            <button type="button" class="btn btn-outline-danger fw-semibold" id="profile-elimina" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
                 <em class="bi bi-person-x me-2" aria-hidden="true"></em>Elimina Account
             </button>
         </div>
     </div>
 
 </form>
+
+<!-- Modal di conferma eliminazione account -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="confirmDeleteLabel">Elimina Account</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">
+                    <strong>Sei sicuro di voler eliminare il tuo account?</strong>
+                </p>
+                <p class="text-muted small mt-2">
+                    Questa azione è irreversibile. Tutti i tuoi dati verranno eliminati dal sistema.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="confirmDeleteNoBtn">
+                    No
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteYesBtn">
+                    Sì, elimina il mio account
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

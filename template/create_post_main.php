@@ -13,7 +13,7 @@
         <!-- Form Card -->
         <div class="card shadow-sm">
             <div class="card-body p-4">
-                <form action="#" method="post">
+                <form action="#" method="post" id="create-post-form" enctype="multipart/form-data">
                     
                     <fieldset class="mb-4 border-0 p-0 m-0">
                         <legend class="fw-semibold mb-2 text-dark fs-6">Che cosa vuoi organizzare?</legend>
@@ -54,15 +54,11 @@
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-8">
-                            <label for="materiaSelezionata" class="form-label fw-medium">Materia <span class="text-danger">*</span></label>
+                            <label for="materiaSelezionata" class="form-label fw-medium">
+                                Materia <span class="text-danger">*</span>
+                            </label>
                             <select class="form-select focus-ring" id="materiaSelezionata" name="materia" required="required">
-                                <option value="" selected="selected">Seleziona una materia...</option>
-                                <option value="matematica">Matematica / Analisi</option>
-                                <option value="informatica">Informatica / Programmazione</option>
-                                <option value="fisica">Fisica</option>
-                                <option value="economia">Economia e Management</option>
-                                <option value="inglese">Lingua Inglese</option>
-                                <option value="altro">Altro...</option>
+                                <option value="" selected="selected">Caricamento materie...</option>
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -113,7 +109,7 @@
 
                     <div class="mb-4">
                         <label for="formFileMultiple" class="form-label fw-medium">Carica File Multipli (Opzionale)</label>
-                        <input class="form-control" type="file" id="formFileMultiple" name="materiali" multiple="multiple" />
+                        <input type="file" name="materiali[]" class="form-control focus-ring" id="formFileMultiple" multiple />
                         <div class="form-text mt-1">
                             Puoi selezionare più documenti da condividere con il gruppo.
                         </div>

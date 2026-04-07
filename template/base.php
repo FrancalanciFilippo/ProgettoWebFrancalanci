@@ -49,10 +49,17 @@
                             <a class="nav-link" href="<?php echo $basePath; ?>pages/create_post.php">Crea post</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo $basePath; ?>pages/login.php" aria-label="Accedi al tuo profilo">
-                                <em class="bi bi-person-circle fs-5" aria-hidden="true"></em>
-                                <span class="d-md-none ms-1">Profilo</span>
-                            </a>
+                            <?php if (isUserLoggedIn()): ?>
+                                <a class="nav-link" href="<?php echo $basePath; ?>pages/profile.php" aria-label="Profilo utente">
+                                    <em class="bi bi-person-circle fs-5" aria-hidden="true"></em>
+                                    <span class="d-md-none ms-1">Profilo</span>
+                                </a>
+                            <?php else: ?>
+                                <a class="nav-link" href="<?php echo $basePath; ?>pages/login.php" aria-label="Accedi al tuo profilo">
+                                    <em class="bi bi-person-circle fs-5" aria-hidden="true"></em>
+                                    <span class="d-md-none ms-1">Profilo</span>
+                                </a>
+                            <?php endif; ?>
                         </li>
                     </ul>
                 </div>

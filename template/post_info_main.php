@@ -117,5 +117,3 @@
         </div>
     </div>
 </section>
-
-<script src="../js/post_info.js"></script>

@@ -64,7 +64,6 @@ function createPostCard(post) {
     const btnClass = necessitaApprovazione ? 'btn-custom-secondary' : 'btn-custom-primary';
     const btnText = necessitaApprovazione ? 'Invia richiesta' : 'Partecipa';
 
-    // Formatta le date
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
         const date = new Date(dateString);

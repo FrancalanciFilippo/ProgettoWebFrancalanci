@@ -36,6 +36,19 @@ function renderPostInfo(post) {
         iconElement.style.color = 'var(--color-primary)';
     }
 
+    const formatDateTime = (dateString) => {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return 'Data non valida';
+        
+        return date.toLocaleString('it-IT', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
     // Autore e data
     const authorElement = document.querySelector('.card-body .text-muted');
     if (authorElement) {
@@ -44,23 +57,20 @@ function renderPostInfo(post) {
         authorElement.innerHTML = `
             <em class="bi bi-person-circle fs-5 me-2"></em>
             <span>Pubblicato da <strong>${authorName}</strong></span>
-            <span class="ms-3"><em class="bi bi-clock me-1"></em>${date}</span>
+            <span class="ms-3"><em class="bi bi-clock me-1"></em>${formatDateTime(post.data_creazione)}</span>
         `;
     }
 
-    // Materia
     const materiaElement = document.querySelector('.card-body .bi-tag').nextElementSibling;
     if (materiaElement) {
         materiaElement.querySelector('.fw-semibold').textContent = post.materia_nome;
     }
 
-    // Partecipanti
     const partecipantiElement = document.querySelector('.card-body .bi-people').nextElementSibling;
     if (partecipantiElement) {
         partecipantiElement.querySelector('.fw-semibold').textContent = `${post.partecipanti_attuali || 0} / ${post.max_partecipanti}`;
     }
 
-    // Periodo
     const periodoElement = document.querySelector('.card-body .bi-calendar-event').nextElementSibling;
     if (periodoElement) {
         const dataInizio = post.data_inizio ? new Date(post.data_inizio).toLocaleDateString('it-IT') : 'N/A';
@@ -68,32 +78,27 @@ function renderPostInfo(post) {
         periodoElement.querySelector('.fw-semibold').textContent = `${dataInizio} – ${dataFine}`;
     }
 
-    // Luogo
     const luogoElement = document.querySelector('.card-body .bi-geo-alt').nextElementSibling;
     if (luogoElement) {
         luogoElement.querySelector('.fw-semibold').textContent = post.luogo || 'Non specificato';
     }
 
-    // Approvazione
     const approvazioneElement = document.querySelector('.card-body .bi-shield-check').nextElementSibling;
     if (approvazioneElement) {
         const richiedeApprovazione = parseInt(post.richiede_approvazione, 10) === 1;
         approvazioneElement.querySelector('.fw-semibold').textContent = richiedeApprovazione ? 'Richiesta' : 'Non richiesta (partecipazione diretta)';
     }
 
-    // Tipo
     const tipoElement = document.querySelector('.card-body .bi-grid').nextElementSibling;
     if (tipoElement) {
         tipoElement.querySelector('.fw-semibold').textContent = post.tipo === 'progettuale' ? 'Progetto di gruppo' : 'Sessione di studio';
     }
 
-    // Descrizione
     const descrizioneElement = document.querySelector('.card-body .bg-light p');
     if (descrizioneElement) {
         descrizioneElement.innerHTML = post.post_descrizione;
     }
 
-    // Bottone partecipazione
     const buttonElement = document.querySelector('.card-body .btn');
     if (buttonElement) {
         const richiedeApprovazione = parseInt(post.richiede_approvazione, 10) === 1;
@@ -120,7 +125,7 @@ function renderFiles(files) {
         const fileColor = getFileColor(file.tipo);
 
         const fileElement = document.createElement('a');
-        fileElement.href = `../ajax/posts/download-file.php?id=${file.id}`; // TODO: creare endpoint download
+        fileElement.href = `../ajax/posts/download-file.php?id=${file.id}`;
         fileElement.className = 'd-flex align-items-center p-3 bg-light rounded-3 text-decoration-none text-dark border';
         fileElement.innerHTML = `
             <em class="bi ${fileIcon} me-3 ${fileColor} fs-4"></em>
