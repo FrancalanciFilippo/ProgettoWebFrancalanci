@@ -13,6 +13,9 @@ $templateParams["breadcrumb"] = [
     ["label" => "Profilo", "url" => "profile.php"],
     ["label" => "I miei post", "active" => true]
 ];
+$templateParams["js"] = [
+    "../js/my_posts.js"
+];
 
 require '../template/base.php';
 ?>

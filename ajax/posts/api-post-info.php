@@ -1,29 +1,41 @@
 <?php
-    require_once('../../bootstrap.php');
-    header("Content-Type: application/json");
+require_once '../../bootstrap.php';
+header('Content-Type: application/json');
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+// Verifica autenticazione
+if (!isUserLoggedIn()) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    exit();
+}
 
-    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-        echo json_encode(["success" => false, "error" => "ID post non valido"]);
-        exit;
-    }
+// Validazione parametro
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'ID post non valido.']);
+    exit();
+}
 
-    $postId = (int)$_GET['id'];
+$postId = (int)$_GET['id'];
 
+try {
     $postInfo = $dbh->getPostInfo($postId);
-    if ($postInfo === null) {
-        echo json_encode(["success" => false, "error" => "Post non trovato"]);
-        exit;
+    if (!$postInfo) {
+        http_response_code(404);
+        echo json_encode(['success' => false, 'message' => 'Post non trovato.']);
+        exit();
     }
 
     $files = $dbh->getPostFiles($postId);
 
     echo json_encode([
-        "success" => true,
-        "post" => $postInfo,
-        "files" => $files
+        'success' => true,
+        'post' => $postInfo,
+        'files' => $files
     ]);
-?>
+} catch (Exception $e) {
+    error_log("Errore caricamento post info: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Errore nel caricamento del post.']);
+}
+exit();

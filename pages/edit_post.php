@@ -12,6 +12,9 @@ $templateParams["breadcrumb"] = [
     ["label" => "I miei post", "url" => "my_posts.php"],
     ["label" => "Modifica Post", "active" => true]
 ];
+$templateParams["js"] = [
+    "../js/modify_posts.js"
+];
 
 require '../template/base.php';
 ?>

@@ -13,6 +13,9 @@ $templateParams["breadcrumb"] = [
     ["label" => "Profilo", "url" => "profile.php"],
     ["label" => "Post a cui partecipi", "active" => true]
 ];
+$templateParams["js"] = [
+    "../js/joined_posts.js"
+];
 
 require '../template/base.php';
 ?>

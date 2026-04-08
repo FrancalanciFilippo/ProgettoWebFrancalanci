@@ -1,5 +1,18 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     fetchPosts();
+
+    // Event listener delegato per i bottoni "Partecipa"
+    const container = document.getElementById('posts-container');
+    if (container) {
+        container.addEventListener('click', event => {
+            const btn = event.target.closest('[data-post-id]');
+            if (btn) {
+                event.preventDefault();
+                const postId = parseInt(btn.dataset.postId);
+                partecipaPost(postId);
+            }
+        });
+    }
 });
 
 function fetchPosts() {
@@ -103,6 +116,11 @@ function createPostCard(post) {
                     </span>
                 </div>
 
+                <div class="d-flex align-items-center text-muted small mb-3">
+                    <em class="bi bi-person-circle fs-5 me-2"></em>
+                    <span>Pubblicato da <strong>${post.creatore_nome} ${post.creatore_cognome}</strong></span>
+                </div>
+
                 <hr class="my-3 text-secondary opacity-25" />
 
                 <div class="row g-3 mb-4">
@@ -135,7 +153,7 @@ function createPostCard(post) {
                 <div class="d-flex flex-wrap justify-content-between align-items-end mt-2">
                     <div class="row gx-3 mb-2 mb-sm-0 w-100 align-items-center">
                         <div class="col-8 col-sm-6 col-md-5 col-xl-4">
-                            <a href="#" class="btn ${btnClass} w-100 text-center fw-semibold">
+                            <a href="#" class="btn ${btnClass} w-100 text-center fw-semibold" data-post-id="${parseInt(post.id)}">
                                 ${btnText}
                             </a>
                         </div>
@@ -153,4 +171,25 @@ function createPostCard(post) {
             </div>
         </div>
     `;
+}
+
+function partecipaPost(postId) {
+    fetch('../ajax/posts/api-partecipa.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ post_id: postId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Partecipazione avvenuta con successo!');
+            location.reload();
+        } else {
+            alert(data.message || 'Errore durante la partecipazione.');
+        }
+    })
+    .catch(error => {
+        console.error('Errore durante la partecipazione:', error);
+        alert('Errore di connessione. Riprova.');
+    });
 }

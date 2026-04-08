@@ -1,21 +1,11 @@
 <?php
 require_once '../../bootstrap.php';
+header('Content-Type: application/json');
 
-header('Content-Type: application/json; charset=utf-8');
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION['email'])) {
+// Verifica autenticazione
+if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Utente non autenticato.'
-    ]);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
     exit();
 }
 

@@ -1,5 +1,5 @@
 <?php
-/* require_once '../bootstrap.php'; */
+require_once '../bootstrap.php';
 
 $templateParams["titolo"] = "SchoolTogether - Contatti";
 $templateParams["descrizione"] = "Contatta il team di SchoolTogether per informazioni, supporto o collaborazioni.";

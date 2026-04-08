@@ -1,15 +1,13 @@
 <?php
-    require_once('../../bootstrap.php');
-    header("Content-Type: application/json");
+require_once '../../bootstrap.php';
+header('Content-Type: application/json');
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
+try {
     $materie = $dbh->getAllMaterie();
-    if ($materie !== null) {
-        echo json_encode(["success" => true, "materie" => $materie]);
-    } else {
-        echo json_encode(["success" => false, "error" => "Impossibile recuperare le materie"]);
-    }
-?>
+    echo json_encode(['success' => true, 'materie' => $materie]);
+} catch (Exception $e) {
+    error_log("Errore caricamento materie: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Errore nel caricamento delle materie.']);
+}
+exit();

@@ -2,10 +2,6 @@
 require_once '../bootstrap.php';
 
 // Effettua il logout
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 session_destroy();
 
 // Mostra la pagina di logout

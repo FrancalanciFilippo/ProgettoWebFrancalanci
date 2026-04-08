@@ -1,23 +1,23 @@
 <?php
-
 require_once '../../bootstrap.php';
+header('Content-Type: application/json');
 
-header('Content-Type: application/json; charset=utf-8');
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION['email'])) {
+// Verifica autenticazione
+if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Utente non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
     exit();
 }
 
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
+// Verifica metodo HTTP
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
+    exit();
+}
+
+// Lettura e validazione dati
+$data = json_decode(file_get_contents('php://input'), true);
 
 if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
@@ -70,9 +70,8 @@ try {
         http_response_code($result['message'] === 'Email già registrata.' ? 409 : 400);
         echo json_encode(['success' => false, 'message' => $result['message']]);
     }
-    
 } catch (Exception $e) {
-    error_log("Update profile error: " . $e->getMessage());
+    error_log("Errore aggiornamento profilo: " . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Errore durante l\'aggiornamento.']);
 }

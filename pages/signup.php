@@ -2,9 +2,9 @@
 require_once '../bootstrap.php';
 
 // Se l'utente è già loggato, reindirizza alla home
-if (isset($_SESSION['email']) && !empty($_SESSION['email'])) {
+if (isUserLoggedIn()) {
     header('Location: ../index.php');
-    exit;
+    exit();
 }
 
 $templateParams["titolo"] = "SchoolTogether - Registrazione";

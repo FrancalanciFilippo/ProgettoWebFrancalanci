@@ -83,9 +83,8 @@
                             <input type="date" class="form-control focus-ring" id="dataInizio" name="data_inizio" required="required" />
                         </div>
                         <div class="col-sm-6">
-                            <label for="dataFine" class="form-label fw-medium">A (Fine)</label>
-                            <input type="date" class="form-control focus-ring" id="dataFine" name="data_fine" />
-                            <div class="form-text">Facoltativo: se l'attività dura più giorni.</div>
+                            <label for="dataFine" class="form-label fw-medium">A (Fine) <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control focus-ring" id="dataFine" name="data_fine" required="required" />
                         </div>
                     </div>
 
@@ -122,10 +121,7 @@
 
                     <!-- Bottoni Invio -->
                     <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
-                        <a href="posts.php" class="btn btn-outline-secondary px-4 fw-semibold order-2 order-sm-1">
-                            Annulla
-                        </a>
-                        <button type="submit" class="btn btn-custom-primary px-5 fw-bold order-1 order-sm-2">
+                        <button type="submit" class="btn btn-custom-primary px-5 fw-bold w-100 w-sm-auto">
                             <em class="bi bi-send me-2" aria-hidden="true"></em>Pubblica il Post
                         </button>
                     </div>

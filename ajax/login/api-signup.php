@@ -2,12 +2,15 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-error_reporting(E_ALL);
+// Verifica metodo HTTP
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
+    exit();
+}
 
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
+// Lettura dati
+$data = json_decode(file_get_contents('php://input'), true);
 
 if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
@@ -28,6 +31,7 @@ $password = $data['password'];
 $passwordConfirm = $data['password_confirm'];
 $bio = trim($data['bio'] ?? '');
 
+// Validazione campi
 if (empty($email)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Email obbligatoria.']);
@@ -65,9 +69,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 try {
-    $created = $dbh->createUser($email, $nome, $cognome, $password, $bio);
+    $result = $dbh->createUser($email, $nome, $cognome, $password, $bio);
     
-    if ($created) {
+    if ($result['success']) {
         http_response_code(201);
         echo json_encode([
             'success' => true,
@@ -76,10 +80,11 @@ try {
         ]);
     } else {
         http_response_code(409);
-        echo json_encode(['success' => false, 'message' => 'Email già registrata.']);
+        echo json_encode(['success' => false, 'message' => $result['message']]);
     }
 } catch (Exception $e) {
-    error_log("Signup error: " . $e->getMessage());
+    error_log("Errore registrazione: " . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Errore durante la registrazione.']);
 }
+exit();

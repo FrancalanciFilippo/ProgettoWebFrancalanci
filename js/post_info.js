@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
 
@@ -14,28 +14,25 @@ document.addEventListener("DOMContentLoaded", function () {
             renderPostInfo(data.post);
             renderFiles(data.files);
         } else {
-            console.error("Errore nel caricamento del post:", data.error);
+            console.error("Errore nel caricamento del post:", data.message);
         }
     })
     .catch(error => {
         console.error("Errore durante la fetch del post:", error);
     });
+
+    // Event listener per il bottone "Partecipa"
+    document.addEventListener('click', event => {
+        const btn = event.target.closest('[data-post-id]');
+        if (btn) {
+            event.preventDefault();
+            const postId = parseInt(btn.dataset.postId);
+            partecipaPost(postId);
+        }
+    });
 });
 
 function renderPostInfo(post) {
-    // Titolo
-    const titleElement = document.querySelector('.card-body h1');
-    if (titleElement) {
-        titleElement.textContent = post.titolo;
-    }
-
-    // Icona tipo
-    const iconElement = document.querySelector('.card-body .bi');
-    if (iconElement) {
-        iconElement.className = post.tipo === 'progettuale' ? 'bi bi-diagram-3 fs-3' : 'bi bi-book fs-3';
-        iconElement.style.color = 'var(--color-primary)';
-    }
-
     const formatDateTime = (dateString) => {
         if (!dateString) return 'N/A';
         const date = new Date(dateString);
@@ -49,67 +46,78 @@ function renderPostInfo(post) {
             minute: '2-digit'
         });
     };
+
+    // Titolo
+    const titleEl = document.getElementById('post-title');
+    if (titleEl) titleEl.textContent = post.titolo;
+
+    // Icona tipo
+    const iconEl = document.getElementById('post-type-icon');
+    if (iconEl) {
+        iconEl.className = post.tipo === 'progettuale' ? 'bi bi-diagram-3 fs-3' : 'bi bi-book fs-3';
+        iconEl.style.color = 'var(--color-primary)';
+    }
+
     // Autore e data
-    const authorElement = document.querySelector('.card-body .text-muted');
-    if (authorElement) {
+    const authorEl = document.getElementById('post-author');
+    if (authorEl) {
         const authorName = `${post.creatore_nome} ${post.creatore_cognome}`;
-        const date = new Date(post.data_creazione).toLocaleDateString('it-IT');
-        authorElement.innerHTML = `
+        authorEl.innerHTML = `
             <em class="bi bi-person-circle fs-5 me-2"></em>
             <span>Pubblicato da <strong>${authorName}</strong></span>
             <span class="ms-3"><em class="bi bi-clock me-1"></em>${formatDateTime(post.data_creazione)}</span>
         `;
     }
 
-    const materiaElement = document.querySelector('.card-body .bi-tag').nextElementSibling;
-    if (materiaElement) {
-        materiaElement.querySelector('.fw-semibold').textContent = post.materia_nome;
-    }
+    // Materia
+    const materiaEl = document.getElementById('post-materia');
+    if (materiaEl) materiaEl.textContent = post.materia_nome;
 
-    const partecipantiElement = document.querySelector('.card-body .bi-people').nextElementSibling;
-    if (partecipantiElement) {
-        partecipantiElement.querySelector('.fw-semibold').textContent = `${post.partecipanti_attuali || 0} / ${post.max_partecipanti}`;
-    }
+    // Partecipanti
+    const partecipantiEl = document.getElementById('post-partecipanti');
+    if (partecipantiEl) partecipantiEl.textContent = `${post.partecipanti_attuali || 0} / ${post.max_partecipanti}`;
 
-    const periodoElement = document.querySelector('.card-body .bi-calendar-event').nextElementSibling;
-    if (periodoElement) {
+    // Periodo
+    const periodoEl = document.getElementById('post-periodo');
+    if (periodoEl) {
         const dataInizio = post.data_inizio ? new Date(post.data_inizio).toLocaleDateString('it-IT') : 'N/A';
         const dataFine = post.data_fine ? new Date(post.data_fine).toLocaleDateString('it-IT') : 'N/A';
-        periodoElement.querySelector('.fw-semibold').textContent = `${dataInizio} – ${dataFine}`;
+        periodoEl.textContent = `${dataInizio} – ${dataFine}`;
     }
 
-    const luogoElement = document.querySelector('.card-body .bi-geo-alt').nextElementSibling;
-    if (luogoElement) {
-        luogoElement.querySelector('.fw-semibold').textContent = post.luogo || 'Non specificato';
-    }
+    // Luogo
+    const luogoEl = document.getElementById('post-luogo');
+    if (luogoEl) luogoEl.textContent = post.luogo || 'Non specificato';
 
-    const approvazioneElement = document.querySelector('.card-body .bi-shield-check').nextElementSibling;
-    if (approvazioneElement) {
+    // Approvazione
+    const approvazioneEl = document.getElementById('post-approvazione');
+    if (approvazioneEl) {
         const richiedeApprovazione = parseInt(post.richiede_approvazione, 10) === 1;
-        approvazioneElement.querySelector('.fw-semibold').textContent = richiedeApprovazione ? 'Richiesta' : 'Non richiesta (partecipazione diretta)';
+        approvazioneEl.textContent = richiedeApprovazione ? 'Richiesta' : 'Non richiesta (partecipazione diretta)';
     }
 
-    const tipoElement = document.querySelector('.card-body .bi-grid').nextElementSibling;
-    if (tipoElement) {
-        tipoElement.querySelector('.fw-semibold').textContent = post.tipo === 'progettuale' ? 'Progetto di gruppo' : 'Sessione di studio';
-    }
+    // Tipo
+    const tipoEl = document.getElementById('post-tipo');
+    if (tipoEl) tipoEl.textContent = post.tipo === 'progettuale' ? 'Progetto di gruppo' : 'Sessione di studio';
 
-    const descrizioneElement = document.querySelector('.card-body .bg-light p');
-    if (descrizioneElement) {
-        descrizioneElement.innerHTML = post.post_descrizione;
-    }
+    // Descrizione
+    const descrizioneEl = document.getElementById('post-descrizione');
+    if (descrizioneEl) descrizioneEl.innerHTML = post.post_descrizione;
 
-    const buttonElement = document.querySelector('.card-body .btn');
-    if (buttonElement) {
+    // Bottone azione
+    const buttonEl = document.getElementById('post-action-btn');
+    if (buttonEl) {
         const richiedeApprovazione = parseInt(post.richiede_approvazione, 10) === 1;
-        buttonElement.innerHTML = `
+        buttonEl.setAttribute('data-post-id', post.id);
+        buttonEl.innerHTML = `
             <em class="bi bi-person-plus me-2" aria-hidden="true"></em>${richiedeApprovazione ? 'Invia richiesta' : 'Partecipa'}
         `;
     }
 }
 
+
 function renderFiles(files) {
-    const container = document.querySelector('.card-body .d-flex.flex-column.gap-2');
+    const container = document.getElementById('post-files');
     if (!container) return;
 
     container.innerHTML = '';
@@ -172,4 +180,25 @@ function getFileColor(mimeType) {
     if (mimeType.includes('image')) return 'text-info';
 
     return 'text-secondary';
+}
+
+function partecipaPost(postId) {
+    fetch('../ajax/posts/api-partecipa.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ post_id: postId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Partecipazione avvenuta con successo!');
+            window.location.href = 'joined_posts.php';
+        } else {
+            alert(data.message || 'Errore durante la partecipazione.');
+        }
+    })
+    .catch(error => {
+        console.error('Errore durante la partecipazione:', error);
+        alert('Errore di connessione. Riprova.');
+    });
 }

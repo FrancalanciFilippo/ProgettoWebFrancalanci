@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     fetchMaterie();
     initFormSubmit();
 });
@@ -11,7 +11,7 @@ function fetchMaterie() {
         if (data.success) {
             renderMaterie(data.materie);
         } else {
-            console.error("Errore materie:", data.error);
+            console.error("Errore materie:", data.message);
         }
     })
     .catch(error => console.error("Errore fetch materie:", error));
@@ -41,8 +41,8 @@ function initFormSubmit() {
     const form = document.getElementById('create-post-form');
     if (!form) return;
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+    form.addEventListener('submit', event => {
+        event.preventDefault();
 
         const btn = form.querySelector('button[type="submit"]');
         const oldText = btn.innerHTML;
@@ -63,7 +63,6 @@ function initFormSubmit() {
         .then(result => {
             if (result.success) {
                 alert(result.message);
-                // ✅ REDIRECT FINALE
                 window.location.href = result.redirect || 'my_posts.php';
             } else {
                 alert('Errore: ' + result.message);

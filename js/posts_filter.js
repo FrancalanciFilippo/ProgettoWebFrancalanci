@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     // Carica le materie dinamicamente
     loadMaterie();
     
@@ -13,7 +13,7 @@ function loadMaterie() {
         if (data.success) {
             populateMateriaDropdowns(data.materie);
         } else {
-            console.error("Errore nel caricamento delle materie:", data.error);
+            console.error("Errore nel caricamento delle materie:", data.message);
         }
     })
     .catch(error => {
@@ -104,13 +104,13 @@ function syncFormValues() {
     const resetMobile = document.getElementById('reset-filters-mobile');
 
     if (resetDesktop) {
-        resetDesktop.addEventListener('click', function() {
+        resetDesktop.addEventListener('click', () => {
             resetFilters();
         });
     }
 
     if (resetMobile) {
-        resetMobile.addEventListener('click', function() {
+        resetMobile.addEventListener('click', () => {
             resetFilters();
         });
     }

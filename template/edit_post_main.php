@@ -13,15 +13,15 @@
         <!-- Form Card -->
         <div class="card shadow-sm">
             <div class="card-body p-4">
-                <form action="#" method="get">
+                <form id="edit-post-form" action="#" method="post" enctype="multipart/form-data">
                     
-                    <!-- Sezione Informazioni Base -->
+                    <!-- Informazioni Modificabili -->
                     <h2 class="h5 fw-bold mb-3">Informazioni Generali</h2>
                     
                     <!-- Luogo dell'incontro (Editabile) -->
                     <div class="mb-4">
                         <label for="luogoIncontro" class="form-label fw-medium">Luogo dell'incontro <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control focus-ring" id="luogoIncontro" name="luogo" value="Aula Studio Campus" required="required" />
+                        <input type="text" class="form-control focus-ring" id="luogoIncontro" name="luogo" value="" required="required" placeholder="Caricamento..." />
                     </div>
 
                     <hr class="my-4 text-secondary opacity-25" />
@@ -32,12 +32,11 @@
                     <div class="row g-3 mb-4">
                         <div class="col-sm-6">
                             <label for="dataInizio" class="form-label fw-medium">Da (Inizio) <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control focus-ring" id="dataInizio" name="data_inizio" value="2026-10-12" required="required" />
+                            <input type="date" class="form-control focus-ring" id="dataInizio" name="data_inizio" value="" required="required" />
                         </div>
                         <div class="col-sm-6">
-                            <label for="dataFine" class="form-label fw-medium">A (Fine)</label>
-                            <input type="date" class="form-control focus-ring" id="dataFine" name="data_fine" value="2026-10-20" />
-                            <div class="form-text">Facoltativo: se l'attività dura più giorni.</div>
+                            <label for="dataFine" class="form-label fw-medium">A (Fine) <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control focus-ring" id="dataFine" name="data_fine" value="" required="required" />
                         </div>
                     </div>
 
@@ -62,20 +61,12 @@
                     <!-- File Caricati e Gestione Materiali -->
                     <div class="mb-4">
                         <label class="form-label fw-medium">Materiali già caricati</label>
-                        <div class="list-group list-group-flush border rounded-3 mb-3">
-                            <div class="list-group-item d-flex justify-content-between align-items-center bg-light">
-                                <div class="d-flex align-items-center">
-                                    <em class="bi bi-file-earmark-pdf me-2 text-danger fs-5"></em>
-                                    <span class="small text-dark">Appunti_Lezioni.pdf</span>
-                                </div>
-                                <button type="button" class="btn btn-link text-danger p-0" aria-label="Elimina PDF">
-                                    <em class="bi bi-trash" aria-hidden="true"></em>
-                                </button>
-                            </div>
+                        <div class="list-group list-group-flush border rounded-3 mb-3" id="existing-files-list">
+                            <span class="text-muted small p-2">Caricamento...</span>
                         </div>
                         
                         <label for="formFileMultiple" class="form-label fw-medium">Aggiungi altri file</label>
-                        <input class="form-control" type="file" id="formFileMultiple" name="materiali" multiple="multiple" />
+                        <input class="form-control" type="file" id="formFileMultiple" name="materiali[]" multiple="multiple" />
                         <div class="form-text mt-1">
                             Puoi caricare altri documenti per integrare il materiale già presente.
                         </div>
@@ -83,7 +74,7 @@
                     
                     <div class="mb-4">
                         <label for="descrizionePost" class="form-label fw-medium">Descrizione e materiale aggiuntivo</label>
-                        <textarea class="form-control focus-ring" id="descrizionePost" name="descrizione" rows="4" placeholder="Fornisci maggiori dettagli ai futuri partecipanti (es. argomenti trattati, requisiti)...">Sessione di ripasso intenso per l'imminente appello. Focalizzati sugli integrali doppi e le serie di Taylor. Portate il libro di testo.</textarea>
+                        <textarea class="form-control focus-ring" id="descrizionePost" name="descrizione" rows="4" placeholder="Caricamento..."></textarea>
                     </div>
 
                     <!-- Bottoni Salvataggio -->

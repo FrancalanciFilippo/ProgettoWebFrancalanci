@@ -1,16 +1,19 @@
 <?php
 require_once '../../bootstrap.php';
-header('Content-Type: application/json; charset=utf-8');
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-error_reporting(E_ALL);
+header('Content-Type: application/json');
 
-if (session_status() === PHP_SESSION_NONE) session_start();
-if (!isset($_SESSION['email'])) {
-    echo json_encode(['success' => false, 'message' => 'Devi effettuare il login.']); exit();
+// Verifica autenticazione
+if (!isUserLoggedIn()) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    exit();
 }
+
+// Verifica metodo HTTP
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']); exit();
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
+    exit();
 }
 
 // Raccolta dati
@@ -27,41 +30,36 @@ $postData = [
     'utente_email' => $_SESSION['email']
 ];
 $files = $_FILES['materiali'] ?? [];
-// === 🔥 DEBUG FILES IN ARRIVO ===
-error_log("=== FILES DEBUG START ===");
-error_log("FILES raw: " . print_r($_FILES['materiali'] ?? 'EMPTY', true));
-if (!empty($files['name'])) {
-    $names = is_array($files['name']) ? $files['name'] : [$files['name']];
-    error_log("📁 File ricevuti dall'API: " . count($names));
-    foreach ($names as $idx => $n) {
-        $err = is_array($files['error']) ? ($files['error'][$idx] ?? -1) : $files['error'];
-        $sz = is_array($files['size']) ? ($files['size'][$idx] ?? 0) : $files['size'];
-        $tp = is_array($files['type']) ? ($files['type'][$idx] ?? '') : $files['type'];
-        $tmp = is_array($files['tmp_name']) ? ($files['tmp_name'][$idx] ?? '') : $files['tmp_name'];
-        error_log("  [$idx] name=$n, size=$sz, type=$tp, error=$err, tmp=$tmp, exists=" . (file_exists($tmp) ? 'YES' : 'NO'));
-    }
-}
-error_log("=== FILES DEBUG END ===");
-// ================================
-// === 1. VALIDAZIONE CAMPI ===
-if (empty($postData['titolo'])) {
-    echo json_encode(['success' => false, 'message' => 'Il titolo è obbligatorio.']); exit();
+
+// Validazione campi
+if (empty($postData['titolo']) || empty($postData['materia_id']) || empty($postData['luogo']) || empty($postData['data_inizio']) || empty($postData['data_fine'])) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Tutti i campi principali (inclusa la data di fine) sono obbligatori.']);
+    exit();
 }
 if ($postData['materia_id'] <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Seleziona una materia valida.']); exit();
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Seleziona una materia valida.']);
+    exit();
 }
 if ($postData['max_partecipanti'] < 2 || $postData['max_partecipanti'] > 50) {
-    echo json_encode(['success' => false, 'message' => 'I partecipanti devono essere tra 2 e 50.']); exit();
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'I partecipanti devono essere tra 2 e 50.']);
+    exit();
 }
 if (empty($postData['luogo'])) {
-    echo json_encode(['success' => false, 'message' => 'Il luogo dell\'incontro è obbligatorio.']); exit();
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Il luogo dell\'incontro è obbligatorio.']);
+    exit();
 }
 if (empty($postData['data_inizio'])) {
-    echo json_encode(['success' => false, 'message' => 'La data di inizio è obbligatoria.']); exit();
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'La data di inizio è obbligatoria.']);
+    exit();
 }
 
-// === 2. VALIDAZIONE FILE (CORRETTA PER MULTI-UPLOAD) ===
-if (!empty($files['name']) && !empty($files['name'][0])) {  // ← Fix: controlla che ci sia almeno un file valido
+// Validazione file
+if (!empty($files['name']) && !empty($files['name'][0])) {
     $names = is_array($files['name']) ? $files['name'] : [$files['name']];
     $errors = is_array($files['error']) ? $files['error'] : [$files['error']];
     $sizes = is_array($files['size']) ? $files['size'] : [$files['size']];
@@ -72,8 +70,7 @@ if (!empty($files['name']) && !empty($files['name'][0])) {  // ← Fix: controll
     $maxSize = 10 * 1024 * 1024; // 10MB
 
     foreach ($names as $i => $name) {
-        // Salta file vuoti o con nome vuoto
-        if (empty($name) || $name === '') continue;
+        if (empty($name)) continue;
         
         $err = $errors[$i] ?? UPLOAD_ERR_NO_FILE;
         $size = (int)($sizes[$i] ?? 0);
@@ -90,45 +87,49 @@ if (!empty($files['name']) && !empty($files['name'][0])) {  // ← Fix: controll
                 UPLOAD_ERR_CANT_WRITE => 'Errore scrittura su disco.',
                 UPLOAD_ERR_EXTENSION => 'Caricamento bloccato dal server.'
             ];
-            echo json_encode(['success' => false, 'message' => $errMessages[$err] ?? 'Errore upload file.']); exit();
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => $errMessages[$err] ?? 'Errore upload file.']);
+            exit();
         }
         
         if ($size > $maxSize) {
-            echo json_encode(['success' => false, 'message' => "Il file \"$name\" è troppo grande (massimo 10MB)."]); exit();
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => "Il file \"$name\" è troppo grande (massimo 10MB)."]);
+            exit();
         }
         
         if (!empty($type) && !in_array($type, $allowedTypes)) {
-            echo json_encode(['success' => false, 'message' => "Formato non valido per \"$name\". Usa solo PDF, JPG, PNG, DOC, TXT."]); exit();
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => "Formato non valido per \"$name\". Usa solo PDF, JPG, PNG, DOC, TXT."]);
+            exit();
         }
         
-        // Fix: controlla che il file temporaneo esista e sia leggibile
         if ($size === 0 || empty($tmp) || !is_readable($tmp)) {
-            echo json_encode(['success' => false, 'message' => "Il file \"$name\" non è accessibile o è vuoto."]); exit();
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => "Il file \"$name\" non è accessibile o è vuoto."]);
+            exit();
         }
     }
 }
 
-// === 3. CHIAMATA AL DATABASE ===
-error_log("🔍 DEBUG: Chiamo createPost() con post_id=" . ($postData['titolo'] ?? 'unknown'));
+// Creazione post
+try {
+    $postId = $dbh->createPost($postData, $files);
 
-$postId = $dbh->createPost($postData, $files);
-
-error_log("🔍 DEBUG: createPost() ha restituito: $postId");
-
-if ($postId > 0) {
-    error_log("✅ DEBUG: Successo, redirect a my_posts.php");
-    echo json_encode([
-        'success' => true, 
-        'message' => 'Post pubblicato con successo!', 
-        'post_id' => $postId, 
-        'redirect' => 'my_posts.php'
-    ]);
-} else {
-    error_log("❌ DEBUG: Fallimento createPost - controllo errori MySQL");
-    // Logga l'ultimo errore MySQL se disponibile
-    if (isset($dbh->db) && $dbh->db->error) {
-        error_log("💥 MySQL Error: " . $dbh->db->error);
+    if ($postId > 0) {
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Post pubblicato con successo!', 
+            'post_id' => $postId, 
+            'redirect' => 'my_posts.php'
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Errore interno durante il salvataggio. Riprova.']);
     }
-    echo json_encode(['success' => false, 'message' => 'Errore interno durante il salvataggio. Riprova.']);
+} catch (Exception $e) {
+    error_log("Errore creazione post: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Errore interno del server.']);
 }
 exit();

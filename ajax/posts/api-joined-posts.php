@@ -9,14 +9,17 @@ if (!isUserLoggedIn()) {
     exit();
 }
 
-// Escludi i post a cui l'utente già partecipa
-$filters = ['exclude_user' => $_SESSION['email']];
-
 try {
-    $posts = $dbh->getAllPosts($filters);
-    echo json_encode(['success' => true, 'posts' => $posts]);
+    $email = $_SESSION['email'];
+    $posts = $dbh->getJoinedPosts($email);
+
+    echo json_encode([
+        'success' => true,
+        'posts' => $posts,
+        'count' => count($posts)
+    ]);
 } catch (Exception $e) {
-    error_log("Errore caricamento post: " . $e->getMessage());
+    error_log("Errore caricamento post partecipati: " . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Errore nel caricamento dei post.']);
 }

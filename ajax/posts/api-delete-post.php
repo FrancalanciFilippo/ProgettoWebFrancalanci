@@ -2,38 +2,35 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica autenticazione
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
-// Verifica metodo HTTP
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
+$postId = (int)($_GET['id'] ?? 0);
+
+if ($postId <= 0) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'ID post non valido.']);
     exit();
 }
-
-$email = $_SESSION['email'];
 
 try {
-    $result = $dbh->deleteUser($email);
-
+    $result = $dbh->deletePost($postId, $_SESSION['email']);
+    
     if ($result['success']) {
-        session_destroy();
         echo json_encode([
             'success' => true,
-            'message' => 'Account eliminato con successo.',
-            'redirect' => '../index.php'
+            'message' => 'Post eliminato con successo.',
+            'redirect' => 'my_posts.php'
         ]);
     } else {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => $result['message']]);
     }
 } catch (Exception $e) {
-    error_log("Errore eliminazione account: " . $e->getMessage());
+    error_log("Errore eliminazione post: " . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Errore interno del server.']);
 }
