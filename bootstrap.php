@@ -19,16 +19,34 @@ if (!isset($dbh)) {
  * @return bool true se autenticato, false altrimenti
  */
 function isUserLoggedIn(): bool {
-    return isset($_SESSION['email']) && !empty($_SESSION['email']);
+    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+}
+
+/**
+ * Verifica se l'utente loggato è un amministratore
+ * @return bool true se admin, false altrimenti
+ */
+function isAdmin(): bool {
+    return isUserLoggedIn() && isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin';
 }
 
 /**
  * Reindirizza al login se l'utente non è autenticato
- * Util per proteggere le pagine che richiedono autenticazione
  */
 function requireLogin(): void {
     if (!isUserLoggedIn()) {
         header('Location: ' . (strpos($_SERVER['REQUEST_URI'], '/pages/') !== false ? '../' : '') . 'pages/login.php');
+        exit;
+    }
+}
+
+/**
+ * Reindirizza alla home se l'utente non è amministratore
+ */
+function requireAdmin(): void {
+    requireLogin();
+    if (!isAdmin()) {
+        header('Location: ' . (strpos($_SERVER['REQUEST_URI'], '/pages/') !== false ? '../' : '') . 'index.php');
         exit;
     }
 }
@@ -43,10 +61,10 @@ function getLoggedInUser(): ?array {
     }
     
     return [
+        'id' => $_SESSION['user_id'] ?? null,
         'email' => $_SESSION['email'] ?? null,
         'name' => $_SESSION['nome'] ?? null,
         'surname' => $_SESSION['cognome'] ?? null,
-        'password' => $_SESSION['password'] ?? null,
         'description' => $_SESSION['descrizione'] ?? null,
         'type' => $_SESSION['user_type'] ?? null
     ];

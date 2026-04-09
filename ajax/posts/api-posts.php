@@ -9,8 +9,11 @@ if (!isUserLoggedIn()) {
     exit();
 }
 
-// Escludi i post a cui l'utente già partecipa
-$filters = ['exclude_user' => $_SESSION['email']];
+// Escludi i post a cui l'utente già partecipa e i post creati dall'utente stesso
+$filters = [
+    'exclude_user_id' => $_SESSION['user_id'],
+    'not_owner_id'    => $_SESSION['user_id']
+];
 
 try {
     $posts = $dbh->getAllPosts($filters);

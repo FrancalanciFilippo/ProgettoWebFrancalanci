@@ -25,16 +25,15 @@ $postData = [
     'luogo' => trim($_POST['luogo'] ?? ''),
     'data_inizio' => $_POST['data_inizio'] ?? '',
     'data_fine' => !empty($_POST['data_fine']) ? $_POST['data_fine'] : null,
-    'richiede_approvazione' => !empty($_POST['approvazione_richiesta']),
     'descrizione' => trim($_POST['descrizione'] ?? ''),
-    'utente_email' => $_SESSION['email']
+    'utente_id' => $_SESSION['user_id']
 ];
 $files = $_FILES['materiali'] ?? [];
 
 // Validazione campi
-if (empty($postData['titolo']) || empty($postData['materia_id']) || empty($postData['luogo']) || empty($postData['data_inizio']) || empty($postData['data_fine'])) {
+if (empty($postData['titolo']) || empty($postData['materia_id']) || empty($postData['luogo']) || empty($postData['data_inizio'])) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Tutti i campi principali (inclusa la data di fine) sono obbligatori.']);
+    echo json_encode(['success' => false, 'message' => 'Titolo, materia, luogo e data di inizio sono obbligatori.']);
     exit();
 }
 if ($postData['materia_id'] <= 0) {

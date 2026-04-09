@@ -42,6 +42,11 @@
 
                 <div class="collapse navbar-collapse" id="navbarMain">
                     <ul class="navbar-nav ms-auto align-items-center gap-1">
+                        <?php if (isAdmin()): ?>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-danger" href="<?php echo $basePath; ?>pages/admin.php">Admin</a>
+                            </li>
+                        <?php endif; ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo $basePath; ?>pages/posts.php">Posts</a>
                         </li>

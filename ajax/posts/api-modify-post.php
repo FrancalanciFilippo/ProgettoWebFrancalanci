@@ -30,39 +30,47 @@ $postData = [
     'luogo' => trim($_POST['luogo'] ?? ''),
     'data_inizio' => $_POST['data_inizio'] ?? '',
     'data_fine' => !empty($_POST['data_fine']) ? $_POST['data_fine'] : null,
-    'richiede_approvazione' => !empty($_POST['approvazione_richiesta']) ? 1 : 0,
     'descrizione' => trim($_POST['descrizione'] ?? '')
 ];
 
 // Validazioni minime
-if (empty($postData['luogo']) || empty($postData['data_inizio']) || empty($postData['data_fine'])) {
-    echo json_encode(['success' => false, 'message' => 'Luogo, data di inizio e data di fine sono obbligatori.']);
+if (empty($postData['luogo']) || empty($postData['data_inizio'])) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Luogo e data di inizio sono obbligatori.']);
     exit();
 }
 
 // File nuovi da caricare
 $filesToAdd = $_FILES['materiali'] ?? [];
 
-// ID file da eliminare (inviati come array dal JS)
+// ID file da eliminare (inviati come stringa separata da virgole dal JS)
 $fileIdsToDelete = [];
 if (!empty($_POST['delete_files']) && is_string($_POST['delete_files'])) {
     $fileIdsToDelete = array_map('intval', explode(',', $_POST['delete_files']));
 }
 
+// ID partecipanti da rimuovere (inviati come stringa separata da virgole dal JS)
+$participantIdsToKick = [];
+if (!empty($_POST['delete_participants']) && is_string($_POST['delete_participants'])) {
+    $participantIdsToKick = array_map('intval', explode(',', $_POST['delete_participants']));
+}
+
 try {
     $result = $dbh->updatePost(
         $postId,
-        $_SESSION['email'],
+        $_SESSION['user_id'],
         $postData,
         $filesToAdd,
-        $fileIdsToDelete
+        $fileIdsToDelete,
+        $participantIdsToKick
     );
     
     if ($result['success']) {
+        $redirect = $_POST['redirect_url'] ?? (isAdmin() ? 'admin_posts.php' : 'my_posts.php');
         echo json_encode([
             'success' => true,
             'message' => $result['message'],
-            'redirect' => 'my_posts.php'
+            'redirect' => $redirect
         ]);
     } else {
         http_response_code(400);

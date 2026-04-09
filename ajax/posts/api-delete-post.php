@@ -17,7 +17,7 @@ if ($postId <= 0) {
 }
 
 try {
-    $result = $dbh->deletePost($postId, $_SESSION['email']);
+    $result = $dbh->deletePost($postId, $_SESSION['user_id']);
     
     if ($result['success']) {
         echo json_encode([

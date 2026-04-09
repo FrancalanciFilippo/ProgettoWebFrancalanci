@@ -42,10 +42,11 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-$oldEmail = $_SESSION['email'];
-
 try {
-    $result = $dbh->updateUserProfile($oldEmail, $email, $nome, $cognome, $descrizione);
+    $userId = $_SESSION['user_id'];
+    $oldEmail = $_SESSION['email'];
+
+    $result = $dbh->updateUserProfile($userId, $email, $nome, $cognome, $descrizione);
     
     if ($result['success']) {
         $_SESSION['nome'] = $nome;

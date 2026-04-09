@@ -14,6 +14,7 @@
         <div class="card shadow-sm">
             <div class="card-body p-4">
                 <form id="edit-post-form" action="#" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="redirect_url" value="my_posts.php" />
                     
                     <!-- Informazioni Modificabili -->
                     <h2 class="h5 fw-bold mb-3">Informazioni Generali</h2>
@@ -40,41 +41,41 @@
                         </div>
                     </div>
 
-                    <!-- Switch Richiesta Approvazione -->
-                    <div class="mb-4 p-3 bg-light rounded-3 border">
-                        <div class="form-check form-switch mb-0">
-                            <input class="form-check-input" type="checkbox" role="switch" id="richiedeApprovazione" name="approvazione_richiesta" />
-                            <label class="form-check-label fw-medium ms-1" for="richiedeApprovazione">
-                                Richiedi la tua approvazione prima che un utente possa unirsi
-                            </label>
-                        </div>
-                        <div class="form-text ms-5 mt-1">
-                            Se attivato, riceverai una notifica quando qualcuno clicca "Partecipa" e potrai accettare o ignorare la richiesta (utile per i progetti con un numero chiuso molto ristretto).
-                        </div>
-                    </div>
 
                     <hr class="my-4 text-secondary opacity-25" />
+
 
                     <!-- Descrizione e Pubblicazione -->
                     <h2 class="h5 fw-bold mb-3">Dettagli</h2>
 
-                    <!-- File Caricati e Gestione Materiali -->
+                    <!-- File Caricati (Solo visualizzazione) -->
                     <div class="mb-4">
-                        <label class="form-label fw-medium">Materiali già caricati</label>
+                        <label class="form-label fw-medium text-dark">Materiali già caricati</label>
                         <div class="list-group list-group-flush border rounded-3 mb-3" id="existing-files-list">
                             <span class="text-muted small p-2">Caricamento...</span>
                         </div>
                         
-                        <label for="formFileMultiple" class="form-label fw-medium">Aggiungi altri file</label>
-                        <input class="form-control" type="file" id="formFileMultiple" name="materiali[]" multiple="multiple" />
+                        <label for="formFileMultiple" class="form-label fw-medium text-dark">Aggiungi altri file</label>
+                        <input class="form-control focus-ring" type="file" id="formFileMultiple" name="materiali[]" multiple="multiple" />
                         <div class="form-text mt-1">
                             Puoi caricare altri documenti per integrare il materiale già presente.
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label for="descrizionePost" class="form-label fw-medium">Descrizione e materiale aggiuntivo</label>
                         <textarea class="form-control focus-ring" id="descrizionePost" name="descrizione" rows="4" placeholder="Caricamento..."></textarea>
+                    </div>
+
+                    <hr class="my-4 text-secondary opacity-25" />
+
+                    <!-- Partecipanti Iscritti -->
+                    <div class="mb-4">
+                        <label class="form-label fw-medium text-dark">Partecipanti iscritti</label>
+                        <p class="text-secondary small mb-3">Qui puoi gestire gli studenti che si sono uniti alla tua sessione.</p>
+                        <div class="list-group border rounded-3" id="partecipanti">
+                            <div class="list-group-item text-muted small py-3">Caricamento...</div>
+                        </div>
                     </div>
 
                     <!-- Bottoni Salvataggio -->

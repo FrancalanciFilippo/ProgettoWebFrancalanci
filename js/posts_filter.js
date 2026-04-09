@@ -83,13 +83,6 @@ function syncFormValues() {
             if (mobileType) mobileType.value = window.currentFilters.type;
         }
         
-        // Checkboxes
-        if (window.currentFilters.no_auth) {
-            const desktopNoAuth = document.getElementById('no-auth-desktop');
-            const mobileNoAuth = document.getElementById('no-auth-mobile');
-            if (desktopNoAuth) desktopNoAuth.checked = true;
-            if (mobileNoAuth) mobileNoAuth.checked = true;
-        }
         
         if (window.currentFilters.show_unavailable) {
             const desktopShowUnavail = document.getElementById('show-unavailable-desktop');

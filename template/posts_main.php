@@ -37,11 +37,6 @@
                 <input type="date" class="form-control form-control-sm" id="date-desktop" name="date_from" />
             </div>
 
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="no-auth-desktop" name="no_auth" />
-                <label class="form-check-label small" for="no-auth-desktop">Non richiedono consenso</label>
-            </div>
-
             <div class="mb-4 form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="show-unavailable-desktop" name="show_unavailable" />
                 <label class="form-check-label small" for="show-unavailable-desktop">Mostra post non disponibili</label>
@@ -110,10 +105,6 @@
                     <input type="date" class="form-control form-control-sm" id="date-mobile" name="date_from" />
                 </div>
 
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="no-auth-mobile" name="no_auth" />
-                    <label class="form-check-label small" for="no-auth-mobile">Non richiedono consenso</label>
-                </div>
 
                 <div class="mb-4 form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="show-unavailable-mobile" name="show_unavailable" />

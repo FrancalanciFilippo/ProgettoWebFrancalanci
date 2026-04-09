@@ -4,12 +4,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- Svuota tutte le tabelle
 TRUNCATE TABLE Commento;
-TRUNCATE TABLE Richiesta;
 TRUNCATE TABLE Partecipazione;
 TRUNCATE TABLE File;
 TRUNCATE TABLE Post;
 TRUNCATE TABLE Utente;
-TRUNCATE TABLE Stato;
 TRUNCATE TABLE Materia;
 
 -- Abilita i constraint
@@ -29,14 +27,6 @@ INSERT INTO Materia (nome) VALUES
 ('Storia'),
 ('Letteratura'),
 ('Altro...');
-
--- ═══════════════════════════════════════════════════════════
--- STATI (per le richieste di partecipazione)
--- ═══════════════════════════════════════════════════════════
-INSERT INTO Stato (nome) VALUES 
-('In attesa'),
-('Accettata'),
-('Rifiutata');
 
 -- ═══════════════════════════════════════════════════════════
 -- UTENTI
@@ -60,31 +50,31 @@ INSERT INTO Utente (email, nome, cognome, password, descrizione, tipo) VALUES
 -- ═══════════════════════════════════════════════════════════
 -- POST
 -- ═══════════════════════════════════════════════════════════
-INSERT INTO Post (titolo, richiede_approvazione, tipo, descrizione, data_inizio, data_fine, luogo, max_partecipanti, utente_email, materia_id) VALUES
+INSERT INTO Post (titolo, tipo, descrizione, data_inizio, data_fine, luogo, max_partecipanti, utente_email, materia_id) VALUES
 
 -- Sessioni dirette (no approvazione)
-('Preparazione Analisi 1', 0, 'sessione', 'Sessione di studio collettiva per prepararsi all''esame di Analisi 1. Portiamo il Bramanti e gli appunti delle lezioni.', '2026-04-12 14:00:00', '2026-04-20 18:00:00', 'Aula Studio Campus – Edificio B', 10, 'mario.rossi@studenti.it', 2),
+('Preparazione Analisi 1', 'sessione', 'Sessione di studio collettiva per prepararsi all''esame di Analisi 1. Portiamo il Bramanti e gli appunti delle lezioni.', '2026-04-12 14:00:00', '2026-04-20 18:00:00', 'Aula Studio Campus – Edificio B', 10, 'mario.rossi@studenti.it', 2),
 
-('Ripasso Meccanica Classica', 0, 'sessione', 'Ripasso degli argomenti di Meccanica per il parziale: cinematica, dinamica e lavoro-energia.', '2026-04-08 10:00:00', '2026-04-10 13:00:00', 'Biblioteca Centrale – Sala Silenziosa', 6, 'luca.bianchi@studenti.it', 3),
+('Ripasso Meccanica Classica', 'sessione', 'Ripasso degli argomenti di Meccanica per il parziale: cinematica, dinamica e lavoro-energia.', '2026-04-08 10:00:00', '2026-04-10 13:00:00', 'Biblioteca Centrale – Sala Silenziosa', 6, 'luca.bianchi@studenti.it', 3),
 
-('Laboratorio Chimica Organica', 0, 'sessione', 'Studio condiviso delle reazioni di chimica organica in preparazione al laboratorio. Portiamo dispense e schemi di reazione.', '2026-04-15 15:00:00', '2026-04-15 18:00:00', 'Aula 3C – Edificio Chimica', 8, 'davide.colombo@studenti.it', 6),
+('Laboratorio Chimica Organica', 'sessione', 'Studio condiviso delle reazioni di chimica organica in preparazione al laboratorio. Portiamo dispense e schemi di reazione.', '2026-04-15 15:00:00', '2026-04-15 18:00:00', 'Aula 3C – Edificio Chimica', 8, 'davide.colombo@studenti.it', 6),
 
-('Algoritmi e Strutture Dati – Esercitazione', 0, 'sessione', 'Esercitazione pratica su grafi, alberi e algoritmi di ordinamento. Utile per il laboratorio di ASD.', '2026-04-20 16:00:00', '2026-04-22 19:00:00', 'Laboratorio Informatica – Piano 2', 12, 'mario.rossi@studenti.it', 1),
+('Algoritmi e Strutture Dati – Esercitazione', 'sessione', 'Esercitazione pratica su grafi, alberi e algoritmi di ordinamento. Utile per il laboratorio di ASD.', '2026-04-20 16:00:00', '2026-04-22 19:00:00', 'Laboratorio Informatica – Piano 2', 12, 'mario.rossi@studenti.it', 1),
 
-('Esercitazione Microeconomia', 0, 'sessione', 'Risolviamo insieme gli esercizi di microeconomia in preparazione all''esame. Portiamo i testi consigliati.', '2026-04-10 09:00:00', '2026-04-12 11:00:00', 'Aula Economia – Blocco A', 7, 'anna.verdi@studenti.it', 4),
+('Esercitazione Microeconomia', 'sessione', 'Risolviamo insieme gli esercizi di microeconomia in preparazione all''esame. Portiamo i testi consigliati.', '2026-04-10 09:00:00', '2026-04-12 11:00:00', 'Aula Economia – Blocco A', 7, 'anna.verdi@studenti.it', 4),
 
-('Discussione Biologia Marina', 0, 'sessione', 'Incontro per discutere di biologia marina e ecosistemi acquatici. Condivisione articoli e ricerche.', '2026-04-18 15:30:00', '2026-04-18 17:30:00', 'Laboratorio Biologia – Piano 3', 5, 'sara.ricci@studenti.it', 5),
+('Discussione Biologia Marina', 'sessione', 'Incontro per discutere di biologia marina e ecosistemi acquatici. Condivisione articoli e ricerche.', '2026-04-18 15:30:00', '2026-04-18 17:30:00', 'Laboratorio Biologia – Piano 3', 5, 'sara.ricci@studenti.it', 5),
 
-('Programmazione in JavaScript', 0, 'sessione', 'Lezione pratica su JavaScript moderno, ES6+, async/await. Aperto a tutti i livelli.', '2026-04-14 16:00:00', '2026-04-16 18:00:00', 'Aula Informatica – Lab 1', 15, 'francesca.russo@studenti.it', 1),
+('Programmazione in JavaScript', 'sessione', 'Lezione pratica su JavaScript moderno, ES6+, async/await. Aperto a tutti i livelli.', '2026-04-14 16:00:00', '2026-04-16 18:00:00', 'Aula Informatica – Lab 1', 15, 'francesca.russo@studenti.it', 1),
 
 -- Progetti con approvazione
-('Sviluppo Web App Gestionale', 1, 'progettuale', 'Progetto di gruppo per sviluppare una web app gestionale in PHP e MySQL. Cerco collaboratori motivati con conoscenze base di HTML/CSS.', '2026-11-05 09:00:00', '2027-01-15 18:00:00', 'Discord / Online', 4, 'giulia.ferrari@studenti.it', 1),
+('Sviluppo Web App Gestionale', 'progettuale', 'Progetto di gruppo per sviluppare una web app gestionale in PHP e MySQL. Cerco collaboratori motivati con conoscenze base di HTML/CSS.', '2026-11-05 09:00:00', '2027-01-15 18:00:00', 'Discord / Online', 4, 'giulia.ferrari@studenti.it', 1),
 
-('Business Plan Startup', 1, 'progettuale', 'Costruzione di un business plan completo per una startup fittizia. Verranno usati strumenti come Canvas e analisi SWOT.', '2026-05-01 09:00:00', '2026-06-30 18:00:00', 'Aula Riunioni – Facoltà di Economia', 5, 'matteo.gallo@studenti.it', 4),
+('Business Plan Startup', 'progettuale', 'Costruzione di un business plan completo per una startup fittizia. Verranno usati strumenti come Canvas e analisi SWOT.', '2026-05-01 09:00:00', '2026-06-30 18:00:00', 'Aula Riunioni – Facoltà di Economia', 5, 'matteo.gallo@studenti.it', 4),
 
-('Ricerca Biologica su Ecosistemi Acquatici', 1, 'progettuale', 'Progetto di ricerca che analizza la biodiversità di un ecosistema acquatico locale. Richiede uscite sul campo.', '2026-05-10 08:00:00', '2026-07-31 18:00:00', 'Campus + uscite esterne', 3, 'sara.ricci@studenti.it', 5),
+('Ricerca Biologica su Ecosistemi Acquatici', 'progettuale', 'Progetto di ricerca che analizza la biodiversità di un ecosistema acquatico locale. Richiede uscite sul campo.', '2026-05-10 08:00:00', '2026-07-31 18:00:00', 'Campus + uscite esterne', 3, 'sara.ricci@studenti.it', 5),
 
-('Analisi Testi Letterari Medievali', 1, 'progettuale', 'Progetto di ricerca su testi letterari della letteratura medievale. Analisi stilistica e storica.', '2026-04-25 10:00:00', '2026-06-15 18:00:00', 'Biblioteca Universitaria', 4, 'elena.conti@studenti.it', 9);
+('Analisi Testi Letterari Medievali', 'progettuale', 'Progetto di ricerca su testi letterari della letteratura medievale. Analisi stilistica e storica.', '2026-04-25 10:00:00', '2026-06-15 18:00:00', 'Biblioteca Universitaria', 4, 'elena.conti@studenti.it', 9);
 
 -- ═══════════════════════════════════════════════════════════
 -- PARTECIPAZIONI (iscrizioni dirette ai post senza approvazione)
@@ -130,32 +120,6 @@ INSERT INTO Partecipazione (utente_email, post_id) VALUES
 ('matteo.gallo@studenti.it', 7),
 ('elena.conti@studenti.it', 7);
 
--- ═══════════════════════════════════════════════════════════
--- RICHIESTE (iscrizioni ai post con approvazione)
--- ═══════════════════════════════════════════════════════════
-INSERT INTO Richiesta (utente_email, post_id, stato_id) VALUES
--- Post 8 – Web App Gestionale
-('mario.rossi@studenti.it', 8, 1),  -- In attesa
-('luca.bianchi@studenti.it', 8, 2),  -- Accettata
-('marco.esposito@studenti.it', 8, 3),  -- Rifiutata
-('davide.colombo@studenti.it', 8, 1),  -- In attesa
-
--- Post 9 – Business Plan
-('mario.rossi@studenti.it', 9, 1),  -- In attesa
-('sara.ricci@studenti.it', 9, 2),  -- Accettata
-('luca.bianchi@studenti.it', 9, 3),  -- Rifiutata
-('francesca.russo@studenti.it', 9, 1),  -- In attesa
-
--- Post 10 – Ricerca Biologica
-('giulia.ferrari@studenti.it', 10, 1),  -- In attesa
-('anna.verdi@studenti.it', 10, 2),  -- Accettata
-('marco.esposito@studenti.it', 10, 3),  -- Rifiutata
-
--- Post 11 – Letteratura
-('sara.ricci@studenti.it', 11, 1),  -- In attesa
-('davide.colombo@studenti.it', 11, 2),  -- Accettata
-('matteo.gallo@studenti.it', 11, 1),  -- In attesa
-('francesca.russo@studenti.it', 11, 2);  -- Accettata
 
 -- ═══════════════════════════════════════════════════════════
 -- COMMENTI (incluse risposte annidate)

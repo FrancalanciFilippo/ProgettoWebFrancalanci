@@ -51,13 +51,12 @@ INSERT INTO Utente (email, nome, cognome, password, descrizione, tipo) VALUES
 --       un post 'sessione' può comunque richiedere approvazione e viceversa.
 -- Le materie ora sono filtrate per nome nel frontend
 INSERT INTO Post
-    (titolo, richiede_approvazione, tipo, descrizione,
+    (titolo, tipo, descrizione,
      data_inizio, data_fine, luogo,
      max_partecipanti, utente_email, materia_id)
 VALUES
 (
     'Preparazione Analisi 1',
-    0,                       -- accesso diretto
     'sessione',
     'Sessione di studio collettiva per prepararsi all''esame di Analisi 1. Portiamo il Bramanti e gli appunti delle lezioni.',
     '2026-04-12 14:00:00', '2026-04-20 18:00:00',
@@ -66,7 +65,6 @@ VALUES
 ),
 (
     'Sviluppo Web App Gestionale',
-    1,                       -- richiede approvazione
     'progettuale',
     'Progetto di gruppo per sviluppare una web app gestionale in PHP e MySQL. Cerco collaboratori motivati con conoscenze base di HTML/CSS.',
     '2026-11-05 09:00:00', '2027-01-15 18:00:00',
@@ -75,7 +73,6 @@ VALUES
 ),
 (
     'Ripasso Meccanica Classica',
-    0,
     'sessione',
     'Ripasso degli argomenti di Meccanica per il parziale: cinematica, dinamica e lavoro-energia.',
     '2026-04-08 10:00:00', '2026-04-10 13:00:00',
@@ -84,7 +81,6 @@ VALUES
 ),
 (
     'Business Plan Startup',
-    1,
     'progettuale',
     'Costruzione di un business plan completo per una startup fittizia. Verranno usati strumenti come Canvas e analisi SWOT.',
     '2026-05-01 09:00:00', '2026-06-30 18:00:00',
@@ -93,7 +89,6 @@ VALUES
 ),
 (
     'Laboratorio Chimica Organica',
-    0,
     'sessione',
     'Studio condiviso delle reazioni di chimica organica in preparazione al laboratorio. Portiamo dispense e schemi di reazione.',
     '2026-04-15 15:00:00', '2026-04-15 18:00:00',
@@ -102,7 +97,6 @@ VALUES
 ),
 (
     'Algoritmi e Strutture Dati – Esercitazione',
-    0,
     'sessione',
     'Esercitazione pratica su grafi, alberi e algoritmi di ordinamento. Utile per il laboratorio di ASD.',
     '2026-04-20 16:00:00', '2026-04-22 19:00:00',
@@ -111,7 +105,6 @@ VALUES
 ),
 (
     'Ricerca Biologica su Ecosistemi Acquatici',
-    1,
     'progettuale',
     'Progetto di ricerca che analizza la biodiversità di un ecosistema acquatico locale. Richiede uscite sul campo.',
     '2026-05-10 08:00:00', '2026-07-31 18:00:00',
@@ -146,22 +139,6 @@ INSERT INTO Partecipazione (utente_email, post_id) VALUES
 ('marco.esposito@studenti.it', 6);
 
 
--- ── Richieste (solo post con richiede_approvazione = 1) ─────────────────────
-INSERT INTO Richiesta (utente_email, post_id, stato_id) VALUES
--- Post 2 – Web App Gestionale
-('mario.rossi@studenti.it',    2, 1),  -- In attesa
-('luca.bianchi@studenti.it',   2, 2),  -- Accettata  (→ presente in Partecipazione)
-('marco.esposito@studenti.it', 2, 3),  -- Rifiutata
-('sara.ricci@studenti.it',     2, 1),  -- In attesa
-
--- Post 4 – Business Plan
-('mario.rossi@studenti.it',    4, 1),  -- In attesa
-('marco.esposito@studenti.it', 4, 3),  -- Rifiutata
-('luca.bianchi@studenti.it',   4, 2),  -- Accettata
-
--- Post 7 – Ricerca Biologica
-('giulia.ferrari@studenti.it', 7, 1),  -- In attesa
-('anna.verdi@studenti.it',     7, 2);  -- Accettata
 
 
 -- ── Commenti (incluse risposte annidate) ────────────────────────────────────

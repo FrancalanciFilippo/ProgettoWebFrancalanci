@@ -10,8 +10,8 @@ if (!isUserLoggedIn()) {
 }
 
 try {
-    $email = $_SESSION['email'];
-    $posts = $dbh->getMyPosts($email);
+    $userId = $_SESSION['user_id'];
+    $posts = $dbh->getMyPosts($userId);
 
     echo json_encode([
         'success' => true,

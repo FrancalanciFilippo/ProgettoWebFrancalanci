@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-$email = $_SESSION['email'];
+$userId = $_SESSION['user_id'];
 
 try {
-    $result = $dbh->deleteUser($email);
+    $result = $dbh->deleteUser($userId);
 
     if ($result['success']) {
         session_destroy();

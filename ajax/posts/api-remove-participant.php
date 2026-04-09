@@ -9,37 +9,28 @@ if (!isUserLoggedIn()) {
     exit();
 }
 
-// Verifica metodo HTTP
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
-    exit();
-}
-
 // Lettura dati
 $data = json_decode(file_get_contents('php://input'), true);
+$postId = (int)($data['post_id'] ?? 0);
+$targetUserId = (int)($data['user_id'] ?? 0);
 
-if (!isset($data['post_id']) || !is_numeric($data['post_id'])) {
+if ($postId <= 0 || $targetUserId <= 0) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'ID post non valido.']);
+    echo json_encode(['success' => false, 'message' => 'Parametri mancanti o non validi.']);
     exit();
 }
 
-$postId = (int)$data['post_id'];
-$userId = $_SESSION['user_id'];
-
-// Esegui partecipazione
 try {
-    $result = $dbh->partecipa($userId, $postId);
-
+    $result = $dbh->removeParticipantByOwner($_SESSION['user_id'], $postId, $targetUserId);
+    
     if ($result['success']) {
         echo json_encode(['success' => true, 'message' => $result['message']]);
     } else {
-        http_response_code(400);
+        http_response_code(403);
         echo json_encode(['success' => false, 'message' => $result['message']]);
     }
 } catch (Exception $e) {
-    error_log("Errore partecipazione: " . $e->getMessage());
+    error_log("Errore API rimozione partecipante: " . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Errore interno del server.']);
 }

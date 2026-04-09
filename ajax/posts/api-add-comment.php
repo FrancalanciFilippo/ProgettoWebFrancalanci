@@ -30,7 +30,7 @@ if ($postId <= 0 || empty($testo)) {
 }
 
 try {
-    $result = $dbh->addComment($postId, $_SESSION['email'], $testo, $rispostaId);
+    $result = $dbh->addComment($postId, $_SESSION['user_id'], $testo, $rispostaId);
     
     if ($result['success']) {
         echo json_encode([

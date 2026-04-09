@@ -44,6 +44,7 @@ try {
 
     session_regenerate_id(true);
 
+    $_SESSION['user_id'] = $utente['id'];
     $_SESSION['email'] = $utente['email'];
     $_SESSION['nome'] = $utente['nome'];
     $_SESSION['cognome'] = $utente['cognome'];

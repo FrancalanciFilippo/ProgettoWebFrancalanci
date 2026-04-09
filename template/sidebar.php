@@ -25,12 +25,6 @@ $basePath = isset($templateParams["basePath"]) ? $templateParams["basePath"] : "
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?php echo $basePath; ?>pages/requests.php" class="nav-link <?php echo $active === 'requests' ? 'active' : ''; ?>" <?php echo $active === 'requests' ? 'aria-current="page"' : ''; ?> id="sidebar-richieste">
-                    <em class="bi bi-bell me-2" aria-hidden="true"></em>
-                    Richieste
-                </a>
-            </li>
-            <li class="nav-item">
                 <a href="<?php echo $basePath; ?>pages/create_post.php" class="nav-link <?php echo $active === 'create_post' ? 'active' : ''; ?>" id="sidebar-crea-post">
                     <em class="bi bi-plus-circle me-2" aria-hidden="true"></em>
                     Crea Nuovo Post
@@ -76,12 +70,6 @@ $basePath = isset($templateParams["basePath"]) ? $templateParams["basePath"] : "
                     <a href="<?php echo $basePath; ?>pages/joined_posts.php" class="nav-link <?php echo $active === 'joined_posts' ? 'active' : ''; ?>" <?php echo $active === 'joined_posts' ? 'aria-current="page"' : ''; ?>>
                         <em class="bi bi-people me-2" aria-hidden="true"></em>
                         Post a cui partecipi
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?php echo $basePath; ?>pages/requests.php" class="nav-link <?php echo $active === 'requests' ? 'active' : ''; ?>" <?php echo $active === 'requests' ? 'aria-current="page"' : ''; ?>>
-                        <em class="bi bi-bell me-2" aria-hidden="true"></em>
-                        Richieste
                     </a>
                 </li>
                 <li class="nav-item">

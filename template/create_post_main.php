@@ -88,18 +88,6 @@
                         </div>
                     </div>
 
-                    <!-- Switch Richiesta Approvazione -->
-                    <div class="mb-4 p-3 bg-light rounded-3 border">
-                        <div class="form-check form-switch mb-0">
-                            <input class="form-check-input" type="checkbox" role="switch" id="richiedeApprovazione" name="approvazione_richiesta" />
-                            <label class="form-check-label fw-medium ms-1" for="richiedeApprovazione">
-                                Richiedi la tua approvazione prima che un utente possa unirsi
-                            </label>
-                        </div>
-                        <div class="form-text ms-5 mt-1">
-                            Se attivato, riceverai una notifica quando qualcuno clicca "Partecipa" e potrai accettare o ignorare la richiesta (utile per i progetti con un numero chiuso molto ristretto).
-                        </div>
-                    </div>
 
                     <hr class="my-4 text-secondary opacity-25" />
 

@@ -17,7 +17,8 @@ if ($postId <= 0) {
 }
 
 try {
-    $result = $dbh->lasciaPost($_SESSION['email'], $postId);
+    $userId = $_SESSION['user_id'];
+    $result = $dbh->lasciaPost($userId, $postId);
     
     if ($result['success']) {
         echo json_encode([

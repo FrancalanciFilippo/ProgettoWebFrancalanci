@@ -10,7 +10,10 @@ if (!isUserLoggedIn()) {
 }
 
 // Raccogli i filtri dai parametri GET
-$filters = ['exclude_user' => $_SESSION['email']];
+$filters = [
+    'exclude_user_id' => $_SESSION['user_id'],
+    'not_owner_id'    => $_SESSION['user_id']
+];
 
 if (isset($_GET['sort'])) {
     $filters['sort'] = $_GET['sort'];
@@ -24,8 +27,8 @@ if (isset($_GET['type']) && !empty($_GET['type'])) {
 if (isset($_GET['date_from']) && !empty($_GET['date_from'])) {
     $filters['date_from'] = $_GET['date_from'];
 }
-if (isset($_GET['no_auth'])) {
-    $filters['no_auth'] = true;
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $filters['search'] = $_GET['search'];
 }
 if (isset($_GET['show_unavailable'])) {
     $filters['show_unavailable'] = true;
