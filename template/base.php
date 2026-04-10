@@ -94,16 +94,14 @@
 
     <main id="main-content">
         <?php if (isset($templateParams["hasSidebar"]) && $templateParams["hasSidebar"]): ?>
-            <div class="container-fluid">
-                <div class="row min-vh-100">
-                    <?php require(__DIR__ . "/sidebar.php"); ?>
-                    <div class="col-12 col-md-9 col-lg-10 pt-2 px-4 pb-4 pt-md-4">
-                        <?php
-                        if(isset($templateParams["main"])){
-                            require(__DIR__ . "/" . $templateParams["main"]);
-                        }
-                        ?>
-                    </div>
+            <div class="container min-vh-100 px-0">
+                <?php require(__DIR__ . "/sidebar.php"); ?>
+                <div class="container py-4">
+                    <?php
+                    if(isset($templateParams["main"])){
+                        require(__DIR__ . "/" . $templateParams["main"]);
+                    }
+                    ?>
                 </div>
             </div>
         <?php else: ?>

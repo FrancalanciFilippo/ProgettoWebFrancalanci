@@ -33,18 +33,16 @@
                     disabled="disabled" maxlength="200" placeholder="Parlaci di te..."></textarea>
             </div>
 
-            <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 gap-3">
-                <button type="button" class="btn btn-custom-primary fw-semibold px-4" id="toggle-edit-btn">
+            <div class="mt-4">
+                <button type="button" class="btn btn-custom-primary fw-semibold w-100 mb-2" id="toggle-edit-btn">
                     <em class="bi bi-pencil-square me-2" aria-hidden="true"></em>Modifica
                 </button>
-                <div class="d-flex gap-2">
-                    <a href="logout.php" class="btn btn-outline-custom-primary fw-semibold" id="profile-logout">
-                        <em class="bi bi-box-arrow-right me-2" aria-hidden="true"></em>Logout
-                    </a>
-                    <button type="button" class="btn btn-outline-danger fw-semibold" id="profile-elimina">
-                        <em class="bi bi-person-x me-2" aria-hidden="true"></em>Elimina Account
-                    </button>
-                </div>
+                <a href="logout.php" class="btn btn-outline-custom-primary fw-semibold w-100 mb-2" id="profile-logout">
+                    <em class="bi bi-box-arrow-right me-2" aria-hidden="true"></em>Logout
+                </a>
+                <button type="button" class="btn btn-outline-danger fw-semibold w-100" id="profile-elimina">
+                    <em class="bi bi-person-x me-2" aria-hidden="true"></em>Elimina Account
+                </button>
             </div>
 
         </form>

@@ -1,29 +1,24 @@
 <section class="py-5 blur-entrance">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div>
 
-                <!-- Toolbar -->
                 <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3 border mb-4">
                     <span class="fw-semibold text-dark" id="post-title">Caricamento...</span>
                     <span class="badge text-bg-secondary" id="comments-count">0 commenti</span>
                 </div>
 
-                <!-- Lista Commenti -->
-                <div class="d-flex flex-column gap-3 mb-5" id="comments-list">
-                    <div class="text-center text-secondary py-4">
+        <div class="mb-5" id="comments-list">
                         <p>Caricamento commenti in corso...</p>
                     </div>
                 </div>
 
-                <!-- Form Nuovo Commento -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
                         <h2 class="h5 fw-bold mb-4">Scrivi un commento</h2>
 
                         <form method="post" id="comment-form" class="needs-validation" novalidate="novalidate">
 
-                            <!-- Reply Preview (nascosto di default) -->
                             <div id="reply-preview-wrapper" class="d-none mb-3">
                                 <div class="reply-preview">
                                     <div class="d-flex justify-content-between align-items-start mb-1">
@@ -38,7 +33,6 @@
                                 </div>
                             </div>
 
-                            <!-- Input nascosto per l'ID della risposta -->
                             <input type="hidden" id="reply-to" name="reply_to" value="" />
 
                             <div class="mb-3">

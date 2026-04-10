@@ -11,7 +11,7 @@
         </div>
 
         <!-- Form Card -->
-        <div class="card shadow-sm">
+        <div class="card">
             <div class="card-body p-4">
                 <form action="#" method="post" id="create-post-form" enctype="multipart/form-data">
                     

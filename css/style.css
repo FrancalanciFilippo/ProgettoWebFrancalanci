@@ -27,6 +27,30 @@ body {
     top: 0;
 }
 
+/* Card semplice */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Responsive container - stacked su small, flex su desktop */
+#my-posts-list,
+#joined-posts-container,
+#comments-list,
+#posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    #my-posts-list,
+    #joined-posts-container,
+    #comments-list {
+        flex-direction: column;
+    }
+}
+
 /* Link generali */
 a {
     color: var(--color-link);

@@ -19,17 +19,13 @@ function fetchJoinedPosts() {
 
 function renderJoinedPosts(posts) {
     const container = document.getElementById('joined-posts-container');
-    const emptyMessage = document.getElementById('joined-posts-empty');
     if (!container) return;
 
     container.innerHTML = '';
 
     if (!posts || posts.length === 0) {
-        if (emptyMessage) emptyMessage.classList.remove('d-none');
         return;
     }
-
-    if (emptyMessage) emptyMessage.classList.add('d-none');
 
     posts.forEach(post => {
         container.insertAdjacentHTML('beforeend', createJoinedPostCard(post));
