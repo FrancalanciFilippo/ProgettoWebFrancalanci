@@ -48,7 +48,7 @@ function fillForm(user, userId) {
         document.getElementById('bio').value = user.descrizione || '';
     }
     
-    // Aggiungi input nascosto per l'ID dell'utente
+
     const form = document.getElementById('admin-edit-user-form');
     const userIdInput = document.createElement('input');
     userIdInput.type = 'hidden';

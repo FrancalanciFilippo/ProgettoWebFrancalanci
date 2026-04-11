@@ -1,6 +1,6 @@
 <?php
 require_once '../bootstrap.php';
-requireLogin(); // Questa pagina richiede autenticazione
+requireLogin();
 
 $templateParams["titolo"] = "SchoolTogether - Profilo";
 $templateParams["descrizione"] = "Visualizza e modifica le informazioni del tuo profilo SchoolTogether.";

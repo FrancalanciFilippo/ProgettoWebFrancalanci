@@ -9,7 +9,6 @@ class DatabaseHelper {
         }
     }
 
-    /* TUTTI I POST PUBBLICATI */
     public function getAllPosts($filters = []) {
         $sql = "SELECT 
                     P.id, 
@@ -37,14 +36,12 @@ class DatabaseHelper {
         $params = [];
         $types = "";
         
-        // Escludi post a cui l'utente già partecipa
         if (!empty($filters['exclude_user_id'])) {
             $whereConditions[] = "NOT EXISTS (SELECT 1 FROM Partecipazione Pp WHERE Pp.post_id = P.id AND Pp.utente_id = ?)";
             $params[] = $filters['exclude_user_id'];
             $types .= "i";
         }
 
-        // Escludi post creati dall'utente stesso (discovery)
         if (!empty($filters['not_owner_id'])) {
             $whereConditions[] = "P.utente_id != ?";
             $params[] = $filters['not_owner_id'];
@@ -111,7 +108,6 @@ class DatabaseHelper {
         return $posts ?: [];
     }
 
-    /* INFO DETTAGLIATE POST */
     public function getPostInfo($id) {
         $sql = "SELECT 
                     P.*, 
@@ -136,7 +132,6 @@ class DatabaseHelper {
         return $postInfo ?: null;
     }
 
-    /* MATERIE DISPONIBILI */
     public function getAllMaterie() {
         $sql = "SELECT id, nome FROM Materia ORDER BY nome";
         $stmt = $this->db->prepare($sql);
@@ -148,9 +143,6 @@ class DatabaseHelper {
         return $materie ?: [];
     }
 
-
-
-    /* RICERCA UTENTE PER EMAIL */
     public function getUserByEmail($email) {
         $sql = "SELECT id, email, nome, cognome, password, descrizione, tipo FROM Utente WHERE email = ?";
         $stmt = $this->db->prepare($sql);
@@ -163,7 +155,6 @@ class DatabaseHelper {
         return $user ?: null;
     }
 
-    /* CREAZIONE NUOVO UTENTE */
     public function createUser($email, $nome, $cognome, $password, $descrizione = "") {
         $existingUser = $this->getUserByEmail($email);
         if ($existingUser) {
@@ -182,7 +173,7 @@ class DatabaseHelper {
             $stmt->execute();
             $newId = $this->db->insert_id;
             return ['success' => true, 'message' => 'Utente creato con successo.', 'user_id' => $newId];
-        } catch (mysqli_sql_exception $e) {
+        } catch (Exception $e) {
             error_log("Errore durante la creazione dell'utente: " . $e->getMessage());
             return ['success' => false, 'message' => 'Errore interno del server.'];
         } finally {
@@ -190,20 +181,14 @@ class DatabaseHelper {
         }
     }
 
-    /* ELIMINA ACCOUNT UTENTE */
     public function deleteUser($userId) {
         $this->db->begin_transaction();
         try {
-            // Eliminiamo l'utente. Il trigger TRG_User_Anonymize nel DB si occuperà di:
-            // 1. Riassegnare i suoi Post all'ID 1 (deleted@system.it)
-            // 2. Riassegnare i suoi Commenti all'ID 1
-            // 3. Eliminare le sue Partecipazioni
             $sql = "DELETE FROM Utente WHERE id = ? AND tipo = 'utente'";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param("i", $userId);
             $stmt->execute();
             $deleted = $stmt->affected_rows > 0;
-            $stmt->close();
             
             $this->db->commit();
             return $deleted
@@ -214,12 +199,12 @@ class DatabaseHelper {
             $this->db->rollback();
             error_log("Errore durante l'eliminazione dell'utente ID $userId: " . $e->getMessage());
             return ['success' => false, 'message' => 'Errore durante l\'eliminazione.'];
+        } finally {
+            if (isset($stmt)) $stmt->close();
         }
     }
 
-    /* MODIFICA PROFILO UTENTE */
     public function updateUserProfile($userId, $newEmail, $nome, $cognome, $descrizione) {
-        // Verifica se la nuova email è già presa da un ALTRO utente
         $sqlCheck = "SELECT id FROM Utente WHERE email = ? AND id != ?";
         $stmtCheck = $this->db->prepare($sqlCheck);
         $stmtCheck->bind_param("si", $newEmail, $userId);
@@ -247,7 +232,7 @@ class DatabaseHelper {
                 'message'   => 'Profilo aggiornato con successo!',
                 'new_email' => $newEmail
             ];
-        } catch (mysqli_sql_exception $e) {
+        } catch (Exception $e) {
             error_log("Errore update profilo per ID $userId: " . $e->getMessage());
             return ['success' => false, 'message' => 'Errore durante l\'aggiornamento.', 'new_email' => null];
         } finally {
@@ -255,11 +240,9 @@ class DatabaseHelper {
         }
     }
 
-    /* CREAZIONE NUOVO POST */
     public function createPost($postData) {
         $this->db->begin_transaction();
         try {
-            // 1. Insert Post
             $sql = "INSERT INTO Post (titolo, tipo, descrizione, data_inizio, data_fine, luogo, max_partecipanti, utente_id, materia_id) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
@@ -284,17 +267,16 @@ class DatabaseHelper {
             
             $stmt->execute();
             $postId = $this->db->insert_id;
-            $stmt->close();
 
-            if (!$postId) throw new Exception("Insert post fallito");
+            if (!$postId) {
+                $this->db->rollback();
+                return 0;
+            }
 
-            // 2. Auto-partecipazione
             $partStmt = $this->db->prepare("INSERT INTO Partecipazione (utente_id, post_id) VALUES (?, ?)");
             $partStmt->bind_param("ii", $postData['utente_id'], $postId);
             $partStmt->execute();
             $partStmt->close();
-
-
 
             $this->db->commit();
             return $postId;
@@ -302,14 +284,14 @@ class DatabaseHelper {
         } catch (Exception $e) {
             $this->db->rollback();
             return 0;
+        } finally {
+            if (isset($stmt)) $stmt->close();
         }
     }
 
-    /* AGGIORNA DATI POST */
     public function updatePost($postId, $userId, $postData, $userIdsToKick = []) {
         $this->db->begin_transaction();
         try {
-            // Verifica permessi: proprietario del post OPPURE admin
             $stmt = $this->db->prepare("SELECT utente_id FROM Post WHERE id = ?");
             $stmt->bind_param("i", $postId);
             $stmt->execute();
@@ -321,7 +303,6 @@ class DatabaseHelper {
                 return ['success' => false, 'message' => 'Post non trovato.'];
             }
 
-            // Controllo tipo utente chiamante
             $stmt = $this->db->prepare("SELECT tipo FROM Utente WHERE id = ?");
             $stmt->bind_param("i", $userId);
             $stmt->execute();
@@ -336,7 +317,6 @@ class DatabaseHelper {
                 return ['success' => false, 'message' => 'Non hai i permessi per modificare questo post.'];
             }
 
-
             $sql = "UPDATE Post SET luogo = ?, data_inizio = ?, data_fine = ?, descrizione = ? WHERE id = ?";
             $stmt = $this->db->prepare($sql);
             
@@ -350,9 +330,7 @@ class DatabaseHelper {
                 $postId
             );
             $stmt->execute();
-            $stmt->close();
 
-            // Rimozione Partecipanti (Kicking)
             if (!empty($userIdsToKick)) {
                 $placeholders = implode(',', array_fill(0, count($userIdsToKick), '?'));
                 $kickSql = "DELETE FROM Partecipazione WHERE post_id = ? AND utente_id IN ($placeholders)";
@@ -371,10 +349,11 @@ class DatabaseHelper {
         } catch (Exception $e) {
             $this->db->rollback();
             return ['success' => false, 'message' => 'Errore interno durante l\'aggiornamento.'];
+        } finally {
+            if (isset($stmt)) $stmt->close();
         }
     }
 
-    /* POST CREATI DALL'UTENTE */
     public function getMyPosts($userId) {
         $sql = "SELECT 
                     P.id, 
@@ -407,7 +386,6 @@ class DatabaseHelper {
         return $posts ?: [];
     }
 
-    /* VERIFICA PARTECIPAZIONE */
     public function isPartecipante($userId, $postId) {
         $sql = "SELECT 1 FROM Partecipazione WHERE utente_id = ? AND post_id = ?";
         $stmt = $this->db->prepare($sql);
@@ -419,7 +397,6 @@ class DatabaseHelper {
         return $found;
     }
 
-    /* PARTECIPAZIONE AD UN POST */
     public function partecipa($userId, $postId) {
         if ($this->isPartecipante($userId, $postId)) {
             return ['success' => false, 'message' => 'Partecipi già a questo post.'];
@@ -447,7 +424,7 @@ class DatabaseHelper {
         try {
             $stmt->execute();
             return ['success' => true, 'message' => 'Partecipazione registrata con successo!'];
-        } catch (mysqli_sql_exception $e) {
+        } catch (Exception $e) {
             error_log("Errore partecipazione ID $userId al post $postId: " . $e->getMessage());
             return ['success' => false, 'message' => 'Errore durante la partecipazione.'];
         } finally {
@@ -455,7 +432,6 @@ class DatabaseHelper {
         }
     }
 
-    /* POST A CUI L'UTENTE PARTECIPA */
     public function getJoinedPosts($userId) {
         $sql = "SELECT 
                     P.id, 
@@ -491,7 +467,6 @@ class DatabaseHelper {
         return $posts ?: [];
     }
 
-    /* ELIMINA POST */
     public function deletePost($postId, $userId) {
         $this->db->begin_transaction();
         try {
@@ -517,7 +492,6 @@ class DatabaseHelper {
         }
     }
 
-    /* ABBANDONA POST (ESCI DALLA PARTECIPAZIONE) */
     public function lasciaPost($userId, $postId) {
         $checkStmt = $this->db->prepare("SELECT utente_id FROM Post WHERE id = ?");
         $checkStmt->bind_param("i", $postId);
@@ -548,7 +522,6 @@ class DatabaseHelper {
         }
     }
 
-    /* OTTENERE I COMMENTI DI UN POST */
     public function getComments($postId) {
         $sql = "SELECT 
                     C.id, C.testo, C.data_scrittura, C.risposta_id, C.utente_id,
@@ -573,7 +546,6 @@ class DatabaseHelper {
         return $comments ?: [];
     }
 
-    /* AGGIUNGERE UN COMMENTO A UN POST */
     public function addComment($postId, $userId, $testo, $rispostaId = null) {
         $sql = "INSERT INTO Commento (testo, utente_id, post_id, risposta_id) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($sql);
@@ -589,7 +561,6 @@ class DatabaseHelper {
             $stmt->close();
         }
     }
-    /* OTTENERE I PARTECIPANTI DI UN POST (ESCLUSO IL CREATORE) */
     public function getPostParticipants($postId) {
         $sql = "SELECT U.id, U.nome, U.cognome, U.email
                 FROM Partecipazione P
@@ -609,16 +580,13 @@ class DatabaseHelper {
         return $participants ?: [];
     }
 
-    /* RIMOZIONE PARTECIPANTE DA PARTE DEL PROPRIETARIO */
     public function removeParticipantByOwner($ownerId, $postId, $targetUserId) {
-        // Verifica che il chiamante sia il proprietario del post OPPURE un admin
         $checkStmt = $this->db->prepare("SELECT utente_id FROM Post WHERE id = ?");
         $checkStmt->bind_param("i", $postId);
         $checkStmt->execute();
         $res = $checkStmt->get_result()->fetch_assoc();
         $checkStmt->close();
 
-        // Check if caller is admin
         $caller = $this->getUserById($ownerId);
         $isAdmin = ($caller && $caller['tipo'] === 'admin');
 
@@ -649,20 +617,12 @@ class DatabaseHelper {
         }
     }
 
-    /* --- METODI PER AMMINISTRAZIONE --- */
-
-    /**
-     * Recupera tutti gli utenti di tipo 'utente' (esclude altri admin)
-     */
     public function getUsersForAdmin() {
         $sql = "SELECT id, email, nome, cognome, descrizione FROM Utente WHERE tipo = 'utente' ORDER BY email ASC";
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    /**
-     * Recupera tutti i post della piattaforma con i dati dei creatori
-     */
     public function getPostsForAdmin() {
         $sql = "SELECT P.id, P.titolo, U.nome AS creatore_nome, U.cognome AS creatore_cognome, U.email AS creatore_email
                 FROM Post P
@@ -672,10 +632,6 @@ class DatabaseHelper {
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    /**
-     * Elimina un utente dal punto di vista dell'admin (salta vincoli di proprietà)
-     * Include protezione per non eliminare altri admin
-     */
     public function deleteUserByAdmin($userId) {
         $check = $this->db->prepare("SELECT tipo FROM Utente WHERE id = ?");
         $check->bind_param("i", $userId);
@@ -697,9 +653,6 @@ class DatabaseHelper {
             : ['success' => false, 'message' => 'Errore durante l\'eliminazione dell\'utente dal database.'];
     }
 
-    /**
-     * Elimina un post dal punto di vista dell'admin
-     */
     public function deletePostByAdmin($postId) {
         $stmt = $this->db->prepare("DELETE FROM Post WHERE id = ?");
         $stmt->bind_param("i", $postId);
@@ -711,9 +664,6 @@ class DatabaseHelper {
             : ['success' => false, 'message' => 'Errore durante l\'eliminazione del post.'];
     }
 
-    /**
-     * Recupera i dati di un utente specifico tramite ID (utile per admin_edit_user)
-     */
     public function getUserById($userId) {
         $stmt = $this->db->prepare("SELECT id, email, nome, cognome, descrizione, tipo FROM Utente WHERE id = ?");
         $stmt->bind_param("i", $userId);

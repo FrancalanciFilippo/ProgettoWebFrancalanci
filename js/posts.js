@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     fetchPosts();
 
-    // Event listener delegato per i bottoni "Partecipa"
     const container = document.getElementById('posts-container');
     if (container) {
         container.addEventListener('click', event => {

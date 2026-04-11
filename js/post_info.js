@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Errore durante la fetch del post:", error);
     });
 
-    // Event listener per il bottone "Partecipa"
+
     document.addEventListener('click', event => {
         const btn = event.target.closest('[data-post-id]');
         if (btn) {
@@ -46,18 +46,18 @@ function renderPostInfo(post) {
         });
     };
 
-    // Titolo
+
     const titleEl = document.getElementById('post-title');
     if (titleEl) titleEl.textContent = post.titolo;
 
-    // Icona tipo
+
     const iconEl = document.getElementById('post-type-icon');
     if (iconEl) {
         iconEl.className = post.tipo === 'progettuale' ? 'bi bi-diagram-3 fs-3' : 'bi bi-book fs-3';
         iconEl.style.color = 'var(--color-primary)';
     }
 
-    // Autore e data
+
     const authorEl = document.getElementById('post-author');
     if (authorEl) {
         const authorName = `${post.creatore_nome} ${post.creatore_cognome}`;
@@ -68,15 +68,15 @@ function renderPostInfo(post) {
         `;
     }
 
-    // Materia
+
     const materiaEl = document.getElementById('post-materia');
     if (materiaEl) materiaEl.textContent = post.materia_nome;
 
-    // Partecipanti
+
     const partecipantiEl = document.getElementById('post-partecipanti');
     if (partecipantiEl) partecipantiEl.textContent = `${post.partecipanti_attuali || 0} / ${post.max_partecipanti}`;
 
-    // Periodo
+
     const periodoEl = document.getElementById('post-periodo');
     if (periodoEl) {
         const dataInizio = post.data_inizio ? new Date(post.data_inizio).toLocaleDateString('it-IT') : 'N/A';
@@ -84,26 +84,26 @@ function renderPostInfo(post) {
         periodoEl.textContent = `${dataInizio} – ${dataFine}`;
     }
 
-    // Luogo
+
     const luogoEl = document.getElementById('post-luogo');
     if (luogoEl) luogoEl.textContent = post.luogo || 'Non specificato';
 
-    // Approvazione
+
     const approvazioneEl = document.getElementById('post-approvazione');
     if (approvazioneEl) {
         const richiedeApprovazione = parseInt(post.richiede_approvazione, 10) === 1;
         approvazioneEl.textContent = richiedeApprovazione ? 'Richiesta' : 'Non richiesta (partecipazione diretta)';
     }
 
-    // Tipo
+
     const tipoEl = document.getElementById('post-tipo');
     if (tipoEl) tipoEl.textContent = post.tipo === 'progettuale' ? 'Progetto di gruppo' : 'Sessione di studio';
 
-    // Descrizione
+
     const descrizioneEl = document.getElementById('post-descrizione');
     if (descrizioneEl) descrizioneEl.innerHTML = post.post_descrizione;
 
-    // Bottone azione
+
     const buttonEl = document.getElementById('post-action-btn');
     if (buttonEl) {
         const richiedeApprovazione = parseInt(post.richiede_approvazione, 10) === 1;
@@ -113,7 +113,6 @@ function renderPostInfo(post) {
         `;
     }
 }
-
 
 function partecipaPost(postId) {
     const formData = new FormData();

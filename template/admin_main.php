@@ -5,7 +5,7 @@
         </div>
 
         <div class="row g-4 justify-content-center">
-            <!-- Gestione Utenti -->
+            
             <div class="col-md-5">
                 <div class="card h-100">
                     <div class="card-body p-5 text-center">
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <!-- Gestione Post -->
+            
             <div class="col-md-5">
                 <div class="card h-100">
                     <div class="card-body p-5 text-center">

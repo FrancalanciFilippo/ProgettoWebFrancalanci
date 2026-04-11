@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchMaterie();
     initFormSubmit();
 });
-
-// === API 1: Carica materie ===
 function fetchMaterie() {
     fetch('../ajax/posts/api-materie.php')
     .then(response => response.json())
@@ -16,7 +14,6 @@ function fetchMaterie() {
     })
     .catch(error => console.error("Errore fetch materie:", error));
 }
-
 function renderMaterie(materieArray) {
     const select = document.getElementById('materiaSelezionata');
     if (!select) return;
@@ -36,7 +33,6 @@ function renderMaterie(materieArray) {
     });
 }
 
-// === API 2: Submit form per creare post ===
 function initFormSubmit() {
     const form = document.getElementById('create-post-form');
     if (!form) return;
@@ -47,11 +43,11 @@ function initFormSubmit() {
         const btn = document.getElementById('create-post-submit');
         const oldText = btn.innerHTML;
         
-        // Feedback visivo
+
         btn.disabled = true;
         btn.innerHTML = 'Pubblicazione...';
 
-        // FormData gestisce testo + file automaticamente
+
         const formData = new FormData(form);
 
         fetch('../ajax/posts/api-create-post.php', {

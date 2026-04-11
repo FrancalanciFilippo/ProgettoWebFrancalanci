@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Carica post se siamo sulla pagina admin_posts
     const postsTbody = document.getElementById('posts-tbody');
     if (postsTbody) {
         loadPosts();
@@ -7,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initializeAvatars();
 });
-
 
 function loadPosts() {
     fetch('../ajax/admin/api-get-posts.php')
@@ -24,7 +22,6 @@ function loadPosts() {
             renderPostsError();
         });
 }
-
 function renderPosts(posts) {
     const tbody = document.getElementById('posts-tbody');
     if (!tbody) return;
@@ -63,7 +60,6 @@ function renderPosts(posts) {
     `).join('');
 }
 
-
 function renderPostsEmpty() {
     const tbody = document.getElementById('posts-tbody');
     if (tbody) {
@@ -71,14 +67,12 @@ function renderPostsEmpty() {
     }
 }
 
-
 function renderPostsError() {
     const tbody = document.getElementById('posts-tbody');
     if (tbody) {
         tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-danger">Errore nel caricamento dei post.</td></tr>';
     }
 }
-
 
 function hashColor(str) {
     const palette = [
@@ -91,7 +85,6 @@ function hashColor(str) {
     }
     return palette[Math.abs(hash) % palette.length];
 }
-
 
 function initializeAvatars() {
     const avatars = document.querySelectorAll('.admin-user-avatar');
@@ -106,11 +99,9 @@ function initializeAvatars() {
     });
 }
 
-
 function getInitials(fullName) {
     return fullName.split(' ').filter(Boolean).slice(0, 2).map(word => word[0].toUpperCase()).join('');
 }
-
 
 function deletePost(postId, title) {
     if (confirm(`Vuoi procedere all'eliminazione del post: "${title}"?`)) {

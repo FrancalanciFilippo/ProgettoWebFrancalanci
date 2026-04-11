@@ -1,6 +1,6 @@
 <?php
 require_once '../bootstrap.php';
-requireLogin(); // Questa pagina richiede autenticazione
+requireLogin();
 
 $postId = (int)($_GET['post_id'] ?? 0);
 if ($postId <= 0) {
@@ -18,7 +18,6 @@ $templateParams["breadcrumb"] = [
     ["label" => "Post a cui partecipi", "url" => "joined_posts.php"],
     ["label" => "Commenti", "active" => true]
 ];
-
 
 $templateParams["js"] = [
     "../js/comments.js"

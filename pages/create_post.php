@@ -1,6 +1,6 @@
 <?php
 require_once '../bootstrap.php';
-requireLogin(); // Questa pagina richiede autenticazione
+requireLogin();
 
 $templateParams["titolo"] = "SchoolTogether - Crea Post";
 $templateParams["descrizione"] = "Crea un nuovo post per organizzare sessioni di studio o cercare membri per progetti universitari.";

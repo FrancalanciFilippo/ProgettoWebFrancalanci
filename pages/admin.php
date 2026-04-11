@@ -1,6 +1,6 @@
 <?php
 require_once '../bootstrap.php';
-requireAdmin(); // Protezione: solo per admin
+requireAdmin();
 
 $templateParams["titolo"] = "SchoolTogether - Admin Dashboard";
 $templateParams["descrizione"] = "Pannello di controllo amministrativo per la gestione di utenti e contenuti.";

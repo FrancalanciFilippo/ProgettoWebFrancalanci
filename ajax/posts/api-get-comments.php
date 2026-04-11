@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 

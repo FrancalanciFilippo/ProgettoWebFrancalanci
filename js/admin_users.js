@@ -1,23 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Carica utenti se siamo sulla pagina admin_users
     const usersTbody = document.getElementById('users-tbody');
     if (usersTbody) {
         loadUsers();
     }
 
-    // Inizializzazione form modifica utente (se presente)
     const editUserForm = document.getElementById('admin-edit-user-form');
     if (editUserForm) {
         editUserForm.addEventListener('submit', handleEditUserSubmit);
     }
 
-    // Inizializzazione avatar (colori e iniziali dinamiche)
     initializeAvatars();
 });
 
-/**
- * Carica e renderizza utenti
- */
 function loadUsers() {
     fetch('../ajax/admin/api-get-users.php')
         .then(res => res.json())
@@ -34,9 +28,6 @@ function loadUsers() {
         });
 }
 
-/**
- * Renderizza utenti in tabella
- */
 function renderUsers(users) {
     const tbody = document.getElementById('users-tbody');
     if (!tbody) return;
@@ -78,7 +69,6 @@ function renderUsers(users) {
     initializeAvatars();
 }
 
-
 function renderUsersEmpty() {
     const tbody = document.getElementById('users-tbody');
     if (tbody) {
@@ -86,14 +76,12 @@ function renderUsersEmpty() {
     }
 }
 
-
 function renderUsersError() {
     const tbody = document.getElementById('users-tbody');
     if (tbody) {
         tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-danger">Errore nel caricamento degli utenti.</td></tr>';
     }
 }
-
 
 function hashColor(str) {
     const palette = [
@@ -107,11 +95,9 @@ function hashColor(str) {
     return palette[Math.abs(hash) % palette.length];
 }
 
-
 function getInitials(fullName) {
     return fullName.split(' ').filter(Boolean).slice(0, 2).map(word => word[0].toUpperCase()).join('');
 }
-
 
 function initializeAvatars() {
     const avatars = document.querySelectorAll('.admin-user-avatar');
@@ -125,7 +111,6 @@ function initializeAvatars() {
         }
     });
 }
-
 
 function deleteUser(userId, email) {
     if (confirm(`Sei sicuro di voler eliminare DEFINITIVAMENTE l'utente ${email}?\n\nTutti i suoi post e commenti verranno rimossi.`)) {
@@ -155,7 +140,6 @@ function deleteUser(userId, email) {
         });
     }
 }
-
 
 function handleEditUserSubmit(e) {
     e.preventDefault();

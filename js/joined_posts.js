@@ -31,7 +31,7 @@ function renderJoinedPosts(posts) {
         container.insertAdjacentHTML('beforeend', createJoinedPostCard(post));
     });
 
-    // Inizializza tooltip Bootstrap
+
     if (typeof bootstrap !== 'undefined') {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
@@ -113,13 +113,11 @@ function createJoinedPostCard(post) {
                     </div>
                 </div>
 
-                <!-- Descrizione e File (AGGIUNTO) -->
                 <div class="p-3 bg-light rounded-3 mb-4">
                     <h3 class="h6 fw-bold mb-2">Descrizione</h3>
                     <p class="small text-secondary mb-0">${escapeHtml(post.post_descrizione || 'Nessuna descrizione')}</p>
                 </div>
 
-                <!-- Bottoni e Data -->
                 <div class="d-flex flex-wrap justify-content-between align-items-end mt-2">
                     <div class="row gx-2 mb-2 mb-sm-0 w-100 align-items-center">
                         <div class="col-6 col-sm-5 col-md-4 col-xl-3">
@@ -142,7 +140,7 @@ function createJoinedPostCard(post) {
     `;
 }
 
-// === Helper functions (da my_posts.js) ===
+
 
 function escapeHtml(text) {
     if (!text) return '';

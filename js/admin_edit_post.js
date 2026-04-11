@@ -9,8 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     loadParticipants(postId);
     initFormSubmit(postId);
 });
-
-// Stato per le rimozioni dei partecipanti
 window.kickedParticipantIds = [];
 
 function getPostIdFromUrl() {
@@ -52,7 +50,6 @@ function fillForm(post) {
         document.getElementById('descrizionePost').value = post.descrizione || '';
     }
     
-    // Aggiungi input nascosto per l'ID del post
     const form = document.getElementById('edit-post-form');
     const idInput = document.createElement('input');
     idInput.type = 'hidden';

@@ -2,51 +2,23 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica metodo HTTP
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
     exit();
 }
 
-// Lettura dati
-$data = json_decode(file_get_contents('php://input'), true);
+$email = trim($_POST['email'] ?? '');
+$nome = trim($_POST['nome'] ?? '');
+$cognome = trim($_POST['cognome'] ?? '');
+$password = $_POST['password'] ?? '';
+$passwordConfirm = $_POST['password_confirm'] ?? '';
+$bio = trim($_POST['bio'] ?? '');
 
-if (json_last_error() !== JSON_ERROR_NONE) {
+if (empty($email) || empty($nome) || empty($cognome) || empty($password) || empty($passwordConfirm)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'JSON non valido.']);
-    exit();
-}
-
-if (!isset($data['email'], $data['password'], $data['password_confirm'], $data['nome'], $data['cognome'])) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Dati mancanti.']);
-    exit();
-}
-
-$email = trim($data['email']);
-$nome = trim($data['nome']);
-$cognome = trim($data['cognome']);
-$password = $data['password'];
-$passwordConfirm = $data['password_confirm'];
-$bio = trim($data['bio'] ?? '');
-
-// Validazione campi
-if (empty($email)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Email obbligatoria.']);
-    exit();
-}
-
-if (empty($nome)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Nome obbligatorio.']);
-    exit();
-}
-
-if (empty($cognome)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Cognome obbligatorio.']);
+    echo json_encode(['success' => false, 'message' => 'Dati mancanti']);
     exit();
 }
 

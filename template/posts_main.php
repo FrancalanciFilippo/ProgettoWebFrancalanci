@@ -1,4 +1,4 @@
-        <!-- Bottone Filtri -->
+        
         <div class="container mt-3">
             <button class="btn btn-sm btn-outline-secondary" type="button"
                 data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
@@ -9,8 +9,7 @@
 
     
 
-
-    <!-- Offcanvas mobile -->
+    
     <div class="offcanvas offcanvas-start" tabindex="-1" id="filterOffcanvas" role="dialog">
         <div class="offcanvas-header border-bottom">
             <h2 class="offcanvas-title fs-6 fw-bold" id="filterOffcanvasLabel">Filtri di Ricerca</h2>
@@ -31,7 +30,7 @@
                     <label for="subject-mobile" class="form-label small">Materia</label>
                     <select class="form-select form-select-sm" id="subject-mobile" name="subject">
                         <option value="">Tutte le materie</option>
-                        <!-- Le opzioni verranno caricate dinamicamente via JavaScript -->
+                        
                     </select>
                 </div>
 
@@ -48,7 +47,6 @@
                     <label for="date-mobile" class="form-label small fw-semibold">Data inizio (da)</label>
                     <input type="date" class="form-control form-control-sm" id="date-mobile" name="date_from" />
                 </div>
-
 
                 <div class="mb-4 form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="show-unavailable-mobile" name="show_unavailable" />
@@ -69,8 +67,7 @@
         </div>
     </div>
 
-
-    <!-- Feed dei Post -->
+    
     <div class="container py-4 flex-grow-1">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h2 fw-bold">Gruppi e Sessioni</h2>

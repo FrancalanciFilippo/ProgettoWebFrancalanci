@@ -40,7 +40,7 @@
 
                     <hr class="my-4 text-secondary opacity-25" />
 
-                    <!-- Sezione Informazioni Base -->
+                    
                     <h2 class="h5 fw-bold mb-3">Informazioni Generali</h2>
                     
                     <div class="mb-3">
@@ -70,7 +70,7 @@
 
                     <hr class="my-4 text-secondary opacity-25" />
 
-                    <!-- Sezione Date -->
+                    
                     <h2 class="h5 fw-bold mb-3">Pianificazione</h2>
                     
                     <div class="row g-3 mb-4">
@@ -84,10 +84,9 @@
                         </div>
                     </div>
 
-
                     <hr class="my-4 text-secondary opacity-25" />
 
-                    <!-- Descrizione e Pubblicazione -->
+                    
                     <h2 class="h5 fw-bold mb-3">Dettagli</h2>
                     
                     <div class="mb-4">
@@ -95,7 +94,7 @@
                         <textarea class="form-control focus-ring" id="descrizionePost" name="descrizione" rows="4" placeholder="Fornisci maggiori dettagli ai futuri partecipanti (es. argomenti trattati, requisiti)..."></textarea>
                     </div>
 
-                    <!-- Bottoni Invio -->
+                    
                     <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
                         <button type="submit" id="create-post-submit" class="btn btn-custom-primary px-5 fw-bold w-100 w-sm-auto">
                             <em class="bi bi-send me-2" aria-hidden="true"></em>Pubblica il Post

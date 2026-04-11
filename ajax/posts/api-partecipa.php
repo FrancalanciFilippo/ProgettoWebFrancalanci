@@ -2,33 +2,33 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica autenticazione
+
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
-// Verifica metodo HTTP
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
     exit();
 }
 
-// Lettura dati
-$data = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($data['post_id']) || !is_numeric($data['post_id'])) {
+$postIdRaw = $_POST['post_id'] ?? null;
+
+if (!isset($postIdRaw) || !is_numeric($postIdRaw)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'ID post non valido.']);
     exit();
 }
 
-$postId = (int)$data['post_id'];
+$postId = (int)$postIdRaw;
 $userId = $_SESSION['user_id'];
 
-// Esegui partecipazione
+
 try {
     $result = $dbh->partecipa($userId, $postId);
 

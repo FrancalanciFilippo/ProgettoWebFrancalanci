@@ -13,8 +13,5 @@ $templateParams["breadcrumb"] = [
 ];
 $templateParams["js"] = ["../js/admin_posts.js"];
 
-// Recupera tutti i post
-$templateParams["posts"] = $dbh->getPostsForAdmin();
-
 require '../template/base.php';
 ?>

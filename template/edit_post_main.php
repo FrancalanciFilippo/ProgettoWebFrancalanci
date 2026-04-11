@@ -6,16 +6,16 @@
             <p class="text-secondary">Aggiorna i dettagli della tua sessione di studio o del tuo progetto. Nota: alcuni campi non sono modificabili dopo la pubblicazione.</p>
         </div>
 
-        <!-- Form Card -->
+        
         <div class="card">
             <div class="card-body p-4">
                 <form id="edit-post-form" action="#" method="post">
                     <input type="hidden" name="redirect_url" value="my_posts.php" />
                     
-                    <!-- Informazioni Modificabili -->
+                    
                     <h2 class="h5 fw-bold mb-3">Informazioni Generali</h2>
                     
-                    <!-- Luogo dell'incontro (Editabile) -->
+                    
                     <div class="mb-4">
                         <label for="luogoIncontro" class="form-label fw-medium">Luogo dell'incontro <span class="text-danger">*</span></label>
                         <input type="text" class="form-control focus-ring" id="luogoIncontro" name="luogo" value="" required="required" placeholder="Caricamento..." />
@@ -23,7 +23,7 @@
 
                     <hr class="my-4 text-secondary opacity-25" />
 
-                    <!-- Sezione Date -->
+                    
                     <h2 class="h5 fw-bold mb-3">Pianificazione</h2>
                     
                     <div class="row g-3 mb-4">
@@ -37,11 +37,9 @@
                         </div>
                     </div>
 
-
                     <hr class="my-4 text-secondary opacity-25" />
 
-
-                    <!-- Descrizione e Pubblicazione -->
+                    
                     <h2 class="h5 fw-bold mb-3">Dettagli</h2>
 
                     <div class="mb-4">
@@ -51,7 +49,7 @@
 
                     <hr class="my-4 text-secondary opacity-25" />
 
-                    <!-- Partecipanti Iscritti -->
+                    
                     <div class="mb-4">
                         <label class="form-label fw-medium text-dark">Partecipanti iscritti</label>
                         <p class="text-secondary small mb-3">Qui puoi gestire gli studenti che si sono uniti alla tua sessione.</p>
@@ -60,7 +58,7 @@
                         </div>
                     </div>
 
-                    <!-- Bottoni Salvataggio -->
+                    
                     <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
                         <a href="my_posts.php" class="btn btn-outline-secondary px-4 fw-semibold order-2 order-sm-1">
                             Annulla

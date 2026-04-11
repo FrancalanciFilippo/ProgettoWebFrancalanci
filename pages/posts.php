@@ -1,6 +1,6 @@
 <?php
 require_once '../bootstrap.php';
-requireLogin(); // Questa pagina richiede autenticazione
+requireLogin();
 
 $templateParams["titolo"] = "SchoolTogether - Posts";
 $templateParams["descrizione"] = "Cerca e partecipa a sessioni di studio o progetti di gruppo su SchoolTogether.";
@@ -11,7 +11,6 @@ $templateParams["breadcrumb"] = [
     ["label" => "Posts", "active" => true]
 ];
 
-// Leggi i filtri dall'URL e passali al JavaScript
 $filters = [];
 if (isset($_GET['sort'])) $filters['sort'] = $_GET['sort'];
 if (isset($_GET['subject']) && !empty($_GET['subject'])) $filters['subject'] = $_GET['subject'];
@@ -22,7 +21,6 @@ if (isset($_GET['show_unavailable'])) $filters['show_unavailable'] = true;
 
 $templateParams["filters"] = $filters;
 
-// In questa pagina abbiamo script custom per i tooltip
 $templateParams["js"] = [
     "../js/posts.js",
     "../js/posts_filter.js",

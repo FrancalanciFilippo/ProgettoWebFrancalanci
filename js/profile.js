@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     addModifyProfile();
 });
 
-// === Caricamento dati profilo ===
 function renderFields() {
     fetch('../ajax/profile/api-get-profile.php')
     .then(response => response.json())
@@ -42,7 +41,6 @@ function renderFields() {
     });
 }
 
-// === Modifica profilo ===
 function addModifyProfile() {
     var toggleBtn = document.getElementById('toggle-edit-btn');
     if (!toggleBtn) return;
@@ -58,7 +56,7 @@ function addModifyProfile() {
 
     toggleBtn.addEventListener('click', () => {
         if (!isEditing) {
-            // Abilita campi
+
             Object.values(editableFields).forEach(field => {
                 if (field) {
                     field.disabled = false;
@@ -74,7 +72,7 @@ function addModifyProfile() {
             isEditing = true;
 
         } else {
-            // Salva modifiche
+
             var originalBtnText = toggleBtn.innerHTML;
             toggleBtn.disabled = true;
             toggleBtn.innerHTML = 'Salvataggio...';
@@ -143,7 +141,6 @@ function addModifyProfile() {
     });
 }
 
-// === Eliminazione account ===
 function addDeleteAccount() {
     var eliminaBtn = document.getElementById('profile-elimina');
     if (!eliminaBtn) return;

@@ -2,7 +2,7 @@
 $active = isset($templateParams["sidebarActive"]) ? $templateParams["sidebarActive"] : "profile";
 $basePath = isset($templateParams["basePath"]) ? $templateParams["basePath"] : "";
 ?>
-<!-- Bottone Menu Profilo -->
+
 <div class="container mt-3">
     <button class="btn btn-sm btn-outline-secondary" type="button"
         data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
@@ -10,7 +10,6 @@ $basePath = isset($templateParams["basePath"]) ? $templateParams["basePath"] : "
     </button>
 </div>
 
-<!-- Offcanvas Menu Profilo -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas">
     <div class="offcanvas-header border-bottom">
         <h2 class="offcanvas-title fs-6 fw-bold" id="sidebarOffcanvasLabel">Menu Profilo</h2>

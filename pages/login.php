@@ -1,7 +1,5 @@
 <?php
 require_once '../bootstrap.php';
-
-// Se l'utente è già loggato, reindirizza alla home
 if (isUserLoggedIn()) {
     header('Location: ../index.php');
     exit();

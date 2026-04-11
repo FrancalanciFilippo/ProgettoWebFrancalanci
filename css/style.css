@@ -180,8 +180,6 @@ a:focus {
     background-color: transparent;
 }
 
-
-
 .btn-post-type:hover {
     border-color: var(--color-primary);
     background-color: rgba(45, 90, 68, 0.03);
@@ -209,7 +207,6 @@ a:focus {
 .btn-check:checked + .btn-post-type .desc-post-type {
     color: white !important;
 }
-
 
 .form-check-input:checked {
     background-color: var(--color-primary);

@@ -2,14 +2,14 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica autenticazione
+
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
-// Verifica ID post
+
 $postId = (int)($_GET['id'] ?? 0);
 if ($postId <= 0) {
     http_response_code(400);
@@ -18,7 +18,7 @@ if ($postId <= 0) {
 }
 
 try {
-    // Verifica che l'utente sia il proprietario OPPURE un admin
+
     $post = $dbh->getPostInfo($postId);
     $isOwner = ($post && $post['utente_id'] == $_SESSION['user_id']);
     

@@ -2,17 +2,23 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica autenticazione
+
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
-// Lettura dati
-$data = json_decode(file_get_contents('php://input'), true);
-$postId = (int)($data['post_id'] ?? 0);
-$targetUserId = (int)($data['user_id'] ?? 0);
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
+    exit();
+}
+
+
+$postId = (int)($_POST['post_id'] ?? 0);
+$targetUserId = (int)($_POST['user_id'] ?? 0);
 
 if ($postId <= 0 || $targetUserId <= 0) {
     http_response_code(400);

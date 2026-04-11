@@ -13,8 +13,5 @@ $templateParams["breadcrumb"] = [
 ];
 $templateParams["js"] = ["../js/admin_users.js"];
 
-// Recupera utenti dal database (esclusi admin)
-$templateParams["utenti"] = $dbh->getUsersForAdmin();
-
 require '../template/base.php';
 ?>

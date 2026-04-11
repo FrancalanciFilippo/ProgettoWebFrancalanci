@@ -10,9 +10,8 @@
 
     <?php $basePath = isset($templateParams["basePath"]) ? $templateParams["basePath"] : ""; ?>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
     
     <link rel="stylesheet" type="text/css" href="<?php echo $basePath; ?>css/style.css"/>
     <?php
@@ -127,11 +126,11 @@
                 <div class="col-12 col-md-4 mb-3 mb-md-0 text-md-center">
                     <h2 class="h6 fw-bold">Link utili</h2>
                     <ul class="list-unstyled small">
-                        <li><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"
+                        <li><a href="https://www.instagram.com"
                                 class="text-body text-decoration-none">Instagram</a></li>
-                        <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                        <li><a href="https://www.linkedin.com"
                                 class="text-body text-decoration-none">LinkedIn</a></li>
-                        <li><a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
+                        <li><a href="https://www.facebook.com"
                                 class="text-body text-decoration-none">Facebook</a></li>
                     </ul>
                 </div>
@@ -153,7 +152,6 @@
     </footer>
     <?php endif; ?>
     <?php
-    // Inizializza le variabili globali di cui hanno bisogno i file JS
     if (isset($templateParams["filters"])) {
         echo '<script>';
         echo 'window.currentFilters = ' . json_encode($templateParams["filters"]) . ';';

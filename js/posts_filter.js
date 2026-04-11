@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Carica le materie dinamicamente
     loadMaterie();
     
-    // Inizializza la sincronizzazione dei form con i valori correnti
     syncFormValues();
 });
 
@@ -26,13 +24,13 @@ function populateMateriaDropdowns(materie) {
     const mobileSelect = document.getElementById('subject-mobile');
 
     if (desktopSelect) {
-        // Mantieni l'opzione "Tutte le materie"
+
         desktopSelect.innerHTML = '<option value="">Tutte le materie</option>';
         materie.forEach(materia => {
             const option = document.createElement('option');
-            option.value = materia.nome.toLowerCase(); // Usa il nome in minuscolo come valore
+            option.value = materia.nome.toLowerCase();
             option.textContent = materia.nome;
-            // Seleziona l'opzione se corrisponde al filtro corrente
+
             if (window.currentFilters && window.currentFilters.subject === materia.nome.toLowerCase()) {
                 option.selected = true;
             }
@@ -41,13 +39,13 @@ function populateMateriaDropdowns(materie) {
     }
 
     if (mobileSelect) {
-        // Mantieni l'opzione "Tutte le materie"
+
         mobileSelect.innerHTML = '<option value="">Tutte le materie</option>';
         materie.forEach(materia => {
             const option = document.createElement('option');
-            option.value = materia.nome.toLowerCase(); // Usa il nome in minuscolo come valore
+            option.value = materia.nome.toLowerCase();
             option.textContent = materia.nome;
-            // Seleziona l'opzione se corrisponde al filtro corrente
+
             if (window.currentFilters && window.currentFilters.subject === materia.nome.toLowerCase()) {
                 option.selected = true;
             }
@@ -57,9 +55,9 @@ function populateMateriaDropdowns(materie) {
 }
 
 function syncFormValues() {
-    // Sincronizza i valori dai filtri correnti nell'URL
+
     if (window.currentFilters) {
-        // Sort
+
         if (window.currentFilters.sort) {
             const desktopSort = document.getElementById('sort-desktop');
             const mobileSort = document.getElementById('sort-mobile');
@@ -67,7 +65,7 @@ function syncFormValues() {
             if (mobileSort) mobileSort.value = window.currentFilters.sort;
         }
         
-        // Date
+
         if (window.currentFilters.date_from) {
             const desktopDate = document.getElementById('date-desktop');
             const mobileDate = document.getElementById('date-mobile');
@@ -75,7 +73,7 @@ function syncFormValues() {
             if (mobileDate) mobileDate.value = window.currentFilters.date_from;
         }
 
-        // Type
+
         if (window.currentFilters.type) {
             const desktopType = document.getElementById('type-desktop');
             const mobileType = document.getElementById('type-mobile');
@@ -92,7 +90,7 @@ function syncFormValues() {
         }
     }
 
-    // Aggiungi event listener per i bottoni reset
+
     const resetDesktop = document.getElementById('reset-filters-desktop');
     const resetMobile = document.getElementById('reset-filters-mobile');
 
@@ -110,18 +108,15 @@ function syncFormValues() {
 }
 
 function resetFilters() {
-    // Reset form desktop
     const formDesktop = document.getElementById('filter-form-desktop');
     if (formDesktop) {
         formDesktop.reset();
     }
 
-    // Reset form mobile
     const formMobile = document.getElementById('filter-form-mobile');
     if (formMobile) {
         formMobile.reset();
     }
 
-    // Vai alla pagina senza parametri (reset filtri)
     window.location.href = window.location.pathname;
 }

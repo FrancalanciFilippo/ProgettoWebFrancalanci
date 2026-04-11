@@ -1,4 +1,3 @@
-// Helper per generare un colore dall'hash del nome
 function hashColor(str) {
     var palette = [
         '#2e7d32', '#1565c0', '#6a1b9a', '#c62828', 
@@ -11,12 +10,10 @@ function hashColor(str) {
     return palette[Math.abs(hash) % palette.length];
 }
 
-// Helper per ottenere le iniziali
 function getInitials(fullName) {
     return fullName.split(' ').filter(Boolean).slice(0, 2).map(word => word[0].toUpperCase()).join('');
 }
 
-// Applica stili agli avatar
 function initializeAvatars() {
     var avatars = document.querySelectorAll('.comment-avatar');
     avatars.forEach(avatar => {
@@ -30,7 +27,6 @@ function initializeAvatars() {
     });
 }
 
-// Gestione della risposta
 window.setReply = function(author, date, text, replyId) {
     document.getElementById('reply-author-name').textContent = author;
     document.getElementById('reply-author-date').textContent = date;

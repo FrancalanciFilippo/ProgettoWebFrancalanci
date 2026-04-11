@@ -4,7 +4,6 @@
             <p class="text-secondary">Le sessioni di studio e i progetti a cui sei iscritto.</p>
         </div>
 
-<!-- Lista Post (popolata dinamicamente via JS) -->
 <div id="joined-posts-container">
     <p class="text-muted text-center">Caricamento...</p>
 </div>

@@ -8,7 +8,7 @@ ini_set('log_errors', 1);
 
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
@@ -31,14 +31,14 @@ $postData = [
     'descrizione' => trim($_POST['descrizione'] ?? '')
 ];
 
-// Validazioni minime
+
 if (empty($postData['luogo']) || empty($postData['data_inizio'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Luogo e data di inizio sono obbligatori.']);
     exit();
 }
 
-// ID partecipanti da rimuovere (inviati come stringa separata da virgole dal JS)
+
 $participantIdsToKick = [];
 if (!empty($_POST['delete_participants']) && is_string($_POST['delete_participants'])) {
     $participantIdsToKick = array_map('intval', explode(',', $_POST['delete_participants']));

@@ -2,14 +2,14 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica autenticazione
+
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
-// Validazione parametro
+
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'ID post non valido.']);

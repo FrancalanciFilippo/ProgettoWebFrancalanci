@@ -2,14 +2,14 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica autenticazione
+
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
-// Raccogli i filtri dai parametri GET
+
 $filters = [
     'exclude_user_id' => $_SESSION['user_id'],
     'not_owner_id'    => $_SESSION['user_id']

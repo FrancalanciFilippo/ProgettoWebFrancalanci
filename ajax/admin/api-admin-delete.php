@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// Lettura dati JSON
-$data = json_decode(file_get_contents("php://input"), true);
-$type = $data['type'] ?? ''; // 'user' o 'post'
+
+$data = json_decode(file_get_contents("php:
+$type = $data['type'] ?? '';
 $id = (int)($data['id'] ?? 0);
 
 if ($id <= 0 || !in_array($type, ['user', 'post'])) {

@@ -2,24 +2,21 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica metodo HTTP
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
     exit();
 }
 
-// Lettura dati
-$data = json_decode(file_get_contents('php://input'), true);
+$email = trim($_POST['email'] ?? '');
+$password = $_POST['password'] ?? '';
 
-if (!isset($data['email'], $data['password'])) {
+if (empty($email) || empty($password)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Dati mancanti: specificare email e password.']);
     exit();
 }
-
-$email = trim($data['email']);
-$password = $data['password'];
 
 try {
     $utente = $dbh->getUserByEmail($email);

@@ -36,19 +36,4 @@ function requireAdmin(): void {
         exit;
     }
 }
-
-function getLoggedInUser(): ?array {
-    if (!isUserLoggedIn()) {
-        return null;
-    }
-    
-    return [
-        'id' => $_SESSION['user_id'] ?? null,
-        'email' => $_SESSION['email'] ?? null,
-        'name' => $_SESSION['nome'] ?? null,
-        'surname' => $_SESSION['cognome'] ?? null,
-        'description' => $_SESSION['descrizione'] ?? null,
-        'type' => $_SESSION['user_type'] ?? null
-    ];
-}
 ?>

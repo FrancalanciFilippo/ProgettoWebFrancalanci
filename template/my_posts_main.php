@@ -4,7 +4,6 @@
             <p class="text-secondary">Gestisci le sessioni di studio e i progetti che hai creato.</p>
         </div>
 
-<!-- Lista Post -->
 <div id="my-posts-list">
 </div>
 </div>

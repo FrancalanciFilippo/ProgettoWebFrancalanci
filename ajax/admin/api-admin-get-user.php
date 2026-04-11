@@ -20,7 +20,7 @@ try {
         exit();
     }
     
-    // Protezione: non permettere la modifica di admin
+
     if ($user['tipo'] === 'admin') {
         http_response_code(403);
         echo json_encode(['success' => false, 'message' => 'Non puoi modificare un amministratore.']);

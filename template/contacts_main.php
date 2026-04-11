@@ -7,7 +7,7 @@
                     <p class="text-secondary">Raggiungici per domande o suggerimenti</p>
                 </div>
 
-                <!-- Form contatti -->
+                
                 <div class="card">
                     <div class="card-body p-4 p-md-5">
 

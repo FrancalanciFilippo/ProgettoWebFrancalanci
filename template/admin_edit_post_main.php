@@ -1,7 +1,7 @@
 <div class="container py-5 flex-grow-1 d-flex flex-column min-vh-100">
         <div class="row justify-content-center">
             <div class="col-12">
-        <!-- Header della pagina -->
+        
         <div class="mb-4">
             <h1 class="h1 fw-bold mb-1">Modifica Post</h1>
             <p class="text-secondary">
@@ -9,13 +9,13 @@
             </p>
         </div>
 
-        <!-- Form Card -->
+        
         <div class="card">
             <div class="card-body p-4">
                 <form id="edit-post-form" action="#" method="post">
                     <input type="hidden" name="redirect_url" value="admin_posts.php" />
                     
-                    <!-- Informazioni Modificabili -->
+                    
                     <h2 class="h5 fw-bold mb-3">Informazioni Generali</h2>
                     
                     <div class="mb-4">
@@ -26,7 +26,7 @@
 
                     <hr class="my-4 text-secondary opacity-25" />
 
-                    <!-- Sezione Date -->
+                    
                     <h2 class="h5 fw-bold mb-3">Pianificazione</h2>
                     
                     <div class="row g-3 mb-4">
@@ -51,7 +51,7 @@
 
                     <hr class="my-4 text-secondary opacity-25" />
 
-                    <!-- Gestione Partecipanti -->
+                    
                     <div class="mb-4">
                         <label class="form-label fw-medium text-dark">Partecipanti iscritti</label>
                         <p class="text-secondary small mb-3">Come amministratore puoi rimuovere iscritti da questa sessione.</p>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <!-- Bottoni Salvataggio -->
+                    
                     <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
                         <a href="admin_posts.php" class="btn btn-outline-secondary px-4 fw-semibold order-2 order-sm-1">
                             Annulla
@@ -76,5 +76,3 @@
             </div>
         </div>
     </div>
-
-

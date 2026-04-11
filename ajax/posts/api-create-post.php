@@ -2,21 +2,21 @@
 require_once '../../bootstrap.php';
 header('Content-Type: application/json');
 
-// Verifica autenticazione
+
 if (!isUserLoggedIn()) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Non autenticato.']);
+    echo json_encode(['success' => false, 'message' => 'Non autenticato.', 'redirect' => 'login.php']);
     exit();
 }
 
-// Verifica metodo HTTP
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
     exit();
 }
 
-// Raccolta dati
+
 $postData = [
     'titolo' => trim($_POST['titolo'] ?? ''),
     'tipo' => $_POST['post_type'] ?? '',
@@ -29,7 +29,7 @@ $postData = [
     'utente_id' => $_SESSION['user_id']
 ];
 
-// Validazione campi
+
 if (empty($postData['titolo']) || empty($postData['materia_id']) || empty($postData['luogo']) || empty($postData['data_inizio'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Titolo, materia, luogo e data di inizio sono obbligatori.']);
@@ -56,7 +56,7 @@ if (empty($postData['data_inizio'])) {
     exit();
 }
 
-// Creazione post
+
 try {
     $postId = $dbh->createPost($postData);
 

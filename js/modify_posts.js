@@ -9,8 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     loadParticipants(postId);
     initFormSubmit(postId);
 });
-
-// Stato per le rimozioni dei partecipanti (tracciate in JS)
 window.kickedParticipantIds = [];
 
 function getPostIdFromUrl() {
@@ -58,7 +56,6 @@ function formatDateForInput(dateString) {
     return date.toISOString().split('T')[0];
 }
 
-
 function initFormSubmit(postId) {
     const form = document.getElementById('edit-post-form');
     if (!form) return;
@@ -74,7 +71,7 @@ function initFormSubmit(postId) {
         const formData = new FormData(form);
         formData.append('id', postId);
         
-        // Aggiunge gli array di rimozione tracciati in JS
+
         if (window.kickedParticipantIds && window.kickedParticipantIds.length > 0) {
             formData.append('delete_participants', window.kickedParticipantIds.join(','));
         }
@@ -103,7 +100,6 @@ function initFormSubmit(postId) {
     });
 }
 
-// === Helper functions ===
 function showError(message) {
     const alertBox = document.createElement('div');
     alertBox.className = 'alert alert-danger alert-dismissible fade show mb-4';
@@ -116,9 +112,6 @@ function showError(message) {
     form?.insertAdjacentElement('beforebegin', alertBox);
 }
 
-
-
-// === Carica e renderizza partecipanti ===
 function loadParticipants(postId) {
     const container = document.getElementById('partecipanti');
     if (!container) return;
