@@ -11,7 +11,7 @@ $templateParams["breadcrumb"] = [
     ["label" => "Admin Dashboard", "url" => "admin.php"],
     ["label" => "Gestione Utenti", "active" => true]
 ];
-$templateParams["js"] = ["../js/admin_actions.js"];
+$templateParams["js"] = ["../js/admin_users.js"];
 
 // Recupera utenti dal database (esclusi admin)
 $templateParams["utenti"] = $dbh->getUsersForAdmin();

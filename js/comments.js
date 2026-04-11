@@ -150,44 +150,39 @@ function setButtonLoading(button, isLoading) {
     }
 }
 
-function handleCommentSubmit(event) {
-    event.preventDefault();
-    
-    const form = document.getElementById('comment-form');
-    const btn = document.getElementById('comment-submit-btn');
-    
-    
-    setButtonLoading(btn, true);
-    
-    const formData = new FormData(form);
-    const params = new URLSearchParams(window.location.search);
-    formData.set('post_id', params.get('post_id'));
-    
-    fetch('../ajax/posts/api-add-comment.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            window.location.href = result.redirect;
-        } else {
-            alert('Errore: ' + result.message);
-            setButtonLoading(btn, false);
-        }
-    })
-    .catch(error => {
-        console.error('Errore invio commento:', error);
-        alert('Errore di connessione. Riprova.');
-        setButtonLoading(btn, false);
-    });
-}
-
 function initFormSubmit() {
-    const btn = document.getElementById('comment-submit-btn');
-    if (!btn) return;
+    const form = document.getElementById('comment-form');
+    if (!form) return;
     
-    btn.addEventListener('click', handleCommentSubmit);
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        
+        const btn = document.getElementById('comment-submit-btn');
+        setButtonLoading(btn, true);
+        
+        const formData = new FormData(form);
+        const params = new URLSearchParams(window.location.search);
+        formData.set('post_id', params.get('post_id'));
+        
+        fetch('../ajax/posts/api-add-comment.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                window.location.href = result.redirect;
+            } else {
+                alert('Errore: ' + result.message);
+                setButtonLoading(btn, false);
+            }
+        })
+        .catch(error => {
+            console.error('Errore invio commento:', error);
+            alert('Errore di connessione. Riprova.');
+            setButtonLoading(btn, false);
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

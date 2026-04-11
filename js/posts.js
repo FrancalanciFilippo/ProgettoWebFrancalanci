@@ -174,10 +174,12 @@ function createPostCard(post) {
 }
 
 function partecipaPost(postId) {
+    const formData = new FormData();
+    formData.append('post_id', postId);
+
     fetch('../ajax/posts/api-partecipa.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ post_id: postId })
+        body: formData
     })
     .then(response => response.json())
     .then(data => {

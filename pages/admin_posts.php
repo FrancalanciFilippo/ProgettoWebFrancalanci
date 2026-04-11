@@ -11,7 +11,7 @@ $templateParams["breadcrumb"] = [
     ["label" => "Admin Dashboard", "url" => "admin.php"],
     ["label" => "Gestione Post", "active" => true]
 ];
-$templateParams["js"] = ["../js/admin_actions.js"];
+$templateParams["js"] = ["../js/admin_posts.js"];
 
 // Recupera tutti i post
 $templateParams["posts"] = $dbh->getPostsForAdmin();

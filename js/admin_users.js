@@ -5,12 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
         loadUsers();
     }
 
-    // Carica post se siamo sulla pagina admin_posts
-    const postsTbody = document.getElementById('posts-tbody');
-    if (postsTbody) {
-        loadPosts();
-    }
-
     // Inizializzazione form modifica utente (se presente)
     const editUserForm = document.getElementById('admin-edit-user-form');
     if (editUserForm) {
@@ -84,9 +78,7 @@ function renderUsers(users) {
     initializeAvatars();
 }
 
-/**
- * Renderizza messaggio vuoto utenti
- */
+
 function renderUsersEmpty() {
     const tbody = document.getElementById('users-tbody');
     if (tbody) {
@@ -94,9 +86,7 @@ function renderUsersEmpty() {
     }
 }
 
-/**
- * Renderizza errore caricamento utenti
- */
+
 function renderUsersError() {
     const tbody = document.getElementById('users-tbody');
     if (tbody) {
@@ -104,89 +94,7 @@ function renderUsersError() {
     }
 }
 
-/**
- * Carica e renderizza post
- */
-function loadPosts() {
-    fetch('../ajax/admin/api-get-posts.php')
-        .then(res => res.json())
-        .then(data => {
-            if (data.success && data.posts) {
-                renderPosts(data.posts);
-            } else {
-                renderPostsEmpty();
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            renderPostsError();
-        });
-}
 
-/**
- * Renderizza post in tabella
- */
-function renderPosts(posts) {
-    const tbody = document.getElementById('posts-tbody');
-    if (!tbody) return;
-
-    if (posts.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted">Nessun post pubblicato al momento.</td></tr>';
-        return;
-    }
-
-    tbody.innerHTML = posts.map(post => `
-        <tr id="post-row-${post.id}">
-            <td class="ps-4 py-3">
-                <div class="fw-bold text-dark">${post.titolo}</div>
-                <div class="text-muted small">ID: #${post.id}</div>
-            </td>
-            <td class="py-3">
-                <div class="d-flex align-items-center">
-                    <em class="bi bi-person-circle me-2 text-secondary"></em>
-                    <div>
-                        <div class="small fw-semibold">${post.creatore_nome} ${post.creatore_cognome}</div>
-                        <div class="text-muted extra-small" style="font-size: 0.75rem;">${post.creatore_email}</div>
-                    </div>
-                </div>
-            </td>
-            <td class="pe-4 py-3 text-end">
-                <div class="d-flex justify-content-end gap-2 text-nowrap">
-                    <a href="admin_edit_post.php?id=${post.id}" class="btn btn-warning btn-sm fw-semibold text-dark">
-                        <em class="bi bi-pencil me-1"></em>Modifica
-                    </a>
-                    <button type="button" class="btn btn-danger btn-sm fw-semibold" onclick="deletePost(${post.id}, '${post.titolo.replace(/'/g, "\\'")}')">
-                        <em class="bi bi-trash me-1"></em>Elimina
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-}
-
-/**
- * Renderizza messaggio vuoto post
- */
-function renderPostsEmpty() {
-    const tbody = document.getElementById('posts-tbody');
-    if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted">Nessun post pubblicato al momento.</td></tr>';
-    }
-}
-
-/**
- * Renderizza errore caricamento post
- */
-function renderPostsError() {
-    const tbody = document.getElementById('posts-tbody');
-    if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-danger">Errore nel caricamento dei post.</td></tr>';
-    }
-}
-
-/**
- * Helper per generare un colore dall'hash del nome (coerente con comments.js)
- */
 function hashColor(str) {
     const palette = [
         '#2e7d32', '#1565c0', '#6a1b9a', '#c62828', 
@@ -199,16 +107,12 @@ function hashColor(str) {
     return palette[Math.abs(hash) % palette.length];
 }
 
-/**
- * Helper per ottenere le iniziali
- */
+
 function getInitials(fullName) {
     return fullName.split(' ').filter(Boolean).slice(0, 2).map(word => word[0].toUpperCase()).join('');
 }
 
-/**
- * Applica stili e iniziali agli avatar amministrativi
- */
+
 function initializeAvatars() {
     const avatars = document.querySelectorAll('.admin-user-avatar');
     avatars.forEach(avatar => {
@@ -222,15 +126,15 @@ function initializeAvatars() {
     });
 }
 
-/**
- * Elimina un utente via AJAX
- */
+
 function deleteUser(userId, email) {
     if (confirm(`Sei sicuro di voler eliminare DEFINITIVAMENTE l'utente ${email}?\n\nTutti i suoi post e commenti verranno rimossi.`)) {
-        fetch('../ajax/admin/api-admin-delete.php', {
+        const formData = new FormData();
+        formData.append('id', userId);
+
+        fetch('../ajax/admin/api-admin-delete-user.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'user', id: userId })
+            body: formData
         })
         .then(res => res.json())
         .then(data => {
@@ -252,39 +156,7 @@ function deleteUser(userId, email) {
     }
 }
 
-/**
- * Elimina un post via AJAX
- */
-function deletePost(postId, title) {
-    if (confirm(`Vuoi procedere all'eliminazione del post: "${title}"?`)) {
-        fetch('../ajax/admin/api-admin-delete.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'post', id: postId })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                const row = document.getElementById(`post-row-${postId}`);
-                if (row) {
-                    row.classList.add('fade-out');
-                    setTimeout(() => row.remove(), 400);
-                }
-                alert(data.message);
-            } else {
-                alert('Errore: ' + data.message);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert('Errore di connessione.');
-        });
-    }
-}
 
-/**
- * Salvataggio modifiche profilo utente (lato admin)
- */
 function handleEditUserSubmit(e) {
     e.preventDefault();
     const form = e.target;

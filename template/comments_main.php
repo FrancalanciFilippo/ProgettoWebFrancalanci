@@ -21,8 +21,8 @@
                                             <span class="reply-author" id="reply-author-name"></span>
                                             <span class="text-muted ms-2 small" id="reply-author-date"></span>
                                         </div>
-                                        <button type="button" class="btn-close btn-sm" aria-label="Annulla risposta"
-                                            onclick="clearReply()" class="btn-clear-reply"></button>
+                                        <button type="button" class="btn-close btn-sm btn-clear-reply" aria-label="Annulla risposta"
+                                            onclick="clearReply()"></button>
                                     </div>
                                     <span class="reply-text" id="reply-text-preview"></span>
                                 </div>

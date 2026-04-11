@@ -79,17 +79,16 @@ function addModifyProfile() {
             toggleBtn.disabled = true;
             toggleBtn.innerHTML = 'Salvataggio...';
 
-            var payload = {
-                nome: editableFields.nome ? editableFields.nome.value : '',
-                cognome: editableFields.cognome ? editableFields.cognome.value : '',
-                email: editableFields.email ? editableFields.email.value : '',
-                descrizione: editableFields.bio ? editableFields.bio.value : ''
-            };
+            const form = document.getElementById('profile-form');
+            const formData = new FormData(form);
+            formData.set('nome', editableFields.nome.value);
+            formData.set('cognome', editableFields.cognome.value);
+            formData.set('email', editableFields.email.value);
+            formData.set('descrizione', editableFields.bio.value);
 
             fetch('../ajax/profile/api-modify-profile.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: formData
             })
             .then(response => response.json())
             .then(result => {
@@ -154,9 +153,11 @@ function addDeleteAccount() {
             return;
         }
 
+        const formData = new FormData();
+
         fetch('../ajax/profile/api-delete-account.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
+            body: formData
         })
         .then(response => response.json())
         .then(result => {
