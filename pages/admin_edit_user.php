@@ -11,17 +11,16 @@ if (!$user || $user['tipo'] === 'admin') {
 }
 
 $templateParams["titolo"] = "SchoolTogether - Admin: Modifica Utente";
-$templateParams["descrizione"] = "Modifica le informazioni dell'utente " . $user['email'];
+$templateParams["descrizione"] = "Modifica le informazioni dell'utente";
 $templateParams["basePath"] = "../";
 $templateParams["main"] = "admin_edit_user_main.php";
-$templateParams["editUser"] = $user;
 $templateParams["breadcrumb"] = [
     ["label" => "Home", "url" => "../index.php"],
     ["label" => "Admin Dashboard", "url" => "admin.php"],
     ["label" => "Gestione Utenti", "url" => "admin_users.php"],
     ["label" => "Modifica Utente", "active" => true]
 ];
-$templateParams["js"] = ["../js/admin_actions.js"];
+$templateParams["js"] = ["../js/admin_edit_user.js"];
 
 require '../template/base.php';
 ?>

@@ -18,14 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// ID post dall'URL o dal body
 $postId = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
 if ($postId <= 0) {
     echo json_encode(['success' => false, 'message' => 'ID post non valido.']);
     exit();
 }
 
-// Dati da aggiornare (solo campi consentiti)
 $postData = [
     'luogo' => trim($_POST['luogo'] ?? ''),
     'data_inizio' => $_POST['data_inizio'] ?? '',
@@ -40,15 +38,6 @@ if (empty($postData['luogo']) || empty($postData['data_inizio'])) {
     exit();
 }
 
-// File nuovi da caricare
-$filesToAdd = $_FILES['materiali'] ?? [];
-
-// ID file da eliminare (inviati come stringa separata da virgole dal JS)
-$fileIdsToDelete = [];
-if (!empty($_POST['delete_files']) && is_string($_POST['delete_files'])) {
-    $fileIdsToDelete = array_map('intval', explode(',', $_POST['delete_files']));
-}
-
 // ID partecipanti da rimuovere (inviati come stringa separata da virgole dal JS)
 $participantIdsToKick = [];
 if (!empty($_POST['delete_participants']) && is_string($_POST['delete_participants'])) {
@@ -60,8 +49,6 @@ try {
         $postId,
         $_SESSION['user_id'],
         $postData,
-        $filesToAdd,
-        $fileIdsToDelete,
         $participantIdsToKick
     );
     

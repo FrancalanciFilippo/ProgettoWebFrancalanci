@@ -67,20 +67,6 @@ function createJoinedPostCard(post) {
     const dataFine = formatDate(post.data_fine);
     const dataPubblicazione = formatDateTime(post.data_creazione);
 
-    // File allegati (come in my_posts.js)
-    const filesHtml = post.files && post.files.length > 0 
-        ? post.files.map(file => {
-            const fileIcon = getFileIcon(file.tipo);
-            const fileColor = getFileColor(file.tipo);
-            return `
-                <a href="../ajax/posts/download-file.php?id=${file.id}" 
-                class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center border-0 bg-white shadow-sm me-2 mb-2">
-                    <em class="bi ${fileIcon} me-2 ${fileColor}"></em>${escapeHtml(file.nome)}
-                </a>
-            `;
-        }).join('')
-        : '<span class="text-muted small">Nessun file allegato</span>';
-
     return `
         <div class="card shadow-sm mb-4 border-0">
             <div class="card-body p-4">
@@ -130,9 +116,7 @@ function createJoinedPostCard(post) {
                 <!-- Descrizione e File (AGGIUNTO) -->
                 <div class="p-3 bg-light rounded-3 mb-4">
                     <h3 class="h6 fw-bold mb-2">Descrizione</h3>
-                    <p class="small text-secondary mb-3">${escapeHtml(post.post_descrizione || 'Nessuna descrizione')}</p>
-                    <h3 class="h6 fw-bold mb-2">Materiali Allegati</h3>
-                    <div class="d-flex flex-wrap">${filesHtml}</div>
+                    <p class="small text-secondary mb-0">${escapeHtml(post.post_descrizione || 'Nessuna descrizione')}</p>
                 </div>
 
                 <!-- Bottoni e Data -->
@@ -159,28 +143,6 @@ function createJoinedPostCard(post) {
 }
 
 // === Helper functions (da my_posts.js) ===
-
-function getFileIcon(mimeType) {
-    if (!mimeType) return 'bi-file-earmark';
-    if (mimeType.includes('pdf')) return 'bi-file-earmark-pdf';
-    if (mimeType.includes('word') || mimeType.includes('doc')) return 'bi-file-earmark-word';
-    if (mimeType.includes('excel') || mimeType.includes('xls')) return 'bi-file-earmark-excel';
-    if (mimeType.includes('powerpoint') || mimeType.includes('ppt')) return 'bi-file-earmark-ppt';
-    if (mimeType.includes('image')) return 'bi-file-earmark-image';
-    if (mimeType.includes('text')) return 'bi-file-earmark-text';
-    if (mimeType.includes('zip') || mimeType.includes('rar')) return 'bi-file-earmark-zip';
-    return 'bi-file-earmark';
-}
-
-function getFileColor(mimeType) {
-    if (!mimeType) return 'text-secondary';
-    if (mimeType.includes('pdf')) return 'text-danger';
-    if (mimeType.includes('word') || mimeType.includes('doc')) return 'text-primary';
-    if (mimeType.includes('excel') || mimeType.includes('xls')) return 'text-success';
-    if (mimeType.includes('powerpoint') || mimeType.includes('ppt')) return 'text-warning';
-    if (mimeType.includes('image')) return 'text-info';
-    return 'text-secondary';
-}
 
 function escapeHtml(text) {
     if (!text) return '';

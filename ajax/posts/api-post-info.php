@@ -26,12 +26,9 @@ try {
         exit();
     }
 
-    $files = $dbh->getPostFiles($postId);
-
     echo json_encode([
         'success' => true,
-        'post' => $postInfo,
-        'files' => $files
+        'post' => $postInfo
     ]);
 } catch (Exception $e) {
     error_log("Errore caricamento post info: " . $e->getMessage());

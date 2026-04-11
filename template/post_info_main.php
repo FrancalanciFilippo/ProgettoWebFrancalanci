@@ -1,18 +1,17 @@
-<section class="py-5 blur-entrance">
-    <div class="container">
+<div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
 
                 <!-- Card Dettaglio Post -->
-                <div class="card shadow-sm border-0">
+                <div class="card">
                     <div class="card-body p-4 p-md-5">
 
                         <!-- Titolo e Icona Tipo -->
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h1 id="post-title" class="h3 fw-bold mb-0 text-dark">
+                        <div class="mb-4 d-flex align-items-center justify-content-between">
+                            <h1 id="post-title" class="h1 fw-bold mb-0 text-dark">
                                 Caricamento...
                             </h1>
-                            <em id="post-type-icon" class="bi bi-book fs-3" style="color: var(--color-primary);" aria-hidden="true"></em>
+                            <em id="post-type-icon" class="bi bi-book post-type-icon-lg" aria-hidden="true"></em>
                         </div>
 
                         <!-- Autore -->
@@ -95,14 +94,6 @@
 
                         <hr class="my-4 text-secondary opacity-25" />
 
-                        <!-- Materiali Allegati -->
-                        <h2 class="h5 fw-bold mb-3">Materiali Allegati</h2>
-                        <div id="post-files" class="d-flex flex-column gap-2 mb-4">
-                            <p class="text-muted">Caricamento materiali...</p>
-                        </div>
-
-                        <hr class="my-4 text-secondary opacity-25" />
-
                         <!-- Bottoni Azione -->
                         <div class="d-grid">
                             <a id="post-action-btn" href="#" class="btn btn-custom-primary fw-bold">
@@ -116,4 +107,3 @@
             </div>
         </div>
     </div>
-</section>

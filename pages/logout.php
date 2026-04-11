@@ -1,10 +1,8 @@
 <?php
 require_once '../bootstrap.php';
 
-// Effettua il logout
 session_destroy();
 
-// Mostra la pagina di logout
 $templateParams["titolo"] = "SchoolTogether - Logout";
 $templateParams["descrizione"] = "Logout da SchoolTogether.";
 $templateParams["basePath"] = "../";

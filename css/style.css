@@ -11,7 +11,6 @@ body {
     padding-top: 76px;
 }
 
-/* Skip-link per accessibilità */
 .skip-link {
     position: absolute;
     top: -100%;
@@ -27,13 +26,15 @@ body {
     top: 0;
 }
 
-/* Card semplice */
+.logo-home {
+    max-width: 180px;
+}
+
 .card {
     border: none;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
-/* Responsive container - stacked su small, flex su desktop */
 #my-posts-list,
 #joined-posts-container,
 #comments-list,
@@ -51,7 +52,6 @@ body {
     }
 }
 
-/* Link generali */
 a {
     color: var(--color-link);
 }
@@ -60,7 +60,6 @@ a:focus {
     color: var(--color-link-hover);
 }
 
-/* Navbar */
 .navbar-custom .navbar-brand,
 .navbar-custom .nav-link {
     color: var(--color-primary) !important;
@@ -72,7 +71,6 @@ a:focus {
     color: var(--color-primary-hover) !important;
 }
 
-/* Bottoni */
 .btn-custom-primary {
     background-color: var(--color-primary);
     color: #ffffff;
@@ -97,7 +95,6 @@ a:focus {
     border-color: var(--color-primary);
 }
 
-/* Outline verde per btn-group (filtri) */
 .btn.btn-outline-custom-primary {
     color: var(--color-primary);
     border-color: var(--color-primary);
@@ -130,7 +127,6 @@ a:focus {
     border-color: var(--color-secondary-hover);
 }
 
-/* Sidebar Profilo (Nav-pills) */
 .nav-pills .nav-link {
     color: var(--color-primary) !important;
 }
@@ -145,7 +141,6 @@ a:focus {
     color: #ffffff !important;
 }
 
-/* Custom Dropdown Active State */
 .dropdown-item.active, 
 .dropdown-item:active {
     background-color: var(--color-primary);
@@ -158,7 +153,6 @@ a:focus {
     color: var(--color-primary);
 }
 
-/* Animazioni di ingresso (Index) */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -181,12 +175,12 @@ a:focus {
 .delay-4 { animation-delay: 0.7s; }
 .delay-5 { animation-delay: 0.9s; }
 
-/* Radio button "Creat Post" Blocks */
 .btn-post-type {
     border: 1px solid #dee2e6;
     background-color: transparent;
-    transition: all 0.2s ease-in-out;
 }
+
+
 
 .btn-post-type:hover {
     border-color: var(--color-primary);
@@ -195,18 +189,16 @@ a:focus {
 
 .btn-post-type .icon-post-type {
     color: var(--color-primary);
-    transition: color 0.15s ease-in-out;
 }
 
 .btn-post-type .title-post-type {
-    color: #212529; /* Dark text normally */
+    color: #212529;
 }
 
 .btn-post-type .desc-post-type {
-    color: #6c757d; /* Muted text normally */
+    color: #6c757d; 
 }
 
-/* Quando il radio button e' selezionato */
 .btn-check:checked + .btn-post-type {
     background-color: var(--color-primary) !important;
     border-color: var(--color-primary) !important;
@@ -218,18 +210,19 @@ a:focus {
     color: white !important;
 }
 
-/* =========================================================================
-   OVERRIDE FORMS SWITCH & CHECKBOX
-   Forze il Bootstrap Switch a verde invece che al classico blu.
-   ========================================================================= */
+
 .form-check-input:checked {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
 }
 
-/* Override: btn-outline-dark selezionato diventa verde del sito */
 .btn-check:checked + .btn-outline-dark {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
     color: #ffffff;
+}
+
+ 
+.icon-admin-lg {
+    font-size: 3.5rem;
 }

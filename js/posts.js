@@ -158,7 +158,7 @@ function createPostCard(post) {
                             </a>
                         </div>
                         <div class="col-auto">
-                            <a href="post_info.php?id=${parseInt(post.id)}" class="btn btn-link text-secondary p-0 border-0" aria-label="Informazioni aggiuntive" data-bs-toggle="tooltip" data-bs-placement="top" title="Maggiori dettagli e materiale">
+                            <a href="post_info.php?id=${parseInt(post.id)}" class="btn btn-link text-secondary p-0 border-0" aria-label="Informazioni aggiuntive" data-bs-toggle="tooltip" data-bs-placement="top" title="Maggiori dettagli">
                                 <em class="bi bi-info-circle fs-4" aria-hidden="true"></em>
                             </a>
                         </div>

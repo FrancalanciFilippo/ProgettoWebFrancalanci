@@ -1,19 +1,15 @@
-<section class="py-5 blur-entrance">
-    <div class="container">
+<div class="container py-5">
+        
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-        <!-- Header della pagina -->
+            <div class="col-12">
         <div class="mb-4">
-            <h1 class="fw-bold mb-2">Crea un nuovo post</h1>
-            <p class="text-secondary">
-                Vuoi organizzare un ritrovo in biblioteca per studiare in compagnia o ti manca un membro per il progetto assegnato dal professore? Compila il form qui sotto!
-            </p>
+            <h1 class="h1 fw-bold mb-1">Crea un nuovo post</h1>
+            <p class="text-secondary">Vuoi organizzare un ritrovo in biblioteca per studiare in compagnia o ti manca un membro per il progetto assegnato dal professore? Compila il form qui sotto!</p>
         </div>
 
-        <!-- Form Card -->
         <div class="card">
             <div class="card-body p-4">
-                <form action="#" method="post" id="create-post-form" enctype="multipart/form-data">
+                <form action="#" method="post" id="create-post-form">
                     
                     <fieldset class="mb-4 border-0 p-0 m-0">
                         <legend class="fw-semibold mb-2 text-dark fs-6">Che cosa vuoi organizzare?</legend>
@@ -93,14 +89,6 @@
 
                     <!-- Descrizione e Pubblicazione -->
                     <h2 class="h5 fw-bold mb-3">Dettagli</h2>
-
-                    <div class="mb-4">
-                        <label for="formFileMultiple" class="form-label fw-medium">Carica File Multipli (Opzionale)</label>
-                        <input type="file" name="materiali[]" class="form-control focus-ring" id="formFileMultiple" multiple />
-                        <div class="form-text mt-1">
-                            Puoi selezionare più documenti da condividere con il gruppo.
-                        </div>
-                    </div>
                     
                     <div class="mb-4">
                         <label for="descrizionePost" class="form-label fw-medium">Descrizione e materiale aggiuntivo</label>
@@ -109,7 +97,7 @@
 
                     <!-- Bottoni Invio -->
                     <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
-                        <button type="submit" class="btn btn-custom-primary px-5 fw-bold w-100 w-sm-auto">
+                        <button type="submit" id="create-post-submit" class="btn btn-custom-primary px-5 fw-bold w-100 w-sm-auto">
                             <em class="bi bi-send me-2" aria-hidden="true"></em>Pubblica il Post
                         </button>
                     </div>
@@ -119,5 +107,5 @@
         </div>
             </div>
         </div>
+    
     </div>
-</section>

@@ -49,13 +49,11 @@ window.clearReply = function() {
     document.getElementById('reply-preview-wrapper').classList.add('d-none');
 };
 
-// Formatta Data
 function formatDateTime(dateStr) {
     var opts = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
     return new Date(dateStr).toLocaleDateString('it-IT', opts).replace(',', '');
 }
 
-// Escape preventivo per HTML (per evitare XSS)
 function escapeHtml(text) {
     if (!text) return '';
     var div = document.createElement('div');
@@ -63,7 +61,6 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Carica commenti dal server
 function loadComments() {
     var params = new URLSearchParams(window.location.search);
     var postId = params.get('post_id');
@@ -86,7 +83,6 @@ function loadComments() {
     });
 }
 
-// Renderizza commenti
 function renderComments(comments) {
     var list = document.getElementById('comments-list');
     list.innerHTML = '';
@@ -140,53 +136,58 @@ function renderComments(comments) {
         list.insertAdjacentHTML('beforeend', html);
     });
 
-    // Inizializza i colori degli avatar
     initializeAvatars();
 }
 
-// Inizializzazione submit form commenti
-function initFormSubmit() {
-    var form = document.getElementById('comment-form');
-    if (!form) return;
+function setButtonLoading(button, isLoading) {
+    if (isLoading) {
+        button.setAttribute('data-original-text', button.innerHTML);
+        button.disabled = true;
+        button.innerHTML = 'Invio...';
+    } else {
+        button.disabled = false;
+        button.innerHTML = button.getAttribute('data-original-text');
+    }
+}
 
-    form.addEventListener('submit', event => {
-        event.preventDefault();
-
-        if (!form.checkValidity()) {
-            form.classList.add('was-validated');
-            return;
+function handleCommentSubmit(event) {
+    event.preventDefault();
+    
+    const form = document.getElementById('comment-form');
+    const btn = document.getElementById('comment-submit-btn');
+    
+    
+    setButtonLoading(btn, true);
+    
+    const formData = new FormData(form);
+    const params = new URLSearchParams(window.location.search);
+    formData.set('post_id', params.get('post_id'));
+    
+    fetch('../ajax/posts/api-add-comment.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            window.location.href = result.redirect;
+        } else {
+            alert('Errore: ' + result.message);
+            setButtonLoading(btn, false);
         }
-
-        var btn = form.querySelector('button[type="submit"]');
-        var oldText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = 'Invio...';
-
-        var formData = new FormData(form);
-        var params = new URLSearchParams(window.location.search);
-        formData.set('post_id', params.get('post_id'));
-
-        fetch('../ajax/posts/api-add-comment.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                window.location.href = result.redirect;
-            } else {
-                alert('Errore: ' + result.message);
-                btn.disabled = false;
-                btn.innerHTML = oldText;
-            }
-        })
-        .catch(error => {
-            console.error('Errore invio commento:', error);
-            alert('Errore di connessione. Riprova.');
-            btn.disabled = false;
-            btn.innerHTML = oldText;
-        });
+    })
+    .catch(error => {
+        console.error('Errore invio commento:', error);
+        alert('Errore di connessione. Riprova.');
+        setButtonLoading(btn, false);
     });
+}
+
+function initFormSubmit() {
+    const btn = document.getElementById('comment-submit-btn');
+    if (!btn) return;
+    
+    btn.addEventListener('click', handleCommentSubmit);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

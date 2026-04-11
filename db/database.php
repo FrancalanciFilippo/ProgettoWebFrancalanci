@@ -148,31 +148,7 @@ class DatabaseHelper {
         return $materie ?: [];
     }
 
-    /* FILE ALLEGATI DI UN POST */
-    public function getPostFiles($postId) {
-        $sql = "SELECT id, nome, tipo, dimensione_byte FROM File WHERE post_id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("i", $postId);
-        $stmt->execute();
-        $result = $stmt->get_result();
 
-        $files = $result->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
-        return $files ?: [];
-    }
-
-    /* FILE PER IL DOWNLOAD */
-    public function getFileForDownload($fileId) {
-        $sql = "SELECT nome, tipo, dimensione_byte, contenuto FROM File WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("i", $fileId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        $file = $result->fetch_assoc();
-        $stmt->close();
-        return $file ?: null;
-    }
 
     /* RICERCA UTENTE PER EMAIL */
     public function getUserByEmail($email) {
@@ -280,7 +256,7 @@ class DatabaseHelper {
     }
 
     /* CREAZIONE NUOVO POST */
-    public function createPost($postData, $files = []) {
+    public function createPost($postData) {
         $this->db->begin_transaction();
         try {
             // 1. Insert Post
@@ -318,34 +294,7 @@ class DatabaseHelper {
             $partStmt->execute();
             $partStmt->close();
 
-            // 3. Gestione File
-            if (!empty($files['name']) && !empty($files['name'][0])) {
-                $names     = is_array($files['name'])     ? $files['name']     : [$files['name']];
-                $mimeTypes = is_array($files['type'])     ? $files['type']     : [$files['type']];
-                $sizes     = is_array($files['size'])     ? $files['size']     : [$files['size']];
-                $tmps      = is_array($files['tmp_name']) ? $files['tmp_name'] : [$files['tmp_name']];
-                $errors    = is_array($files['error'])    ? $files['error']    : [$files['error']];
 
-                $fileStmt = $this->db->prepare("INSERT INTO File (nome, tipo, dimensione_byte, contenuto, post_id) VALUES (?, ?, ?, ?, ?)");
-                
-                for ($i = 0; $i < count($names); $i++) {
-                    if ($errors[$i] !== UPLOAD_ERR_OK) continue;
-                    
-                    $fileName = basename($names[$i]);
-                    if (empty($fileName)) continue;
-                    
-                    $fileSize = (int)$sizes[$i];
-                    $fileType = $mimeTypes[$i];
-                    $fileTmp  = $tmps[$i];
-                    
-                    $content = @file_get_contents($fileTmp);
-                    if ($content === false) continue;
-
-                    $fileStmt->bind_param("ssisi", $fileName, $fileType, $fileSize, $content, $postId);
-                    $fileStmt->execute();
-                }
-                $fileStmt->close();
-            }
 
             $this->db->commit();
             return $postId;
@@ -356,8 +305,8 @@ class DatabaseHelper {
         }
     }
 
-    /* AGGIORNA DATI POST E FILE */
-    public function updatePost($postId, $userId, $postData, $filesToAdd = [], $fileIdsToDelete = [], $userIdsToKick = []) {
+    /* AGGIORNA DATI POST */
+    public function updatePost($postId, $userId, $postData, $userIdsToKick = []) {
         $this->db->begin_transaction();
         try {
             // Verifica permessi: proprietario del post OPPURE admin
@@ -403,19 +352,6 @@ class DatabaseHelper {
             $stmt->execute();
             $stmt->close();
 
-            // Rimozione File
-            if (!empty($fileIdsToDelete)) {
-                $placeholders = implode(',', array_fill(0, count($fileIdsToDelete), '?'));
-                $delSql = "DELETE FROM File WHERE post_id = ? AND id IN ($placeholders)";
-                $delStmt = $this->db->prepare($delSql);
-                
-                $bindTypes = "i" . str_repeat('i', count($fileIdsToDelete));
-                $params = array_merge([$postId], $fileIdsToDelete);
-                $delStmt->bind_param($bindTypes, ...$params);
-                $delStmt->execute();
-                $delStmt->close();
-            }
-
             // Rimozione Partecipanti (Kicking)
             if (!empty($userIdsToKick)) {
                 $placeholders = implode(',', array_fill(0, count($userIdsToKick), '?'));
@@ -427,34 +363,6 @@ class DatabaseHelper {
                 $kickStmt->bind_param($bindTypes, ...$params);
                 $kickStmt->execute();
                 $kickStmt->close();
-            }
-
-            if (!empty($filesToAdd['name']) && !empty($filesToAdd['name'][0])) {
-                $names     = is_array($filesToAdd['name'])     ? $filesToAdd['name']     : [$filesToAdd['name']];
-                $mimeTypes = is_array($filesToAdd['type'])     ? $filesToAdd['type']     : [$filesToAdd['type']]; // FIX: rinominato da $types a $mimeTypes
-                $sizes     = is_array($filesToAdd['size'])     ? $filesToAdd['size']     : [$filesToAdd['size']];
-                $tmps      = is_array($filesToAdd['tmp_name']) ? $filesToAdd['tmp_name'] : [$filesToAdd['tmp_name']];
-                $errors    = is_array($filesToAdd['error'])    ? $filesToAdd['error']    : [$filesToAdd['error']];
-
-                $fileStmt = $this->db->prepare("INSERT INTO File (nome, tipo, dimensione_byte, contenuto, post_id) VALUES (?, ?, ?, ?, ?)");
-
-                for ($i = 0; $i < count($names); $i++) {
-                    if ($errors[$i] !== UPLOAD_ERR_OK) continue;
-                    
-                    $fileName = basename($names[$i]);
-                    if (empty($fileName)) continue;
-                    
-                    $fileSize = (int)$sizes[$i];
-                    $fileType = $mimeTypes[$i];
-                    $fileTmp  = $tmps[$i];
-                    
-                    $content = @file_get_contents($fileTmp);
-                    if ($content === false) continue;
-
-                    $fileStmt->bind_param("ssisi", $fileName, $fileType, $fileSize, $content, $postId);
-                    $fileStmt->execute();
-                }
-                $fileStmt->close();
             }
 
             $this->db->commit();
@@ -496,11 +404,6 @@ class DatabaseHelper {
         
         $posts = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
-        
-        foreach ($posts as &$post) {
-            $post['files'] = $this->getPostFiles((int)$post['id']);
-        }
-        
         return $posts ?: [];
     }
 
@@ -585,11 +488,6 @@ class DatabaseHelper {
         
         $posts = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
-
-        foreach ($posts as &$post) {
-            $post['files'] = $this->getPostFiles((int)$post['id']);
-        }
-
         return $posts ?: [];
     }
 
@@ -608,7 +506,6 @@ class DatabaseHelper {
             $stmt->close();
 
             $this->db->query("DELETE FROM Partecipazione WHERE post_id = " . (int)$postId);
-            $this->db->query("DELETE FROM File WHERE post_id = "           . (int)$postId);
             $this->db->query("DELETE FROM Post WHERE id = "                . (int)$postId);
 
             $this->db->commit();

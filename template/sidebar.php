@@ -3,7 +3,7 @@ $active = isset($templateParams["sidebarActive"]) ? $templateParams["sidebarActi
 $basePath = isset($templateParams["basePath"]) ? $templateParams["basePath"] : "";
 ?>
 <!-- Bottone Menu Profilo -->
-<div class="container mt-2">
+<div class="container mt-3">
     <button class="btn btn-sm btn-outline-secondary" type="button"
         data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
         <em class="bi bi-layout-sidebar me-1"></em>Menu Profilo

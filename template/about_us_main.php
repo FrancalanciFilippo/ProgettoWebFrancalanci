@@ -1,53 +1,41 @@
-<section class="py-5 blur-entrance">
-    <div class="container">
+<div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
 
-                <h1 class="fw-bold mb-4">Chi siamo</h1>
+                <h1 class="h1 fw-bold mb-4">Chi siamo</h1>
 
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body p-4 p-md-5">
-                        <h2 class="fw-bold mb-3">
-                            <em class="bi bi-lightbulb me-2" style="color: var(--color-primary);"></em>La nostra missione
-                        </h2>
-                        <p class="text-dark">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
-                        <p class="text-dark mb-0">
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-                        </p>
+                <div class="mb-5">
+                    <div class="mb-3">
+                        <em class="bi bi-lightbulb d-block section-icon-lg"></em>
                     </div>
+                    <h2 class="fw-bold mb-2">La nostra missione</h2>
+                    <p class="text-dark">
+                        Creare un applicazione che faciliti la collaborazione tra studenti, permettendo loro di organizzare sessioni di studio e lavorare insieme su progetti accademici.
+                    </p>
+                    <hr class="my-4">
                 </div>
 
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body p-4 p-md-5">
-                        <h2 class="fw-bold mb-3">
-                            <em class="bi bi-people me-2" style="color: var(--color-primary);"></em>Il nostro team
-                        </h2>
-                        <p class="text-dark">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
-                        <p class="text-dark mb-0">
-                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
-                        </p>
+                <div class="mb-5">
+                    <div class="mb-3">
+                        <em class="bi bi-people d-block section-icon-lg"></em>
                     </div>
+                    <h2 class="fw-bold mb-2">Il nostro team</h2>
+                    <p class="text-dark">
+                        Il mio team è formato da me, me e solo me.
+                    </p>
+                    <hr class="my-4">
                 </div>
 
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4 p-md-5">
-                        <h2 class="fw-bold mb-3">
-                            <em class="bi bi-mortarboard me-2" style="color: var(--color-primary);"></em>Perché SchoolTogether
-                        </h2>
-                        <p class="text-dark">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
-                        </p>
-                        <p class="text-dark mb-0">
-                            Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus.
-                        </p>
+                <div>
+                    <div class="mb-3">
+                        <em class="bi bi-mortarboard d-block section-icon-lg"></em>
                     </div>
+                    <h2 class="fw-bold mb-2">Perché SchoolTogether</h2>
+                    <p class="text-dark">
+                        Perché crediamo che la conoscenza cresca solo se condivisa. SchoolTogether è la piattaforma ideale per studenti che vogliono collaborare, imparare insieme e raggiungere i loro obiettivi accademici in modo più efficace.
+                    </p>
                 </div>
 
             </div>
         </div>
     </div>
-</section>

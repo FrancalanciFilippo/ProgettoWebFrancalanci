@@ -1,19 +1,14 @@
-<section class="py-5 blur-entrance">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div>
-
-                <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3 border mb-4">
-                    <span class="fw-semibold text-dark" id="post-title">Caricamento...</span>
-                    <span class="badge text-bg-secondary" id="comments-count">0 commenti</span>
-                </div>
+<div class="container py-5">
+        <div class="mb-4">
+            <h1 class="h1 fw-bold mb-1" id="post-title">Caricamento...</h1>
+            <p class="text-secondary"><span class="badge text-bg-secondary" id="comments-count">0 commenti</span></p>
+        </div>
 
         <div class="mb-5" id="comments-list">
-                        <p>Caricamento commenti in corso...</p>
-                    </div>
-                </div>
+            <p>Caricamento commenti in corso...</p>
+        </div>
 
-                <div class="card border-0 shadow-sm">
+        <div class="card">
                     <div class="card-body p-4">
                         <h2 class="h5 fw-bold mb-4">Scrivi un commento</h2>
 
@@ -27,7 +22,7 @@
                                             <span class="text-muted ms-2 small" id="reply-author-date"></span>
                                         </div>
                                         <button type="button" class="btn-close btn-sm" aria-label="Annulla risposta"
-                                            onclick="clearReply()" style="font-size:0.6rem;"></button>
+                                            onclick="clearReply()" class="btn-clear-reply"></button>
                                     </div>
                                     <span class="reply-text" id="reply-text-preview"></span>
                                 </div>
@@ -46,8 +41,8 @@
 
                             <div class="d-flex justify-content-end gap-2">
                                 <button type="button" class="btn btn-outline-secondary fw-semibold"
-                                    onclick="clearReply()">Annulla Risposta</button>
-                                <button type="submit" class="btn btn-custom-primary fw-semibold px-4">
+                                    onclick="clearReply()">Annulla</button>
+                                <button type="submit" id="comment-submit-btn" class="btn btn-custom-primary fw-semibold px-4">
                                     <em class="bi bi-send me-2" aria-hidden="true"></em>Invia
                                 </button>
                             </div>
@@ -55,8 +50,8 @@
                         </form>
                     </div>
                 </div>
-
-            </div>
-        </div>
     </div>
-</section>
+
+<a href="#comment-text" class="floating-comment-btn" title="Vai al form commenti" aria-label="Vai al form commenti">
+    <em class="bi bi-chat-dots" aria-hidden="true"></em>
+</a>

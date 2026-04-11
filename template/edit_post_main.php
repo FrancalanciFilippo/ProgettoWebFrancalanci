@@ -1,19 +1,15 @@
-<section class="py-5 blur-entrance">
-    <div class="container">
+<div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-        <!-- Header della pagina -->
+            <div class="col-12">
         <div class="mb-4">
-            <h1 class="fw-bold mb-2">Modifica il tuo post</h1>
-            <p class="text-secondary">
-                Aggiorna i dettagli della tua sessione di studio o del tuo progetto. Nota: alcuni campi non sono modificabili dopo la pubblicazione.
-            </p>
+            <h1 class="h1 fw-bold mb-1">Modifica il tuo post</h1>
+            <p class="text-secondary">Aggiorna i dettagli della tua sessione di studio o del tuo progetto. Nota: alcuni campi non sono modificabili dopo la pubblicazione.</p>
         </div>
 
         <!-- Form Card -->
-        <div class="card shadow-sm">
+        <div class="card">
             <div class="card-body p-4">
-                <form id="edit-post-form" action="#" method="post" enctype="multipart/form-data">
+                <form id="edit-post-form" action="#" method="post">
                     <input type="hidden" name="redirect_url" value="my_posts.php" />
                     
                     <!-- Informazioni Modificabili -->
@@ -48,20 +44,6 @@
                     <!-- Descrizione e Pubblicazione -->
                     <h2 class="h5 fw-bold mb-3">Dettagli</h2>
 
-                    <!-- File Caricati (Solo visualizzazione) -->
-                    <div class="mb-4">
-                        <label class="form-label fw-medium text-dark">Materiali già caricati</label>
-                        <div class="list-group list-group-flush border rounded-3 mb-3" id="existing-files-list">
-                            <span class="text-muted small p-2">Caricamento...</span>
-                        </div>
-                        
-                        <label for="formFileMultiple" class="form-label fw-medium text-dark">Aggiungi altri file</label>
-                        <input class="form-control focus-ring" type="file" id="formFileMultiple" name="materiali[]" multiple="multiple" />
-                        <div class="form-text mt-1">
-                            Puoi caricare altri documenti per integrare il materiale già presente.
-                        </div>
-                    </div>
-
                     <div class="mb-4">
                         <label for="descrizionePost" class="form-label fw-medium">Descrizione e materiale aggiuntivo</label>
                         <textarea class="form-control focus-ring" id="descrizionePost" name="descrizione" rows="4" placeholder="Caricamento..."></textarea>
@@ -83,7 +65,7 @@
                         <a href="my_posts.php" class="btn btn-outline-secondary px-4 fw-semibold order-2 order-sm-1">
                             Annulla
                         </a>
-                        <button type="submit" class="btn btn-custom-primary px-5 fw-bold order-1 order-sm-2">
+                        <button type="submit" id="edit-post-submit" class="btn btn-custom-primary px-5 fw-bold order-1 order-sm-2">
                             <em class="bi bi-save me-2" aria-hidden="true"></em>Salva Modifiche
                         </button>
                     </div>
@@ -94,4 +76,3 @@
             </div>
         </div>
     </div>
-</section>

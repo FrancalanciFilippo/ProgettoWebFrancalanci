@@ -1,43 +1,14 @@
-<section class="py-5 blur-entrance">
-    <div class="container">
+<div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
 
-                <h1 class="h2 fw-bold mb-4">Contattaci</h1>
-
-                <!-- Info di contatto -->
-                <div class="row g-3 mb-5">
-                    <div class="col-12 col-sm-4">
-                        <div class="card border-0 shadow-sm h-100 text-center">
-                            <div class="card-body p-4">
-                                <em class="bi bi-envelope-at fs-2 d-block mb-2" style="color: var(--color-primary);"></em>
-                                <h2 class="h6 fw-bold mb-1">Email</h2>
-                                <a href="mailto:filippo.francalanci@studio.unibo.it" class="text-secondary small text-decoration-none">filippo.francalanci@studio.unibo.it</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                        <div class="card border-0 shadow-sm h-100 text-center">
-                            <div class="card-body p-4">
-                                <em class="bi bi-geo-alt fs-2 d-block mb-2" style="color: var(--color-primary);"></em>
-                                <h2 class="h6 fw-bold mb-1">Sede</h2>
-                                <span class="text-secondary small">Universit&agrave; di Bologna</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                        <div class="card border-0 shadow-sm h-100 text-center">
-                            <div class="card-body p-4">
-                                <em class="bi bi-clock fs-2 d-block mb-2" style="color: var(--color-primary);"></em>
-                                <h2 class="h6 fw-bold mb-1">Orari</h2>
-                                <span class="text-secondary small">Lun - Ven, 9:00 - 18:00</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mb-4">
+                    <h1 class="h1 fw-bold mb-1">Contattaci</h1>
+                    <p class="text-secondary">Raggiungici per domande o suggerimenti</p>
                 </div>
 
                 <!-- Form contatti -->
-                <div class="card border-0 shadow-sm">
+                <div class="card">
                     <div class="card-body p-4 p-md-5">
 
                         <h2 class="h5 fw-bold mb-1">Inviaci un messaggio</h2>
@@ -83,7 +54,7 @@
                             </div>
 
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-custom-primary fw-bold">
+                                <button type="submit" id="contact-submit-btn" class="btn btn-custom-primary fw-bold">
                                     <em class="bi bi-send me-2" aria-hidden="true"></em>Invia Messaggio
                                 </button>
                             </div>
@@ -95,4 +66,3 @@
             </div>
         </div>
     </div>
-</section>

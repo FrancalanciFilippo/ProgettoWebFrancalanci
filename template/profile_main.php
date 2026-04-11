@@ -1,9 +1,10 @@
-<div class="mb-4">
-    <h1 class="h2 fw-bold mb-1">Il tuo Profilo</h1>
-    <p class="text-secondary mb-0">Gestisci le tue informazioni personali e le impostazioni dell'account.</p>
+<div class="container">
+        <div class="mb-4">
+    <h1 class="h1 fw-bold mb-1">Il tuo Profilo</h1>
+    <p class="text-secondary">Gestisci le tue informazioni personali e le impostazioni dell'account.</p>
 </div>
 
-<div class="card border-0 shadow-sm">
+<div class="card">
     <div class="card-body p-4">
         <form action="#" method="post" id="profile-form" novalidate="novalidate">
             
@@ -33,18 +34,21 @@
                     disabled="disabled" maxlength="200" placeholder="Parlaci di te..."></textarea>
             </div>
 
-            <div class="mt-4">
-                <button type="button" class="btn btn-custom-primary fw-semibold w-100 mb-2" id="toggle-edit-btn">
+            <div class="mt-4 row">
+                <div class="col-12 d-flex flex-column flex-sm-row justify-content-start gap-2">
+                <button type="button" class="btn btn-custom-primary fw-semibold" id="toggle-edit-btn">
                     <em class="bi bi-pencil-square me-2" aria-hidden="true"></em>Modifica
                 </button>
-                <a href="logout.php" class="btn btn-outline-custom-primary fw-semibold w-100 mb-2" id="profile-logout">
+                <a href="logout.php" class="btn btn-outline-custom-primary fw-semibold" id="profile-logout">
                     <em class="bi bi-box-arrow-right me-2" aria-hidden="true"></em>Logout
                 </a>
-                <button type="button" class="btn btn-outline-danger fw-semibold w-100" id="profile-elimina">
+                <button type="button" class="btn btn-outline-danger fw-semibold" id="profile-elimina">
                     <em class="bi bi-person-x me-2" aria-hidden="true"></em>Elimina Account
                 </button>
+                </div>
             </div>
 
         </form>
     </div>
 </div>
+    </div>

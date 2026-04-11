@@ -28,7 +28,6 @@ $postData = [
     'descrizione' => trim($_POST['descrizione'] ?? ''),
     'utente_id' => $_SESSION['user_id']
 ];
-$files = $_FILES['materiali'] ?? [];
 
 // Validazione campi
 if (empty($postData['titolo']) || empty($postData['materia_id']) || empty($postData['luogo']) || empty($postData['data_inizio'])) {
@@ -57,63 +56,9 @@ if (empty($postData['data_inizio'])) {
     exit();
 }
 
-// Validazione file
-if (!empty($files['name']) && !empty($files['name'][0])) {
-    $names = is_array($files['name']) ? $files['name'] : [$files['name']];
-    $errors = is_array($files['error']) ? $files['error'] : [$files['error']];
-    $sizes = is_array($files['size']) ? $files['size'] : [$files['size']];
-    $tmps = is_array($files['tmp_name']) ? $files['tmp_name'] : [$files['tmp_name']];
-    $types = is_array($files['type']) ? $files['type'] : [$files['type']];
-    
-    $allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'];
-    $maxSize = 10 * 1024 * 1024; // 10MB
-
-    foreach ($names as $i => $name) {
-        if (empty($name)) continue;
-        
-        $err = $errors[$i] ?? UPLOAD_ERR_NO_FILE;
-        $size = (int)($sizes[$i] ?? 0);
-        $type = $types[$i] ?? '';
-        $tmp = $tmps[$i] ?? '';
-        
-        if ($err !== UPLOAD_ERR_OK) {
-            $errMessages = [
-                UPLOAD_ERR_INI_SIZE => 'Il file supera il limite del server.',
-                UPLOAD_ERR_FORM_SIZE => 'Il file supera il limite consentito.',
-                UPLOAD_ERR_PARTIAL => 'Il file è stato caricato solo parzialmente.',
-                UPLOAD_ERR_NO_FILE => 'Nessun file selezionato.',
-                UPLOAD_ERR_NO_TMP_DIR => 'Errore server temporaneo.',
-                UPLOAD_ERR_CANT_WRITE => 'Errore scrittura su disco.',
-                UPLOAD_ERR_EXTENSION => 'Caricamento bloccato dal server.'
-            ];
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => $errMessages[$err] ?? 'Errore upload file.']);
-            exit();
-        }
-        
-        if ($size > $maxSize) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => "Il file \"$name\" è troppo grande (massimo 10MB)."]);
-            exit();
-        }
-        
-        if (!empty($type) && !in_array($type, $allowedTypes)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => "Formato non valido per \"$name\". Usa solo PDF, JPG, PNG, DOC, TXT."]);
-            exit();
-        }
-        
-        if ($size === 0 || empty($tmp) || !is_readable($tmp)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => "Il file \"$name\" non è accessibile o è vuoto."]);
-            exit();
-        }
-    }
-}
-
 // Creazione post
 try {
-    $postId = $dbh->createPost($postData, $files);
+    $postId = $dbh->createPost($postData);
 
     if ($postId > 0) {
         echo json_encode([

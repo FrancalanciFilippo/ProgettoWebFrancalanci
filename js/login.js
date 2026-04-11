@@ -7,37 +7,35 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", event => {
         event.preventDefault();
 
-        hideMessage();
-
         var email = document.getElementById("email").value.trim();
         var password = document.getElementById("password").value;
 
         if (!email || !password) {
-            showMessage("Email e password sono obbligatori.", "error");
+            alert("Email e password sono obbligatori.");
             return;
         }
 
         if (!isValidEmail(email)) {
-            showMessage("Inserisci un'email valida.", "error");
+            alert("Inserisci un'email valida.");
             return;
         }
 
         setLoading(true);
 
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+
         fetch('../ajax/login/api-login.php', {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email, password: password })
+            body: formData
         })
         .then(response => response.json())
         .then(result => {
             if (result.success) {
-                showMessage(result.message, "success");
-                setTimeout(() => {
-                    window.location.href = result.redirect;
-                }, 1000);
+                window.location.href = result.redirect;
             } else {
-                showMessage(result.message, "error");
+                alert(result.message);
                 var passwordField = document.getElementById("password");
                 if (passwordField) passwordField.focus();
                 setLoading(false);
@@ -45,30 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => {
             console.error("Errore login:", error);
-            showMessage("Errore di connessione. Riprova piu tardi.", "error");
+            alert("Errore di connessione. Riprova piu tardi.");
             setLoading(false);
         });
     });
-
-    function showMessage(message, type) {
-        var messageBox = document.getElementById("error-message");
-        if (!messageBox) {
-            console.error("Contenitore messaggi non trovato");
-            return;
-        }
-        messageBox.textContent = message;
-        messageBox.className = 'alert alert-' + (type === 'success' ? 'success' : 'danger');
-        messageBox.style.display = 'block';
-        messageBox.setAttribute('role', 'alert');
-    }
-
-    function hideMessage() {
-        var messageBox = document.getElementById("error-message");
-        if (messageBox) {
-            messageBox.style.display = 'none';
-            messageBox.textContent = '';
-        }
-    }
 
     function isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

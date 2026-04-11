@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(data => {
         if (data.success) {
             renderPostInfo(data.post);
-            renderFiles(data.files);
         } else {
             console.error("Errore nel caricamento del post:", data.message);
         }
@@ -115,72 +114,6 @@ function renderPostInfo(post) {
     }
 }
 
-
-function renderFiles(files) {
-    const container = document.getElementById('post-files');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    if (files.length === 0) {
-        container.innerHTML = '<p class="text-muted">Nessun materiale allegato.</p>';
-        return;
-    }
-
-    files.forEach(file => {
-        const fileSize = formatFileSize(file.dimensione_byte);
-        const fileIcon = getFileIcon(file.tipo);
-        const fileColor = getFileColor(file.tipo);
-
-        const fileElement = document.createElement('a');
-        fileElement.href = `../ajax/posts/download-file.php?id=${file.id}`;
-        fileElement.className = 'd-flex align-items-center p-3 bg-light rounded-3 text-decoration-none text-dark border';
-        fileElement.innerHTML = `
-            <em class="bi ${fileIcon} me-3 ${fileColor} fs-4"></em>
-            <div>
-                <div class="fw-semibold small">${file.nome}</div>
-                <div class="text-muted" style="font-size:0.75rem;">${file.tipo || 'File'} &middot; ${fileSize}</div>
-            </div>
-            <em class="bi bi-download ms-auto text-muted"></em>
-        `;
-
-        container.appendChild(fileElement);
-    });
-}
-
-function formatFileSize(bytes) {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-}
-
-function getFileIcon(mimeType) {
-    if (!mimeType) return 'bi-file-earmark';
-
-    if (mimeType.includes('pdf')) return 'bi-file-earmark-pdf';
-    if (mimeType.includes('word') || mimeType.includes('doc')) return 'bi-file-earmark-word';
-    if (mimeType.includes('excel') || mimeType.includes('xls')) return 'bi-file-earmark-excel';
-    if (mimeType.includes('powerpoint') || mimeType.includes('ppt')) return 'bi-file-earmark-ppt';
-    if (mimeType.includes('image')) return 'bi-file-earmark-image';
-    if (mimeType.includes('text')) return 'bi-file-earmark-text';
-    if (mimeType.includes('zip') || mimeType.includes('rar')) return 'bi-file-earmark-zip';
-
-    return 'bi-file-earmark';
-}
-
-function getFileColor(mimeType) {
-    if (!mimeType) return 'text-secondary';
-
-    if (mimeType.includes('pdf')) return 'text-danger';
-    if (mimeType.includes('word') || mimeType.includes('doc')) return 'text-primary';
-    if (mimeType.includes('excel') || mimeType.includes('xls')) return 'text-success';
-    if (mimeType.includes('powerpoint') || mimeType.includes('ppt')) return 'text-warning';
-    if (mimeType.includes('image')) return 'text-info';
-
-    return 'text-secondary';
-}
 
 function partecipaPost(postId) {
     fetch('../ajax/posts/api-partecipa.php', {

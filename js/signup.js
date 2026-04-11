@@ -15,50 +15,41 @@ document.addEventListener('DOMContentLoaded', () => {
         var bio = document.getElementById('signup-bio').value.trim();
 
         if (!nome || !cognome || !email || !password || !password_confirm) {
-            showMessage('Tutti i campi obbligatori devono essere compilati.', 'error');
+            alert('Tutti i campi obbligatori devono essere compilati.');
             return;
         }
-
-        var data = { nome: nome, cognome: cognome, email: email, password: password, password_confirm: password_confirm, bio: bio };
 
         signupSubmit.disabled = true;
         var originalText = signupSubmit.innerText;
         signupSubmit.innerText = 'Registrazione in corso...';
 
+        const formData = new FormData();
+        formData.append('nome', nome);
+        formData.append('cognome', cognome);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('password_confirm', password_confirm);
+        formData.append('bio', bio);
+
         fetch('../ajax/login/api-signup.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: formData
         })
         .then(response => response.json())
         .then(result => {
             if (result.success) {
-                showMessage(result.message, 'success');
-                setTimeout(() => {
-                    window.location.href = result.redirect;
-                }, 1500);
+                window.location.href = result.redirect;
             } else {
-                showMessage(result.message, 'error');
+                alert(result.message);
                 signupSubmit.disabled = false;
                 signupSubmit.innerText = originalText;
             }
         })
         .catch(error => {
             console.error('Errore:', error);
-            showMessage('Errore di connessione. Riprova piu tardi.', 'error');
+            alert('Errore di connessione. Riprova piu tardi.');
             signupSubmit.disabled = false;
             signupSubmit.innerText = originalText;
         });
     });
-
-    function showMessage(message, type) {
-        var messageBox = document.getElementById('error-message');
-        if (!messageBox) {
-            console.error('Contenitore messaggi non trovato.');
-            return;
-        }
-        messageBox.innerText = message;
-        messageBox.className = type === 'success' ? 'alert alert-success' : 'alert alert-danger';
-        messageBox.style.display = 'block';
-    }
 });

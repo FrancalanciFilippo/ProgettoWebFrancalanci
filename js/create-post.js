@@ -44,7 +44,7 @@ function initFormSubmit() {
     form.addEventListener('submit', event => {
         event.preventDefault();
 
-        const btn = form.querySelector('button[type="submit"]');
+        const btn = document.getElementById('create-post-submit');
         const oldText = btn.innerHTML;
         
         // Feedback visivo
@@ -57,7 +57,6 @@ function initFormSubmit() {
         fetch('../ajax/posts/api-create-post.php', {
             method: 'POST',
             body: formData
-            // NON impostare Content-Type: il browser lo fa per FormData
         })
         .then(response => response.json())
         .then(result => {

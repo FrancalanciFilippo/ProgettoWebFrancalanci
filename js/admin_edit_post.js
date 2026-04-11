@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initFormSubmit(postId);
 });
 
-// Stato per le rimozioni dei partecipanti (tracciate in JS)
+// Stato per le rimozioni dei partecipanti
 window.kickedParticipantIds = [];
 
 function getPostIdFromUrl() {
@@ -27,7 +27,7 @@ function loadPostData(postId) {
             fillForm(data.post);
         } else {
             showError(data.message);
-            setTimeout(() => window.location.href = 'my_posts.php', 2000);
+            setTimeout(() => window.location.href = 'admin_posts.php', 2000);
         }
     })
     .catch(err => {
@@ -37,6 +37,8 @@ function loadPostData(postId) {
 }
 
 function fillForm(post) {
+    document.getElementById('edit-post-title').textContent = post.titolo || 'Senza titolo';
+    
     if (document.getElementById('luogoIncontro')) {
         document.getElementById('luogoIncontro').value = post.luogo || '';
     }
@@ -49,6 +51,14 @@ function fillForm(post) {
     if (document.getElementById('descrizionePost')) {
         document.getElementById('descrizionePost').value = post.descrizione || '';
     }
+    
+    // Aggiungi input nascosto per l'ID del post
+    const form = document.getElementById('edit-post-form');
+    const idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.name = 'id';
+    idInput.value = post.id;
+    form.appendChild(idInput);
 }
 
 function formatDateForInput(dateString) {
@@ -58,67 +68,6 @@ function formatDateForInput(dateString) {
     return date.toISOString().split('T')[0];
 }
 
-
-function initFormSubmit(postId) {
-    const form = document.getElementById('edit-post-form');
-    if (!form) return;
-    
-    form.addEventListener('submit', event => {
-        event.preventDefault();
-        
-        const btn = document.getElementById('edit-post-submit');
-        const oldText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = 'Salvataggio...';
-        
-        const formData = new FormData(form);
-        formData.append('id', postId);
-        
-        // Aggiunge gli array di rimozione tracciati in JS
-        if (window.kickedParticipantIds && window.kickedParticipantIds.length > 0) {
-            formData.append('delete_participants', window.kickedParticipantIds.join(','));
-        }
-        
-        fetch(`../ajax/posts/api-modify-post.php?id=${postId}`, {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(result => {
-            if (result.success) {
-                alert(result.message);
-                window.location.href = result.redirect || 'my_posts.php';
-            } else {
-                alert('Errore: ' + result.message);
-                btn.disabled = false;
-                btn.innerHTML = oldText;
-            }
-        })
-        .catch(err => {
-            console.error("Errore submit:", err);
-            alert('Errore di connessione. Riprova.');
-            btn.disabled = false;
-            btn.innerHTML = oldText;
-        });
-    });
-}
-
-// === Helper functions ===
-function showError(message) {
-    const alertBox = document.createElement('div');
-    alertBox.className = 'alert alert-danger alert-dismissible fade show mb-4';
-    alertBox.role = 'alert';
-    alertBox.innerHTML = `
-        ${escapeHtml(message)}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
-    const form = document.getElementById('edit-post-form');
-    form?.insertAdjacentElement('beforebegin', alertBox);
-}
-
-
-
-// === Carica e renderizza partecipanti ===
 function loadParticipants(postId) {
     const container = document.getElementById('partecipanti');
     if (!container) return;
@@ -127,7 +76,7 @@ function loadParticipants(postId) {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                renderParticipantsList(data.participants, postId);
+                renderParticipants(data.participants, postId);
             } else {
                 container.innerHTML = `<div class="list-group-item text-danger small py-3">${data.message}</div>`;
             }
@@ -138,7 +87,7 @@ function loadParticipants(postId) {
         });
 }
 
-function renderParticipantsList(participants, postId) {
+function renderParticipants(participants, postId) {
     const container = document.getElementById('partecipanti');
     if (!container) return;
 
@@ -184,16 +133,6 @@ function confirmKickParticipant(btn, postId, userId, fullName) {
         const item = btn.closest('.list-group-item');
         if (item) item.remove();
         
-        const countEl = document.getElementById('edit-post-partecipanti');
-        if (countEl) {
-            const parts = countEl.textContent.trim().split('/');
-            if (parts.length === 2) {
-                const currentCount = parseInt(parts[0]);
-                const maxCount = parseInt(parts[1]);
-                countEl.textContent = `${Math.max(0, currentCount - 1)}/${maxCount}`;
-            }
-        }
-        
         const container = document.getElementById('partecipanti');
         if (container && container.children.length === 0) {
             container.innerHTML = '<div class="list-group-item text-muted small py-3">Nessun partecipante iscritto al momento.</div>';
@@ -210,9 +149,49 @@ function hashColor(str) {
     return palette[Math.abs(hash) % palette.length];
 }
 
-function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+function initFormSubmit(postId) {
+    const form = document.getElementById('edit-post-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        
+        const btn = document.getElementById('edit-post-submit');
+        const oldText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = 'Salvataggio...';
+        
+        const formData = new FormData(form);
+        formData.append('id', postId);
+        
+        if (window.kickedParticipantIds && window.kickedParticipantIds.length > 0) {
+            formData.append('delete_participants', window.kickedParticipantIds.join(','));
+        }
+        
+        fetch(`../ajax/posts/api-modify-post.php?id=${postId}`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (result.success) {
+                alert(result.message);
+                window.location.href = result.redirect || 'admin_posts.php';
+            } else {
+                alert('Errore: ' + result.message);
+                btn.disabled = false;
+                btn.innerHTML = oldText;
+            }
+        })
+        .catch(err => {
+            console.error("Errore submit:", err);
+            alert('Errore di connessione. Riprova.');
+            btn.disabled = false;
+            btn.innerHTML = oldText;
+        });
+    });
+}
+
+function showError(message) {
+    alert('Errore: ' + message);
 }

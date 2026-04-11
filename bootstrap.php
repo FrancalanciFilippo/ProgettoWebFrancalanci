@@ -14,25 +14,14 @@ if (!isset($dbh)) {
     exit;
 }
 
-/**
- * Verifica se l'utente è autenticato
- * @return bool true se autenticato, false altrimenti
- */
 function isUserLoggedIn(): bool {
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 }
 
-/**
- * Verifica se l'utente loggato è un amministratore
- * @return bool true se admin, false altrimenti
- */
 function isAdmin(): bool {
     return isUserLoggedIn() && isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin';
 }
 
-/**
- * Reindirizza al login se l'utente non è autenticato
- */
 function requireLogin(): void {
     if (!isUserLoggedIn()) {
         header('Location: ' . (strpos($_SERVER['REQUEST_URI'], '/pages/') !== false ? '../' : '') . 'pages/login.php');
@@ -40,9 +29,6 @@ function requireLogin(): void {
     }
 }
 
-/**
- * Reindirizza alla home se l'utente non è amministratore
- */
 function requireAdmin(): void {
     requireLogin();
     if (!isAdmin()) {
@@ -51,10 +37,6 @@ function requireAdmin(): void {
     }
 }
 
-/**
- * Ritorna i dati dell'utente loggato
- * @return array|null array con i dati dell'utente o null se non loggato
- */
 function getLoggedInUser(): ?array {
     if (!isUserLoggedIn()) {
         return null;

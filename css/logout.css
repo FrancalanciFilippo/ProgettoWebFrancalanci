@@ -1,4 +1,4 @@
-/* Stili specifici per la pagina di Logout */
+/* Stile per il logout */
 .logout-card {
     max-width: 480px;
     margin: auto;
@@ -13,8 +13,8 @@
     font-size: 6rem;
 }
 
-/* Centratura perfetta del contenuto */
-body, html {
+body,
+html {
     height: 100%;
 }
 
