@@ -1,6 +1,6 @@
 <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
+            <div class="col-lg-5">
 
                 <div class="mb-4 text-center">
                     <h1 id="register-title" class="h1 fw-bold mb-1">Registrazione</h1>

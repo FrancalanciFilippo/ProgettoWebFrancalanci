@@ -1,13 +1,13 @@
 <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+            <div class="col-lg-5">
 
                 <div class="mb-4 text-center">
                     <h1 id="login-title" class="h1 fw-bold mb-1">Login</h1>
                     <p class="text-secondary">Accedi al tuo account SchoolTogether</p>
                 </div>
 
-                <div class="card shadow-sm">
+                <div class="card">
                     <div class="card-body p-4">
 
                         <form action="#" method="post" id="login-form" novalidate="novalidate">

@@ -39,6 +39,9 @@
                 <button type="button" class="btn btn-custom-primary fw-semibold" id="toggle-edit-btn">
                     <em class="bi bi-pencil-square me-2" aria-hidden="true"></em>Modifica
                 </button>
+                <a href="reset_password.php" class="btn btn-warning fw-semibold text-dark">
+                    <em class="bi bi-key me-2" aria-hidden="true"></em>Cambia Password
+                </a>
                 <a href="logout.php" class="btn btn-outline-custom-primary fw-semibold" id="profile-logout">
                     <em class="bi bi-box-arrow-right me-2" aria-hidden="true"></em>Logout
                 </a>

@@ -240,6 +240,39 @@ class DatabaseHelper {
         }
     }
 
+    public function updatePassword($userId, $oldPassword, $newPassword) {
+        $sql = "SELECT password FROM Utente WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        $stmt->close();
+
+        if (!$user) {
+            return ['success' => false, 'message' => 'Utente non trovato.'];
+        }
+
+        if (!password_verify($oldPassword, $user['password'])) {
+            return ['success' => false, 'message' => 'La vecchia password non è corretta.'];
+        }
+
+        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+        $sql = "UPDATE Utente SET password = ? WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("si", $hashedPassword, $userId);
+
+        try {
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Password modificata con successo!'];
+        } catch (Exception $e) {
+            error_log("Errore update password per ID $userId: " . $e->getMessage());
+            return ['success' => false, 'message' => 'Errore durante la modifica della password.'];
+        } finally {
+            $stmt->close();
+        }
+    }
+
     public function createPost($postData) {
         $this->db->begin_transaction();
         try {

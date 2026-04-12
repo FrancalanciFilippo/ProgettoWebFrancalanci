@@ -64,15 +64,6 @@
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="d-flex align-items-center text-secondary">
-                                    <em class="bi bi-shield-check me-2 fs-5" aria-hidden="true"></em>
-                                    <div>
-                                        <div class="small text-muted">Approvazione</div>
-                                        <div id="post-approvazione" class="fw-semibold text-dark">Caricamento...</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="d-flex align-items-center text-secondary">
                                     <em class="bi bi-grid me-2 fs-5" aria-hidden="true"></em>
                                     <div>
                                         <div class="small text-muted">Tipo</div>

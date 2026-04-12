@@ -89,19 +89,12 @@ function renderPostInfo(post) {
     if (luogoEl) luogoEl.textContent = post.luogo || 'Non specificato';
 
 
-    const approvazioneEl = document.getElementById('post-approvazione');
-    if (approvazioneEl) {
-        const richiedeApprovazione = parseInt(post.richiede_approvazione, 10) === 1;
-        approvazioneEl.textContent = richiedeApprovazione ? 'Richiesta' : 'Non richiesta (partecipazione diretta)';
-    }
-
-
     const tipoEl = document.getElementById('post-tipo');
     if (tipoEl) tipoEl.textContent = post.tipo === 'progettuale' ? 'Progetto di gruppo' : 'Sessione di studio';
 
 
     const descrizioneEl = document.getElementById('post-descrizione');
-    if (descrizioneEl) descrizioneEl.innerHTML = post.post_descrizione;
+    if (descrizioneEl) descrizioneEl.innerHTML = post.descrizione;
 
 
     const buttonEl = document.getElementById('post-action-btn');
