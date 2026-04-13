@@ -105,7 +105,7 @@ function createPostCard(post) {
     const dataPubblicazione = formatDateTime(post.data_creazione);
 
     return `
-        <div class="card shadow-sm mb-4 border-0">
+        <div class="card mb-4">
             <div class="card-body p-4">
 
                 <div class="d-flex justify-content-between align-items-start mb-2">
