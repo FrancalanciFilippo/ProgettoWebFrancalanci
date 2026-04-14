@@ -24,6 +24,14 @@ function renderJoinedPosts(posts) {
     container.innerHTML = '';
 
     if (!posts || posts.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-4">
+                <p class="text-muted mb-3">Nessun post a cui partecipi</p>
+                <a href="posts.php" class="btn btn-custom-primary">
+                    <em class="bi bi-journal-text me-2"></em>Partecipa ad un post
+                </a>
+            </div>
+        `;
         return;
     }
 

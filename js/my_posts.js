@@ -27,6 +27,14 @@ function renderMyPosts(posts) {
     container.innerHTML = '';
 
     if (!posts || posts.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-4">
+                <p class="text-muted mb-3">Nessun post creato</p>
+                <a href="create_post.php" class="btn btn-custom-primary">
+                    <em class="bi bi-plus-circle me-2"></em>Crea un post
+                </a>
+            </div>
+        `;
         return;
     }
 
