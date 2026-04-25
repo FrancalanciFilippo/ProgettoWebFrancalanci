@@ -1,6 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
     fetchPosts();
 
+    fetch('../ajax/posts/api-materie.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const mobileDropdown = document.getElementById('subject-mobile');
+                if (mobileDropdown) {
+                    mobileDropdown.innerHTML = '<option value="">Tutte le materie</option>';
+                    data.materie.forEach(m => {
+                        const option = document.createElement('option');
+                        option.value = m.nome.toLowerCase();
+                        option.textContent = m.nome;
+                        mobileDropdown.appendChild(option);
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Errore nel caricamento delle materie:", error);
+            alert("Errore di connessione durante il caricamento delle materie.");
+        });
+
     const container = document.getElementById('posts-container');
     if (container) {
         container.addEventListener('click', event => {
@@ -12,22 +33,39 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    const filterFormMobile = document.getElementById('filter-form-mobile');
+    if (filterFormMobile) {
+        filterFormMobile.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const params = new URLSearchParams();
+            for (const [key, value] of formData.entries()) {
+                if (value) params.append(key, value);
+            }
+            fetchPosts(params.toString());
+        });
+    }
+
+    const resetFiltersMobile = document.getElementById('reset-filters-mobile');
+    if (resetFiltersMobile) {
+        resetFiltersMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (filterFormMobile) filterFormMobile.reset();
+            fetchPosts();
+        });
+    }
 });
 
-function fetchPosts() {
-    const hasFilters = window.currentFilters && Object.keys(window.currentFilters).length > 0;
-    const apiUrl = hasFilters ? "../ajax/posts/api-posts-filter.php" : "../ajax/posts/api-posts.php";
+function fetchPosts(queryString = "") {
+    const container = document.getElementById('posts-container');
+    if (container) {
+        container.innerHTML = '<div class="text-center my-4"><p>Caricamento...</p></div>';
+    }
 
-    let url = apiUrl;
-    if (hasFilters) {
-        const params = new URLSearchParams();
-        if (window.currentFilters.sort) params.set('sort', window.currentFilters.sort);
-        if (window.currentFilters.subject) params.set('subject', window.currentFilters.subject);
-        if (window.currentFilters.type) params.set('type', window.currentFilters.type);
-        if (window.currentFilters.date_from) params.set('date_from', window.currentFilters.date_from);
-        if (window.currentFilters.no_auth) params.set('no_auth', '1');
-        if (window.currentFilters.show_unavailable) params.set('show_unavailable', '1');
-        url += '?' + params.toString();
+    let url = "../ajax/posts/api-posts.php";
+    if (queryString !== "") {
+        url += '?' + queryString;
     }
 
     fetch(url)
@@ -37,10 +75,12 @@ function fetchPosts() {
             renderPosts(data.posts);
         } else {
             console.error("Errore nel caricamento dei post:", data.message);
+            alert("Errore nel caricamento dei post: " + data.message);
         }
     })
     .catch(error => {
         console.error("Errore durante la fetch dei post:", error);
+        alert("Errore di connessione durante il caricamento dei post.");
     });
 }
 

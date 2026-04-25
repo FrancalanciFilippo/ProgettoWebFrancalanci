@@ -153,13 +153,6 @@
     </footer>
     <?php endif; ?>
     <?php
-    if (isset($templateParams["filters"])) {
-        echo '<script>';
-        echo 'window.currentFilters = ' . json_encode($templateParams["filters"]) . ';';
-        echo '</script>';
-    }
-    ?>
-    <?php
     if (isset($templateParams["js"])) {
         foreach ($templateParams["js"] as $jsFile) {
             echo '<script src="' . $jsFile . '"></script>';

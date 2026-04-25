@@ -10,18 +10,15 @@ function hashColor(str) {
     return palette[Math.abs(hash) % palette.length];
 }
 
-function getInitials(fullName) {
-    return fullName.split(' ').filter(Boolean).slice(0, 2).map(word => word[0].toUpperCase()).join('');
-}
-
 function initializeAvatars() {
     var avatars = document.querySelectorAll('.comment-avatar');
     avatars.forEach(avatar => {
         var userName = avatar.getAttribute('data-user');
+        var userInitials = avatar.getAttribute('data-initials');
         if (userName) {
             avatar.style.backgroundColor = hashColor(userName);
-            if (avatar.textContent.trim() === "") {
-                avatar.textContent = getInitials(userName);
+            if (avatar.textContent.trim() === "" && userInitials) {
+                avatar.textContent = userInitials;
             }
         }
     });
@@ -90,6 +87,7 @@ function renderComments(comments) {
 
     comments.forEach(comment => {
         var fullname = comment.creatore_nome + ' ' + comment.creatore_cognome;
+        var userInitials = (comment.creatore_nome[0] + comment.creatore_cognome[0]).toUpperCase();
         var dateStr = formatDateTime(comment.data_scrittura);
         var safeText = escapeHtml(comment.testo);
 
@@ -109,7 +107,7 @@ function renderComments(comments) {
             '<div class="card border-0 shadow-sm">' +
                 '<div class="card-body p-4">' +
                     '<div class="d-flex align-items-start gap-3">' +
-                        '<div class="comment-avatar" aria-hidden="true" data-user="' + escapeHtml(fullname) + '"></div>' +
+                        '<div class="comment-avatar" aria-hidden="true" data-user="' + escapeHtml(fullname) + '" data-initials="' + escapeHtml(userInitials) + '"></div>' +
                         '<div class="flex-grow-1">' +
                             '<div class="d-flex justify-content-between align-items-center mb-1">' +
                                 '<span class="fw-semibold text-dark">' + escapeHtml(fullname) + '</span>' +

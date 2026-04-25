@@ -11,21 +11,6 @@ body {
     padding-top: 76px;
 }
 
-.skip-link {
-    position: absolute;
-    top: -100%;
-    left: 0;
-    z-index: 9999;
-    padding: 0.5rem 1rem;
-    background: #212529;
-    color: #fff;
-    transition: top 0.2s ease;
-}
-
-.skip-link:focus {
-    top: 0;
-}
-
 .logo-home {
     max-width: 180px;
 }
@@ -222,4 +207,19 @@ a:focus {
  
 .icon-admin-lg {
     font-size: 3.5rem;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background: #ffffff;
+    color: var(--color-primary);
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
 }
