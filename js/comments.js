@@ -24,23 +24,13 @@ function initializeAvatars() {
     });
 }
 
-window.setReply = function(author, date, text, replyId) {
-    document.getElementById('reply-author-name').textContent = author;
-    document.getElementById('reply-author-date').textContent = date;
-    document.getElementById('reply-text-preview').textContent = text;
-    document.getElementById('reply-to').value = replyId || '';
-    document.getElementById('reply-preview-wrapper').classList.remove('d-none');
-    document.getElementById('comment-text').focus();
-    document.getElementById('comment-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
-};
-
-window.clearReply = function() {
+function clearReply() {
     document.getElementById('reply-author-name').textContent = '';
     document.getElementById('reply-author-date').textContent = '';
     document.getElementById('reply-text-preview').textContent = '';
     document.getElementById('reply-to').value = '';
     document.getElementById('reply-preview-wrapper').classList.add('d-none');
-};
+}
 
 function formatDateTime(dateStr) {
     var opts = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -113,9 +103,7 @@ function renderComments(comments) {
                                 '<span class="fw-semibold text-dark">' + escapeHtml(fullname) + '</span>' +
                                 '<div class="d-flex align-items-center gap-2">' +
                                     '<span class="text-secondary small">' + dateStr + '</span>' +
-                                    '<button class="reply-btn" title="Rispondi"' +
-                                        ' aria-label="Rispondi a ' + escapeHtml(fullname) + '"' +
-                                        ' onclick="setReply(\'' + escapeHtml(fullname).replace(/'/g, "\\'") + '\', \'' + dateStr + '\', \'' + escapeHtml(comment.testo).replace(/'/g, "\\'") + '\', ' + comment.id + ')">' +
+                                    '<button class="reply-btn js-reply-btn" title="Rispondi" aria-label="Rispondi a ' + escapeHtml(fullname) + '">' +
                                         '<em class="bi bi-reply" aria-hidden="true"></em> Rispondi' +
                                     '</button>' +
                                 '</div>' +
@@ -128,6 +116,19 @@ function renderComments(comments) {
             '</div>';
 
         list.insertAdjacentHTML('beforeend', html);
+        
+        var replyBtn = list.lastElementChild.querySelector('.js-reply-btn');
+        if (replyBtn) {
+            replyBtn.addEventListener('click', () => {
+                document.getElementById('reply-author-name').textContent = fullname;
+                document.getElementById('reply-author-date').textContent = dateStr;
+                document.getElementById('reply-text-preview').textContent = safeText;
+                document.getElementById('reply-to').value = comment.id || '';
+                document.getElementById('reply-preview-wrapper').classList.remove('d-none');
+                document.getElementById('comment-text').focus();
+                document.getElementById('comment-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        }
     });
 
     initializeAvatars();

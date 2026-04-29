@@ -10,7 +10,7 @@
                     </div>
                     <h2 class="fw-bold mb-2">La nostra missione</h2>
                     <p class="text-dark">
-                        Creare un applicazione che faciliti la collaborazione tra studenti, permettendo loro di organizzare sessioni di studio e lavorare insieme su progetti accademici.
+                        Quante volte ti è capitato di sentirti solo davanti a un esame difficile, senza sapere con chi studiare o come organizzarti? SchoolTogether nasce proprio da questa frustrazione. Il nostro obiettivo è semplice: rendere più facile per gli studenti trovarsi, collaborare e affrontare insieme il percorso universitario — dalle sessioni di studio ai progetti di gruppo.
                     </p>
                     <hr class="my-4">
                 </div>
@@ -21,7 +21,7 @@
                     </div>
                     <h2 class="fw-bold mb-2">Il nostro team</h2>
                     <p class="text-dark">
-                        Il mio team è formato da me, me e solo me.
+                        Dietro SchoolTogether c'è… una sola persona. Sono uno studente universitario che ha deciso di realizzare questo progetto per superare l'esame di WEB.
                     </p>
                     <hr class="my-4">
                 </div>
@@ -32,7 +32,7 @@
                     </div>
                     <h2 class="fw-bold mb-2">Perché SchoolTogether</h2>
                     <p class="text-dark">
-                        Perché crediamo che la conoscenza cresca solo se condivisa. SchoolTogether è la piattaforma ideale per studenti che vogliono collaborare, imparare insieme e raggiungere i loro obiettivi accademici in modo più efficace.
+                        Perché studiare da soli è difficile, e farlo insieme è tutta un'altra cosa. La conoscenza si costruisce nel confronto, nelle domande che ci facciamo a vicenda, nei dubbi condivisi che diventano risposte. SchoolTogether vuole essere il posto dove gli studenti si incontrano, si aiutano e crescono insieme — perché nessuno dovrebbe dover affrontare l'università completamente da solo.
                     </p>
                 </div>
 
